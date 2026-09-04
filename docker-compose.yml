@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile.api
+    container_name: crypto-payment-gateway-api
+    env_file:
+      - .env
+    ports:
+      - "${API_PORT}:3000"
+    networks:
+      - internal
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: crypto-payment-gateway-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: crypto_payment_gateway
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    # No ports: — Postgres is only reachable on the internal network
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 30
+
+networks:
+  internal:
+    driver: bridge

@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/modules/db/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PaymentStatus {
+  CREATED
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum TransferStatus {
+  NEW
+  USED
+}
+
+model Init {
+  id              Int      @id @default(0)
+  phraseHash      String
+  lastBlockNumber BigInt
+  updatedAt       DateTime @updatedAt
+}
+
+model Payment {
+  id              String        @id @default(uuid(7))
+  transferHash    String?       @unique
+  transfer        Transfer?     @relation(fields: [transferHash], references: [hash])
+  createdAt       DateTime      @default(now())
+  status          PaymentStatus @default(CREATED)
+  updatedAt       DateTime      @updatedAt
+  amount          BigInt
+  contractAddress String?
+  fromAddress     String?
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Transfer {
+  hash            String         @id
+  blockNumber     BigInt
+  createdAt       DateTime       @default(now())
+  amount          BigInt
+  contractAddress String
+  fromAddress     String
+  payment         Payment?
+  status          TransferStatus @default(NEW)
+
+  @@index([status, amount, contractAddress, fromAddress])
+}
