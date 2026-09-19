@@ -19,6 +19,10 @@ export class CreatePaymentReqBodyDto {
 }
 
 export class CreatePaymentResBodyDto {
+  @IsUUID(7)
+  id: string;
+
+  @IsString()
   url: string;
 }
 

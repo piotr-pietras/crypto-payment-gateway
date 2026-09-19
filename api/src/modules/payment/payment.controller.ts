@@ -7,7 +7,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ApiKeyGuard } from 'src/guards/apikey.guard';
-import { ErrorDto } from 'src/common/dto';
 import {
   AddFromAddressReqBodyDto,
   AddFromAddressResBodyDto,
@@ -29,7 +28,7 @@ export class PaymentController {
     status: 200,
     description: 'Payment created successfully',
     type: CreatePaymentResBodyDto,
-  })
+  })    
   @ApiForbiddenResponse({
     description: 'Invalid or missing API key',
     example: {
@@ -37,7 +36,6 @@ export class PaymentController {
       error: 'Forbidden',
       message: 'Invalid or missing API key',
     },
-    type: ErrorDto,
   })
   async createPayment(
     @Body() body: CreatePaymentReqBodyDto,
@@ -46,12 +44,6 @@ export class PaymentController {
   }
 
   @Post('add-from-address')
-  @ApiOperation({ summary: 'Add a from address to a payment' })
-  @ApiResponse({
-    status: 200,
-    description: 'From address added successfully',
-    type: AddFromAddressResBodyDto,
-  })
   async addFromAddress(
     @Body() body: AddFromAddressReqBodyDto,
   ): Promise<AddFromAddressResBodyDto> {

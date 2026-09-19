@@ -9,12 +9,16 @@ import {
 } from './etherscan.types';
 import { Mutex } from 'async-mutex';
 
-/** Etherscan free tier allows 3 calls/sec; stay under with 1 call/sec. */
-const RATE_LIMIT_MS = 1000;
-
+/**
+ * Etherscan API
+ *
+ * @default Etherscan free tier allows 3 calls/sec.
+ * @see https://docs.etherscan.io/endpoint-overview
+ */
 @Injectable()
 export class EtherscanService {
   private readonly mutex = new Mutex();
+  private readonly callsPerSec = 3;
   private readonly chainId: number;
   private readonly baseUrl: string = 'https://api.etherscan.io/v2/api';
 
@@ -86,12 +90,10 @@ export class EtherscanService {
 
   private async rateLimited<T>(fn: () => Promise<T>): Promise<T> {
     const release = await this.mutex.acquire();
-    const startedAt = Date.now();
     try {
       return await fn();
     } finally {
-      const elapsed = Date.now() - startedAt;
-      const delay = Math.max(0, RATE_LIMIT_MS - elapsed);
+      const delay = Math.max(0, 1000 / this.callsPerSec);
       setTimeout(release, delay);
     }
   }

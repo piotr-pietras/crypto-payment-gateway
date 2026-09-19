@@ -32,6 +32,7 @@ import { EtherscanService } from '../etherscan/etherscan.service';
           },
         });
 
+        // Prevent re-initialization database with a different account
         if (init && init?.phraseHash !== phraseHash) {
           throw new Error(
             '\n' +

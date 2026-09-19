@@ -16,7 +16,7 @@ import {
 } from 'src/types';
 import { PaymentService } from 'src/modules/payment/payment.service';
 import { BlockService } from 'src/modules/block/block.service';
-import { Payment, PaymentStatus } from 'src/modules/db/prisma/client';
+import { PaymentStatus } from 'src/modules/db/prisma/client';
 
 describe('PaymentService (e2e)', () => {
   let app: INestApplication<App>;

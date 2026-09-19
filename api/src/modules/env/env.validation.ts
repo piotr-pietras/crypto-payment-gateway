@@ -23,14 +23,8 @@ export class EnvironmentVariables {
   @IsString()
   ETHERSCAN_API_KEY: string;
 
-  @IsString()
-  APP_URL: string;
-
   @IsNumber()
-  API_PORT: number;
-
-  @IsNumber()
-  WEBSITE_PORT: number;
+  PORT: number;
 
   @IsNumber()
   INIT_TX_SYNC_BLOCK_BATCH_SIZE: number;
