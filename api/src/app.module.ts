@@ -7,6 +7,7 @@ import { EtherscanModule } from './modules/etherscan/etherscan.module';
 import { InitializerModule } from './modules/initializer/initializer.module';
 import { BlockModule } from './modules/block/block.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { WSModule } from './modules/ws/ws.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     EnvModule,
     InitializerModule,
     DbModule,
+    WSModule,
     EtherscanModule,
     AccountModule,
     BlockModule,

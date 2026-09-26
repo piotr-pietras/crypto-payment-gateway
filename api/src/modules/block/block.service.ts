@@ -10,6 +10,7 @@ import { isToAddressPaymentToken } from 'src/common/utils/isToAddressPaymentToke
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { Interface } from 'ethers';
+import { WSGateway } from '../ws/ws.gateway';
 
 @Injectable()
 export class BlockService {
@@ -24,6 +25,7 @@ export class BlockService {
       true
     >,
     private readonly db: DbService,
+    private readonly ws: WSGateway,
     private readonly account: AccountService,
     private readonly etherscan: EtherscanService,
     private readonly payment: PaymentService,

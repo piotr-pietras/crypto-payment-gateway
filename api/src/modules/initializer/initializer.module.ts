@@ -57,13 +57,14 @@ import { EtherscanService } from '../etherscan/etherscan.service';
           const backward = env.get<number>(
             'INIT_BACKWARD_TX_SYNC_BLOCK_QUANTITY',
           );
-          const batchesToProcess = Math.ceil(
-            Number(
-              (BigInt(currentBlockNumber) -
-                init!.lastBlockNumber +
-                BigInt(backward)) /
-                BigInt(batchSize),
-            ),
+          const remainingBlocks =
+            BigInt(currentBlockNumber) -
+            init!.lastBlockNumber +
+            BigInt(backward);
+
+          // BigInt `/` truncates; ceiling divide: (a + b - 1n) / b
+          const batchesToProcess = Number(
+            (remainingBlocks + BigInt(batchSize) - 1n) / BigInt(batchSize),
           );
 
           console.log(`Syncing with ${batchesToProcess} missing batches...`);

@@ -5,9 +5,17 @@ import { DbModule } from '../db/db.module';
 import { AccountModule } from '../account/account.module';
 import { InitializerModule } from '../initializer/initializer.module';
 import { PaymentModule } from '../payment/payment.module';
+import { WSModule } from '../ws/ws.module';
 
 @Module({
-  imports: [InitializerModule, DbModule, AccountModule, EtherscanModule, PaymentModule],
+  imports: [
+    InitializerModule,
+    DbModule,
+    WSModule,
+    AccountModule,
+    EtherscanModule,
+    PaymentModule,
+  ],
   providers: [BlockService],
   exports: [BlockService],
 })

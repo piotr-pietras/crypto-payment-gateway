@@ -28,23 +28,22 @@ export class CreatePaymentResBodyDto {
 
 export class AddFromAddressReqBodyDto {
   @IsUUID(7)
-  paymentId: string;
+  id: string;
 
   @IsString()
   @IsEthereumAddress()
   fromAddress: string;
 }
 
-export class AddFromAddressResBodyDto implements Pick<
-  Payment,
-  | 'id'
-  | 'fromAddress'
-  | 'status'
-  | 'contractAddress'
-> {
+export class AddFromAddressResBodyDto
+  implements Pick<Payment, 'id' | 'fromAddress' | 'status' | 'contractAddress'>
+{
   id: string;
   amount: string;
   fromAddress: string | null;
   status: PaymentStatus;
   contractAddress: string | null;
+  toAddress: string;
 }
+
+export class GetPaymentResBodyDto extends AddFromAddressResBodyDto {}

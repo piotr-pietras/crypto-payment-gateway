@@ -62,7 +62,7 @@ describe('PaymentService (e2e)', () => {
       .post('/payment/add-from-address')
       .set('x-api-key', '')
       .send({
-        paymentId: body.id,
+        id: body.id,
         fromAddress: wallet.address,
       })
       .expect(201);

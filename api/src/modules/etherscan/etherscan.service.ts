@@ -36,7 +36,6 @@ export class EtherscanService {
     startblock: string | bigint | number;
     endblock: string | bigint | number;
   }) {
-    console.log(`Making rate limited request to Etherscan`);
     return this.rateLimited(async () => {
       const queryParams = new URLSearchParams({
         chainid: this.chainId.toString(),

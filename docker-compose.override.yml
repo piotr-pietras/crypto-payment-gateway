@@ -1,0 +1,8 @@
+services:
+  web:
+    profiles: [dev]
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile.web.dev
+    volumes:
+      - ./web:/app

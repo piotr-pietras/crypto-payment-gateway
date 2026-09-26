@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { PaymentTokenAddresses } from 'src/types';
 import { PaymentStatus } from '../db/prisma/enums';
+import { AccountService } from '../account/account.service';
 
 /**
  * Payment service
@@ -24,7 +25,26 @@ export class PaymentService {
       true
     >,
     private readonly db: DbService,
+    private readonly account: AccountService,
   ) {}
+
+  async getPayment(id: string) {
+    const payment = await this.db.payment.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!payment) {
+      throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
+    }
+
+    return {
+      ...payment,
+      amount: payment.amount.toString(),
+      toAddress: this.account.root.address,
+    };
+  }
 
   async createPayment(body: CreatePaymentReqBodyDto) {
     const payment = await this.db.payment.create({
@@ -46,18 +66,13 @@ export class PaymentService {
   async addFromAddress(body: AddFromAddressReqBodyDto) {
     const payment = await this.db.payment.findUnique({
       where: {
-        id: body.paymentId,
+        id: body.id,
       },
     });
 
     if (!payment) {
       throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
-    } else if (
-      !(
-        payment.status === PaymentStatus.CREATED ||
-        payment.status === PaymentStatus.PENDING
-      )
-    ) {
+    } else if (!(payment.status === PaymentStatus.CREATED)) {
       throw new HttpException(
         `Payment is not in the correct status: ${payment.status}\n` +
           `The statuses that are allowed are: ${PaymentStatus.CREATED} and ${PaymentStatus.PENDING}`,
@@ -83,7 +98,7 @@ export class PaymentService {
 
     const updatedPayment = await this.db.payment.update({
       where: {
-        id: body.paymentId,
+        id: body.id,
       },
       data: {
         fromAddress: body.fromAddress.toLowerCase(),
@@ -94,6 +109,7 @@ export class PaymentService {
     return {
       ...updatedPayment,
       amount: updatedPayment.amount.toString(),
+      toAddress: this.account.root.address,
     };
   }
 

@@ -1,0 +1,36 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Secure, Fast, Open"
+  },
+  "fromAddress": {
+    "title": "Enter your wallet address",
+    "description-1": "Paste the address from which you will send {{ currency }}.",
+    "description-2": "We'll use it to detect your payment.",
+    "label": "Wallet address",
+    "button": "Continue to payment",
+    "error": "Invalid wallet address",
+    "error-placeholder": "Enter a valid wallet address"
+  },
+  "payAddress": {
+    "title": "Pay with USD Coin ({{ currency }})",
+    "description": "Scan the QR code or send the exact amount to the address below.",
+    "scanHint": "Scan with your wallet",
+    "amountLabel": "Amount ({{ currency }})",
+    "addressLabel": "Send to this address (Ethereum)",
+    "warning": "Send only {{ currency }} (Ethereum network). Other assets may be lost.",
+    "copy": "Copy address",
+    "copied": "Copied",
+    "waiting": "Waiting for payment...",
+    "autoUpdate": "This page will update automatically once the payment is detected."
+  },
+  "incomingTransfer": {
+    "waiting": "Waiting for payment...",
+    "autoUpdate": "This page will update automatically once the payment is detected."
+  },
+  "not-found": {
+    "title": "Oops! Payment not found",
+    "description-1": "The payment you are looking for does not exist.",
+    "description-2": "Please check the URL or go back to the home page."
+  }
+}

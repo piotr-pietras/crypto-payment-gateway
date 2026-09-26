@@ -2,7 +2,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: dockerfile.api
+      dockerfile: ./docker/dockerfile.api
     container_name: crypto-payment-gateway-api
     env_file:
       - .env
@@ -15,7 +15,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: dockerfile.web
+      dockerfile: ./docker/dockerfile.web
     container_name: crypto-payment-gateway-web
     env_file:
       - .env
@@ -46,7 +46,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: dockerfile.nginx
+      dockerfile: ./docker/dockerfile.nginx
     container_name: crypto-payment-gateway-nginx
     env_file:
       - .env

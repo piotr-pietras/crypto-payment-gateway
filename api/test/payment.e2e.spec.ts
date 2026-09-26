@@ -72,7 +72,7 @@ describe('PaymentService (e2e)', () => {
     });
 
     const updated = await paymentService.addFromAddress({
-      paymentId: id,
+      id: id,
       fromAddress: FROM_ADDRESS,
     });
 
@@ -80,7 +80,7 @@ describe('PaymentService (e2e)', () => {
     expect(updated.status).toBe(PaymentStatus.PENDING);
   });
 
-  it('allows adding from address only when payment is created or pending', async () => {
+  it('allows adding from address only when payment is created', async () => {
     const { id } = await paymentService.createPayment({
       amount: 100,
       paymentToken: PaymentTokens.USDC,
@@ -93,7 +93,7 @@ describe('PaymentService (e2e)', () => {
 
     await expect(
       paymentService.addFromAddress({
-        paymentId: id,
+        id: id,
         fromAddress: FROM_ADDRESS,
       }),
     ).rejects.toThrow(HttpException);
@@ -106,7 +106,7 @@ describe('PaymentService (e2e)', () => {
     });
     
     await paymentService.addFromAddress({
-      paymentId: id1,
+      id: id1,
       fromAddress: FROM_ADDRESS,
     });
 
@@ -117,7 +117,7 @@ describe('PaymentService (e2e)', () => {
 
     await expect(
       paymentService.addFromAddress({
-        paymentId: id2,
+        id: id2,
         fromAddress: FROM_ADDRESS,
       }),
     ).rejects.toThrow(HttpException);
@@ -135,7 +135,7 @@ describe('PaymentService (e2e)', () => {
     });
 
     await paymentService.addFromAddress({
-      paymentId: id,
+      id: id,
       fromAddress: FROM_ADDRESS,
     });
 
