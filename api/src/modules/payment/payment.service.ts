@@ -9,6 +9,9 @@ import { EnvironmentVariables } from '../env/env.validation';
 import { PaymentTokenAddresses } from 'src/types';
 import { PaymentStatus } from '../db/prisma/enums';
 import { AccountService } from '../account/account.service';
+import { WSGateway } from '../ws/ws.gateway';
+import { EtherscanService } from '../etherscan/etherscan.service';
+import { erc20ValueToAmount } from 'src/common/utils/erc20ValueToAmount';
 
 /**
  * Payment service
@@ -25,6 +28,8 @@ export class PaymentService {
       true
     >,
     private readonly db: DbService,
+    private readonly ws: WSGateway,
+    private readonly etherscan: EtherscanService,
     private readonly account: AccountService,
   ) {}
 
@@ -75,7 +80,7 @@ export class PaymentService {
     } else if (!(payment.status === PaymentStatus.CREATED)) {
       throw new HttpException(
         `Payment is not in the correct status: ${payment.status}\n` +
-          `The statuses that are allowed are: ${PaymentStatus.CREATED} and ${PaymentStatus.PENDING}`,
+          `The statuses that are allowed are: ${PaymentStatus.CREATED}`,
         HttpStatus.BAD_REQUEST,
       );
     } else if (
@@ -88,7 +93,7 @@ export class PaymentService {
           contractAddress: payment.contractAddress?.toLowerCase(),
           amount: payment.amount,
           status: {
-            in: [PaymentStatus.PENDING, PaymentStatus.CREATED],
+            in: [PaymentStatus.CREATED, PaymentStatus.PENDING],
           },
         },
       })
@@ -120,11 +125,18 @@ export class PaymentService {
 
     if (!transfer) return;
 
+    const decimals = await this.etherscan.getERC20Decimals(
+      transfer.contractAddress,
+    );
+    const amount = erc20ValueToAmount(transfer.value, decimals);
     const payment = await this.db.payment.findFirst({
       where: {
-        amount: transfer.amount,
+        amount,
         fromAddress: transfer.fromAddress,
         contractAddress: transfer.contractAddress,
+        status: {
+          in: [PaymentStatus.PENDING],
+        },
         transfer: null,
       },
     });
@@ -135,6 +147,8 @@ export class PaymentService {
       where: { id: payment.id },
       data: { transferHash: transfer.hash, status: PaymentStatus.COMPLETED },
     });
+
+    this.ws.emitTransfer(payment.id, updatedPayment);
 
     console.log(`Payment ${payment.id} linked to transfer ${transfer.hash}`);
 

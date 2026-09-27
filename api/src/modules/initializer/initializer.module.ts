@@ -90,7 +90,7 @@ import { EtherscanService } from '../etherscan/etherscan.service';
                 contractAddress: tx.contractAddress,
                 tokenSymbol: tx.tokenSymbol,
                 blockNumber: BigInt(tx.blockNumber),
-                amount: BigInt(tx.value),
+                value: BigInt(tx.value),
                 fromAddress: tx.from,
               })),
               skipDuplicates: true,

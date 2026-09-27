@@ -10,7 +10,7 @@ import { Payment, PaymentStatus } from '../db/prisma/client';
 
 export class CreatePaymentReqBodyDto {
   @IsNumber({
-    maxDecimalPlaces: 0,
+    maxDecimalPlaces: 2,
   })
   amount: number;
 

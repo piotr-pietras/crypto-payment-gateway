@@ -12,6 +12,9 @@
   --color-text-tertiary: #7b8796;
   --color-text-danger: #9F1C13;
 
+  --color-success: #0F766E;
+  --color-success-bg: #D1FAE5;
+
   --font-size-body: 1rem;
   --font-size-heading: 1.5rem;
   --font-size-caption: 0.875rem;
@@ -29,6 +32,8 @@
   --color-border: var(--color-border);
   --color-border-strong: var(--color-border-strong);
   --color-text-danger: var(--color-text-danger);
+  --color-success: var(--color-success);
+  --color-success-bg: var(--color-success-bg);
 
   /* Font Sizes → text-body, text-heading, text-caption */
   --text-body: var(--font-size-body);

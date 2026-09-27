@@ -28,19 +28,19 @@ export type AggregateTransfer = {
 
 export type TransferAvgAggregateOutputType = {
   blockNumber: number | null
-  amount: number | null
+  value: number | null
 }
 
 export type TransferSumAggregateOutputType = {
   blockNumber: bigint | null
-  amount: bigint | null
+  value: bigint | null
 }
 
 export type TransferMinAggregateOutputType = {
   hash: string | null
   blockNumber: bigint | null
   createdAt: Date | null
-  amount: bigint | null
+  value: bigint | null
   contractAddress: string | null
   fromAddress: string | null
   status: $Enums.TransferStatus | null
@@ -50,7 +50,7 @@ export type TransferMaxAggregateOutputType = {
   hash: string | null
   blockNumber: bigint | null
   createdAt: Date | null
-  amount: bigint | null
+  value: bigint | null
   contractAddress: string | null
   fromAddress: string | null
   status: $Enums.TransferStatus | null
@@ -60,7 +60,7 @@ export type TransferCountAggregateOutputType = {
   hash: number
   blockNumber: number
   createdAt: number
-  amount: number
+  value: number
   contractAddress: number
   fromAddress: number
   status: number
@@ -70,19 +70,19 @@ export type TransferCountAggregateOutputType = {
 
 export type TransferAvgAggregateInputType = {
   blockNumber?: true
-  amount?: true
+  value?: true
 }
 
 export type TransferSumAggregateInputType = {
   blockNumber?: true
-  amount?: true
+  value?: true
 }
 
 export type TransferMinAggregateInputType = {
   hash?: true
   blockNumber?: true
   createdAt?: true
-  amount?: true
+  value?: true
   contractAddress?: true
   fromAddress?: true
   status?: true
@@ -92,7 +92,7 @@ export type TransferMaxAggregateInputType = {
   hash?: true
   blockNumber?: true
   createdAt?: true
-  amount?: true
+  value?: true
   contractAddress?: true
   fromAddress?: true
   status?: true
@@ -102,7 +102,7 @@ export type TransferCountAggregateInputType = {
   hash?: true
   blockNumber?: true
   createdAt?: true
-  amount?: true
+  value?: true
   contractAddress?: true
   fromAddress?: true
   status?: true
@@ -199,7 +199,7 @@ export type TransferGroupByOutputType = {
   hash: string
   blockNumber: bigint
   createdAt: Date
-  amount: bigint
+  value: bigint
   contractAddress: string
   fromAddress: string
   status: $Enums.TransferStatus
@@ -232,7 +232,7 @@ export type TransferWhereInput = {
   hash?: Prisma.StringFilter<"Transfer"> | string
   blockNumber?: Prisma.BigIntFilter<"Transfer"> | bigint | number
   createdAt?: Prisma.DateTimeFilter<"Transfer"> | Date | string
-  amount?: Prisma.BigIntFilter<"Transfer"> | bigint | number
+  value?: Prisma.BigIntFilter<"Transfer"> | bigint | number
   contractAddress?: Prisma.StringFilter<"Transfer"> | string
   fromAddress?: Prisma.StringFilter<"Transfer"> | string
   status?: Prisma.EnumTransferStatusFilter<"Transfer"> | $Enums.TransferStatus
@@ -243,7 +243,7 @@ export type TransferOrderByWithRelationInput = {
   hash?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -257,7 +257,7 @@ export type TransferWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TransferWhereInput | Prisma.TransferWhereInput[]
   blockNumber?: Prisma.BigIntFilter<"Transfer"> | bigint | number
   createdAt?: Prisma.DateTimeFilter<"Transfer"> | Date | string
-  amount?: Prisma.BigIntFilter<"Transfer"> | bigint | number
+  value?: Prisma.BigIntFilter<"Transfer"> | bigint | number
   contractAddress?: Prisma.StringFilter<"Transfer"> | string
   fromAddress?: Prisma.StringFilter<"Transfer"> | string
   status?: Prisma.EnumTransferStatusFilter<"Transfer"> | $Enums.TransferStatus
@@ -268,7 +268,7 @@ export type TransferOrderByWithAggregationInput = {
   hash?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -286,7 +286,7 @@ export type TransferScalarWhereWithAggregatesInput = {
   hash?: Prisma.StringWithAggregatesFilter<"Transfer"> | string
   blockNumber?: Prisma.BigIntWithAggregatesFilter<"Transfer"> | bigint | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Transfer"> | Date | string
-  amount?: Prisma.BigIntWithAggregatesFilter<"Transfer"> | bigint | number
+  value?: Prisma.BigIntWithAggregatesFilter<"Transfer"> | bigint | number
   contractAddress?: Prisma.StringWithAggregatesFilter<"Transfer"> | string
   fromAddress?: Prisma.StringWithAggregatesFilter<"Transfer"> | string
   status?: Prisma.EnumTransferStatusWithAggregatesFilter<"Transfer"> | $Enums.TransferStatus
@@ -296,7 +296,7 @@ export type TransferCreateInput = {
   hash: string
   blockNumber: bigint | number
   createdAt?: Date | string
-  amount: bigint | number
+  value: bigint | number
   contractAddress: string
   fromAddress: string
   status?: $Enums.TransferStatus
@@ -307,7 +307,7 @@ export type TransferUncheckedCreateInput = {
   hash: string
   blockNumber: bigint | number
   createdAt?: Date | string
-  amount: bigint | number
+  value: bigint | number
   contractAddress: string
   fromAddress: string
   status?: $Enums.TransferStatus
@@ -318,7 +318,7 @@ export type TransferUpdateInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -329,7 +329,7 @@ export type TransferUncheckedUpdateInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -340,7 +340,7 @@ export type TransferCreateManyInput = {
   hash: string
   blockNumber: bigint | number
   createdAt?: Date | string
-  amount: bigint | number
+  value: bigint | number
   contractAddress: string
   fromAddress: string
   status?: $Enums.TransferStatus
@@ -350,7 +350,7 @@ export type TransferUpdateManyMutationInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -360,7 +360,7 @@ export type TransferUncheckedUpdateManyInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -375,7 +375,7 @@ export type TransferCountOrderByAggregateInput = {
   hash?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -383,14 +383,14 @@ export type TransferCountOrderByAggregateInput = {
 
 export type TransferAvgOrderByAggregateInput = {
   blockNumber?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
 }
 
 export type TransferMaxOrderByAggregateInput = {
   hash?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -400,7 +400,7 @@ export type TransferMinOrderByAggregateInput = {
   hash?: Prisma.SortOrder
   blockNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -408,7 +408,7 @@ export type TransferMinOrderByAggregateInput = {
 
 export type TransferSumOrderByAggregateInput = {
   blockNumber?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
+  value?: Prisma.SortOrder
 }
 
 export type TransferCreateNestedOneWithoutPaymentInput = {
@@ -435,7 +435,7 @@ export type TransferCreateWithoutPaymentInput = {
   hash: string
   blockNumber: bigint | number
   createdAt?: Date | string
-  amount: bigint | number
+  value: bigint | number
   contractAddress: string
   fromAddress: string
   status?: $Enums.TransferStatus
@@ -445,7 +445,7 @@ export type TransferUncheckedCreateWithoutPaymentInput = {
   hash: string
   blockNumber: bigint | number
   createdAt?: Date | string
-  amount: bigint | number
+  value: bigint | number
   contractAddress: string
   fromAddress: string
   status?: $Enums.TransferStatus
@@ -471,7 +471,7 @@ export type TransferUpdateWithoutPaymentInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -481,7 +481,7 @@ export type TransferUncheckedUpdateWithoutPaymentInput = {
   hash?: Prisma.StringFieldUpdateOperationsInput | string
   blockNumber?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  value?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
@@ -493,7 +493,7 @@ export type TransferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   hash?: boolean
   blockNumber?: boolean
   createdAt?: boolean
-  amount?: boolean
+  value?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
   status?: boolean
@@ -504,7 +504,7 @@ export type TransferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   hash?: boolean
   blockNumber?: boolean
   createdAt?: boolean
-  amount?: boolean
+  value?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
   status?: boolean
@@ -514,7 +514,7 @@ export type TransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   hash?: boolean
   blockNumber?: boolean
   createdAt?: boolean
-  amount?: boolean
+  value?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
   status?: boolean
@@ -524,13 +524,13 @@ export type TransferSelectScalar = {
   hash?: boolean
   blockNumber?: boolean
   createdAt?: boolean
-  amount?: boolean
+  value?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
   status?: boolean
 }
 
-export type TransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"hash" | "blockNumber" | "createdAt" | "amount" | "contractAddress" | "fromAddress" | "status", ExtArgs["result"]["transfer"]>
+export type TransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"hash" | "blockNumber" | "createdAt" | "value" | "contractAddress" | "fromAddress" | "status", ExtArgs["result"]["transfer"]>
 export type TransferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   payment?: boolean | Prisma.Transfer$paymentArgs<ExtArgs>
 }
@@ -546,7 +546,7 @@ export type $TransferPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     hash: string
     blockNumber: bigint
     createdAt: Date
-    amount: bigint
+    value: bigint
     contractAddress: string
     fromAddress: string
     status: $Enums.TransferStatus
@@ -977,7 +977,7 @@ export interface TransferFieldRefs {
   readonly hash: Prisma.FieldRef<"Transfer", 'String'>
   readonly blockNumber: Prisma.FieldRef<"Transfer", 'BigInt'>
   readonly createdAt: Prisma.FieldRef<"Transfer", 'DateTime'>
-  readonly amount: Prisma.FieldRef<"Transfer", 'BigInt'>
+  readonly value: Prisma.FieldRef<"Transfer", 'BigInt'>
   readonly contractAddress: Prisma.FieldRef<"Transfer", 'String'>
   readonly fromAddress: Prisma.FieldRef<"Transfer", 'String'>
   readonly status: Prisma.FieldRef<"Transfer", 'TransferStatus'>

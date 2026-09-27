@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PaymentDto } from "@/utils/types";
 import { CopyPasteIcon } from "../icons/CopyPasteIcon";
+import { Pressable } from "../generic/Pressable";
 
 type Props = {
   payment: PaymentDto;
@@ -60,13 +60,12 @@ export function PayAddressSection({ payment }: Props) {
               <span className="flex-1 break-all text-body text-text-primary font-mono">
                 {payment.toAddress}
               </span>
-              <button
-                type="button"
+              <Pressable
                 onClick={handleCopy}
-                className="p-2 text-text-secondary hover:text-text-primary"
+                className="p-2 text-text-secondary"
               >
                 <CopyPasteIcon size={32} />
-              </button>
+              </Pressable>
             </div>
             <div className="text-caption text-text-tertiary">
               {t("payAddress.warning", { currency: "USDC" })}

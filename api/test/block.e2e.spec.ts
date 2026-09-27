@@ -51,7 +51,7 @@ const mockNewestBlockTx = (
   from: '0xfrom',
   to: PaymentTokenAddresses[PaymentTokens.USDC][Environment.SEPOLIA],
   value: '0x0',
-  input: transferIface.encodeFunctionData('transfer', [toAddress, 100n]),
+  input: transferIface.encodeFunctionData('transfer', [toAddress, 100000000n]),
   ...overrides,
 });
 
@@ -65,6 +65,7 @@ describe('BlockService (e2e)', () => {
     getBlockNumber: jest.Mock;
     getBlockByNumber: jest.Mock;
     getERC20TokenTransfer: jest.Mock;
+    getERC20Decimals: jest.Mock;
   };
 
   beforeAll(async () => {
@@ -74,6 +75,7 @@ describe('BlockService (e2e)', () => {
       getBlockNumber: jest.fn(),
       getBlockByNumber: jest.fn(),
       getERC20TokenTransfer: jest.fn(),
+      getERC20Decimals: jest.fn().mockResolvedValue(6),
     };
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -173,7 +175,7 @@ describe('BlockService (e2e)', () => {
     const transfers = await dbService.transfer.findMany();
     expect(transfers).toHaveLength(1);
     expect(transfers[0].hash).toBe('0xnewest');
-    expect(transfers[0].amount).toBe(BigInt(100));
+    expect(transfers[0].value).toBe(BigInt(100 * 10 ** 6));
     expect(transfers[0].contractAddress).toBe(tx.to);
     expect(transfers[0].fromAddress).toBe(tx.from);
   });

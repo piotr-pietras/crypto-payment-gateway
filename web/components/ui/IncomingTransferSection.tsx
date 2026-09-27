@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { io } from "socket.io-client";
 import { ClockIcon } from "../icons/ClockIcon";
+import { useRouter } from "next/navigation";
 
 type Props = {
   payment: PaymentDto;
@@ -12,6 +13,7 @@ type Props = {
 
 export function IncomingTransferSection({ payment }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
 
   useEffect(() => {
     const socket = io({
@@ -21,11 +23,16 @@ export function IncomingTransferSection({ payment }: Props) {
     });
 
     socket.on("connect", () => {
-      console.log("socket connected", socket.id);
-      socket.emit("subscribe", payment.id);
+      socket.emit("transfer:subscribe", payment.id);
     });
 
-    socket.on("subscribe", (data: { paymentId: string }) => {
+    socket.on("transfer", (data: { id: string }) => {
+      if (data.id === payment.id) {
+        router.push(`/pay/success/?id=${data.id}`);
+      }
+    });
+
+    socket.on("transfer:subscribe", (data) => {
       console.log("subscribe", data);
     });
 
@@ -40,7 +47,7 @@ export function IncomingTransferSection({ payment }: Props) {
     return () => {
       socket.disconnect();
     };
-  }, [payment.id]);
+  }, [payment.id, router]);
 
   return (
     <div className="flex flex-col items-center gap-1 border-t border-border pt-4">

@@ -31,3 +31,7 @@ export const ChainId: Record<Environment, number> = {
 export const ERC20TransferABI = [
   'function transfer(address to, uint256 amount)',
 ] as const;
+
+export const ERC20DecimalsABI = [
+  'function decimals() view returns (uint8)',
+] as const;

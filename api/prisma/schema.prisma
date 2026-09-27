@@ -42,7 +42,7 @@ model Payment {
   createdAt       DateTime      @default(now())
   status          PaymentStatus @default(CREATED)
   updatedAt       DateTime      @updatedAt
-  amount          BigInt
+  amount          Float
   contractAddress String?
   fromAddress     String?
 
@@ -54,11 +54,11 @@ model Transfer {
   hash            String         @id
   blockNumber     BigInt
   createdAt       DateTime       @default(now())
-  amount          BigInt
+  value          BigInt
   contractAddress String
   fromAddress     String
   payment         Payment?
   status          TransferStatus @default(NEW)
 
-  @@index([status, amount, contractAddress, fromAddress])
+  @@index([status, value, contractAddress, fromAddress])
 }

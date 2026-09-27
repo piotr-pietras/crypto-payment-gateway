@@ -100,7 +100,7 @@ export const TransferScalarFieldEnum = {
   hash: 'hash',
   blockNumber: 'blockNumber',
   createdAt: 'createdAt',
-  amount: 'amount',
+  value: 'value',
   contractAddress: 'contractAddress',
   fromAddress: 'fromAddress',
   status: 'status'

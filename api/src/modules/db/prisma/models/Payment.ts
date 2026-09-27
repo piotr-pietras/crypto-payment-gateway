@@ -31,7 +31,7 @@ export type PaymentAvgAggregateOutputType = {
 }
 
 export type PaymentSumAggregateOutputType = {
-  amount: bigint | null
+  amount: number | null
 }
 
 export type PaymentMinAggregateOutputType = {
@@ -40,7 +40,7 @@ export type PaymentMinAggregateOutputType = {
   createdAt: Date | null
   status: $Enums.PaymentStatus | null
   updatedAt: Date | null
-  amount: bigint | null
+  amount: number | null
   contractAddress: string | null
   fromAddress: string | null
 }
@@ -51,7 +51,7 @@ export type PaymentMaxAggregateOutputType = {
   createdAt: Date | null
   status: $Enums.PaymentStatus | null
   updatedAt: Date | null
-  amount: bigint | null
+  amount: number | null
   contractAddress: string | null
   fromAddress: string | null
 }
@@ -203,7 +203,7 @@ export type PaymentGroupByOutputType = {
   createdAt: Date
   status: $Enums.PaymentStatus
   updatedAt: Date
-  amount: bigint
+  amount: number
   contractAddress: string | null
   fromAddress: string | null
   _count: PaymentCountAggregateOutputType | null
@@ -237,7 +237,7 @@ export type PaymentWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
-  amount?: Prisma.BigIntFilter<"Payment"> | bigint | number
+  amount?: Prisma.FloatFilter<"Payment"> | number
   contractAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
   fromAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
@@ -264,7 +264,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
-  amount?: Prisma.BigIntFilter<"Payment"> | bigint | number
+  amount?: Prisma.FloatFilter<"Payment"> | number
   contractAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
   fromAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
@@ -295,7 +295,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
-  amount?: Prisma.BigIntWithAggregatesFilter<"Payment"> | bigint | number
+  amount?: Prisma.FloatWithAggregatesFilter<"Payment"> | number
   contractAddress?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   fromAddress?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
 }
@@ -305,7 +305,7 @@ export type PaymentCreateInput = {
   createdAt?: Date | string
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
-  amount: bigint | number
+  amount: number
   contractAddress?: string | null
   fromAddress?: string | null
   transfer?: Prisma.TransferCreateNestedOneWithoutPaymentInput
@@ -317,7 +317,7 @@ export type PaymentUncheckedCreateInput = {
   createdAt?: Date | string
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
-  amount: bigint | number
+  amount: number
   contractAddress?: string | null
   fromAddress?: string | null
 }
@@ -327,7 +327,7 @@ export type PaymentUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transfer?: Prisma.TransferUpdateOneWithoutPaymentNestedInput
@@ -339,7 +339,7 @@ export type PaymentUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -350,7 +350,7 @@ export type PaymentCreateManyInput = {
   createdAt?: Date | string
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
-  amount: bigint | number
+  amount: number
   contractAddress?: string | null
   fromAddress?: string | null
 }
@@ -360,7 +360,7 @@ export type PaymentUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -371,7 +371,7 @@ export type PaymentUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -426,6 +426,14 @@ export type EnumPaymentStatusFieldUpdateOperationsInput = {
   set?: $Enums.PaymentStatus
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
@@ -467,7 +475,7 @@ export type PaymentCreateWithoutTransferInput = {
   createdAt?: Date | string
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
-  amount: bigint | number
+  amount: number
   contractAddress?: string | null
   fromAddress?: string | null
 }
@@ -477,7 +485,7 @@ export type PaymentUncheckedCreateWithoutTransferInput = {
   createdAt?: Date | string
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
-  amount: bigint | number
+  amount: number
   contractAddress?: string | null
   fromAddress?: string | null
 }
@@ -503,7 +511,7 @@ export type PaymentUpdateWithoutTransferInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -513,7 +521,7 @@ export type PaymentUncheckedUpdateWithoutTransferInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
   contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -589,7 +597,7 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdAt: Date
     status: $Enums.PaymentStatus
     updatedAt: Date
-    amount: bigint
+    amount: number
     contractAddress: string | null
     fromAddress: string | null
   }, ExtArgs["result"]["payment"]>
@@ -1021,7 +1029,7 @@ export interface PaymentFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly status: Prisma.FieldRef<"Payment", 'PaymentStatus'>
   readonly updatedAt: Prisma.FieldRef<"Payment", 'DateTime'>
-  readonly amount: Prisma.FieldRef<"Payment", 'BigInt'>
+  readonly amount: Prisma.FieldRef<"Payment", 'Float'>
   readonly contractAddress: Prisma.FieldRef<"Payment", 'String'>
   readonly fromAddress: Prisma.FieldRef<"Payment", 'String'>
 }

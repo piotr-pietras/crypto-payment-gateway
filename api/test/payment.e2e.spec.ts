@@ -7,11 +7,9 @@ import { InitializerService } from './../src/modules/initializer/initializer.ser
 import { DbService } from './../src/modules/db/db.service';
 import { PaymentService } from './../src/modules/payment/payment.service';
 import { PaymentStatus } from './../src/modules/db/prisma/enums';
-import {
-  PaymentTokenAddresses,
-  PaymentTokens,
-} from 'src/types';
+import { PaymentTokenAddresses, PaymentTokens } from 'src/types';
 import e2eUtils from './e2e.utils';
+import { EtherscanService } from 'src/modules/etherscan/etherscan.service';
 
 const FROM_ADDRESS = '0x742d35cc6634c0532925a3b844bc9e7595f0beb';
 
@@ -20,15 +18,24 @@ describe('PaymentService (e2e)', () => {
   let paymentService: PaymentService;
   let dbService: DbService;
   let dbClear: () => void;
+  let etherscanMock: {
+    getERC20Decimals: jest.Mock;
+  };
 
   beforeAll(async () => {
     dbClear = (await e2eUtils.runDbContainer()).clear;
+
+    etherscanMock = {
+      getERC20Decimals: jest.fn().mockResolvedValue(6),
+    };
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
       .overrideProvider(InitializerService)
       .useValue(new InitializerService())
+      .overrideProvider(EtherscanService)
+      .useValue(etherscanMock)
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -51,14 +58,16 @@ describe('PaymentService (e2e)', () => {
 
   it('creates new payment', async () => {
     const result = await paymentService.createPayment({
-      amount: 100,
+      amount: 100.02,
       paymentToken: PaymentTokens.USDC,
     });
 
-    const payment = await dbService.payment.findUnique({ where: { id: result.id } });
+    const payment = await dbService.payment.findUnique({
+      where: { id: result.id },
+    });
     const env = app.get(ConfigService).get('ENV');
 
-    expect(payment!.amount).toBe(BigInt(100));
+    expect(payment!.amount).toBe(100.02);
     expect(payment!.status).toBe(PaymentStatus.CREATED);
     expect(payment!.contractAddress).toBe(
       PaymentTokenAddresses[PaymentTokens.USDC][env],
@@ -104,7 +113,7 @@ describe('PaymentService (e2e)', () => {
       amount: 100,
       paymentToken: PaymentTokens.USDC,
     });
-    
+
     await paymentService.addFromAddress({
       id: id1,
       fromAddress: FROM_ADDRESS,
@@ -125,8 +134,7 @@ describe('PaymentService (e2e)', () => {
 
   it('links payment to transfer', async () => {
     const env = app.get(ConfigService).get('ENV');
-    const contractAddress =
-      PaymentTokenAddresses[PaymentTokens.USDC][env];
+    const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
     const transferHash = '0xtransfer123';
 
     const { id } = await paymentService.createPayment({
@@ -143,7 +151,7 @@ describe('PaymentService (e2e)', () => {
       data: {
         hash: transferHash,
         blockNumber: BigInt(1001),
-        amount: BigInt(100),
+        value: BigInt(100 * 10 ** 6),
         contractAddress,
         fromAddress: FROM_ADDRESS,
       },

@@ -1,0 +1,55 @@
+import Card from "@/components/generic/Card";
+import { SuccessCheckIcon } from "@/components/icons/SuccessCheckIcon";
+import { isLocale } from "@/i18n/config";
+import { getTranslation } from "@/i18n/server";
+import { Api } from "@/utils/api";
+import { Page } from "@/utils/page";
+import { PaymentDto } from "@/utils/types";
+import { notFound, redirect } from "next/navigation";
+
+const ROUTE = "/[locale]/pay/success";
+
+export default async function SuccessPage({
+  params,
+  searchParams,
+}: PageProps<typeof ROUTE>) {
+  const { locale } = await params;
+  const { id } = await searchParams;
+
+  if (!isLocale(locale) || typeof id !== "string") {
+    notFound();
+  }
+
+  const { t } = await getTranslation(locale);
+
+  const api = new Api();
+  const res = await api.getPayment(id);
+
+  if (!res.ok) {
+    notFound();
+  }
+
+  const data = (await res.json()) as PaymentDto;
+  const redirectUrl = Page.verifyURL(data, ROUTE);
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
+
+  return (
+    <div className="p-4 max-w-[768px] flex flex-1">
+      <Card>
+        <div className="flex flex-col items-center gap-4 text-center">
+          <SuccessCheckIcon size={32} />
+          <div className="flex flex-col gap-1">
+            <h1 className="text-heading text-text-primary font-bold">
+              {t("successPayment.title")}
+            </h1>
+            <span className="text-body text-text-secondary max-w-sm">
+              {t("successPayment.description")}
+            </span>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}

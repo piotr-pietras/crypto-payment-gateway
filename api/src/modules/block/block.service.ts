@@ -69,7 +69,7 @@ export class BlockService {
           });
           const funcName = decodedTx?.fragment.name;
           const toAddress = decodedTx?.args[0];
-          const amount = decodedTx?.args[1];
+          const value = decodedTx?.args[1];
           if (
             funcName === 'transfer' &&
             toAddress === this.account.root.address
@@ -85,7 +85,7 @@ export class BlockService {
               data: {
                 hash: tx.hash,
                 blockNumber: BigInt(tx.blockNumber),
-                amount: BigInt(amount),
+                value: BigInt(value),
                 contractAddress: tx.to,
                 fromAddress: tx.from,
               },
@@ -147,7 +147,7 @@ export class BlockService {
         data: txs.map((tx) => ({
           hash: tx.hash,
           blockNumber: BigInt(tx.blockNumber),
-          amount: BigInt(tx.value),
+          value: BigInt(tx.value),
           contractAddress: tx.contractAddress,
           fromAddress: tx.from,
         })),

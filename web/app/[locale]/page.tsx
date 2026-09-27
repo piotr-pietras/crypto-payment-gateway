@@ -2,14 +2,16 @@ import Card from "@/components/generic/Card";
 import { EnterFromAddressSection } from "@/components/ui/EnterFromAddressSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
-import { PaymentDto, PaymentStatus } from "@/utils/types";
-import { headers } from "next/headers";
+import { Page } from "@/utils/page";
+import { PaymentDto } from "@/utils/types";
 import { notFound, redirect } from "next/navigation";
+
+const ROUTE = "/[locale]";
 
 export default async function Home({
   params,
   searchParams,
-}: PageProps<"/[locale]">) {
+}: PageProps<typeof ROUTE>) {
   const { locale } = await params;
   const { id } = await searchParams;
 
@@ -26,10 +28,11 @@ export default async function Home({
 
   const data = (await res.json()) as PaymentDto;
 
-  switch (data.status) {
-    case PaymentStatus.PENDING:
-      return redirect(`/pay/?id=${id}`);
+  const redirectUrl = Page.verifyURL(data, ROUTE);
+  if (redirectUrl) {
+    redirect(redirectUrl);
   }
+
 
   return (
     <div className="p-4 max-w-[768px] flex flex-1">

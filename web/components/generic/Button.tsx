@@ -33,7 +33,7 @@ export default function Button({
       ${variantClasses[variant]} 
       ${loading || disabled
         ? "opacity-50 cursor-not-allowed"
-        : "active:scale-[0.97] active:opacity-80"}
+        : "active:scale-[0.95] active:opacity-80"}
       `}
       {...props}
     >

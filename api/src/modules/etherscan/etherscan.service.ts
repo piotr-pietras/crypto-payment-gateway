@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
-import { ChainId } from 'src/types';
+import { ChainId, ERC20DecimalsABI, PaymentTokens } from 'src/types';
 import {
   EtherscanResponse,
   GetBlockByNumberResponse,
   GetERC20TokenTransferResponse,
 } from './etherscan.types';
 import { Mutex } from 'async-mutex';
+import { Interface } from 'ethers';
 
 /**
  * Etherscan API
@@ -21,6 +22,9 @@ export class EtherscanService {
   private readonly callsPerSec = 3;
   private readonly chainId: number;
   private readonly baseUrl: string = 'https://api.etherscan.io/v2/api';
+  private decimalsCache: Record<PaymentTokens, number | null> = {
+    [PaymentTokens.USDC]: null,
+  };
 
   constructor(
     private readonly env: ConfigService<
@@ -29,6 +33,28 @@ export class EtherscanService {
     >,
   ) {
     this.chainId = ChainId[env.get('ENV')];
+  }
+
+  async getERC20Decimals(address: string): Promise<number> {
+    if (this.decimalsCache[address]) return this.decimalsCache[address];
+
+    return this.rateLimited(async () => {
+      const iface = new Interface(ERC20DecimalsABI);
+      const queryParams = new URLSearchParams({
+        chainid: this.chainId.toString(),
+        module: 'proxy',
+        action: 'eth_call',
+        to: address,
+        data: iface.encodeFunctionData('decimals'),
+        tag: 'latest',
+        apikey: this.env.get('ETHERSCAN_API_KEY'),
+      });
+      const response = await fetch(`${this.baseUrl}?${queryParams.toString()}`);
+      const data = (await response.json()) as EtherscanResponse<string>;
+      const decimals = parseInt(data.result, 16);
+      this.decimalsCache[address] = decimals;
+      return decimals;
+    });
   }
 
   async getERC20TokenTransfer(params: {

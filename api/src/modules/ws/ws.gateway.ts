@@ -29,11 +29,11 @@ export class WSGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  private paymentRoom(paymentId: string) {
-    return `payment:${paymentId}`;
+  private transferRoom(paymentId: string) {
+    return `transfer:${paymentId}`;
   }
 
-  @SubscribeMessage('subscribe:transfer')
+  @SubscribeMessage('transfer:subscribe')
   subscribeTransfer(
     @ConnectedSocket() client: Socket,
     @MessageBody() paymentId: string,
@@ -42,10 +42,10 @@ export class WSGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return { event: 'error', data: { message: 'paymentId is required' } };
     }
 
-    const room = this.paymentRoom(paymentId);
+    const room = this.transferRoom(paymentId);
     void client.join(room);
 
-    return { event: 'subscribe', data: { paymentId } };
+    return { event: 'transfer:subscribe', data: { paymentId } };
   }
 
   // @SubscribeMessage('block')
@@ -57,7 +57,7 @@ export class WSGateway implements OnGatewayConnection, OnGatewayDisconnect {
   // }
 
   emitTransfer(paymentId: string, data: unknown) {
-    this.server.to(this.paymentRoom(paymentId)).emit('event:transfer', data);
+    this.server.to(this.transferRoom(paymentId)).emit('transfer', data);
   }
 
   // emitNewBlock(block: string) {

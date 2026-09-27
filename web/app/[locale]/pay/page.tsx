@@ -4,13 +4,16 @@ import { IncomingTransferSection } from "@/components/ui/IncomingTransferSection
 import { PayAddressSection } from "@/components/ui/PayAddressSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
-import { PaymentDto, PaymentStatus } from "@/utils/types";
+import { Page } from "@/utils/page";
+import { PaymentDto } from "@/utils/types";
 import { notFound, redirect } from "next/navigation";
+
+const ROUTE = "/[locale]/pay";
 
 export default async function PayPage({
   params,
   searchParams,
-}: PageProps<"/[locale]/pay">) {
+}: PageProps<typeof ROUTE>) {
   const { locale } = await params;
   const { id } = await searchParams;
 
@@ -26,9 +29,9 @@ export default async function PayPage({
   }
 
   const data = (await res.json()) as PaymentDto;
-
-  if (data.status === PaymentStatus.CREATED) {
-    redirect(`/${locale}?id=${id}`);
+  const redirectUrl = Page.verifyURL(data, ROUTE);
+  if (redirectUrl) {
+    redirect(redirectUrl);
   }
 
   return (

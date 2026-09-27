@@ -21,7 +21,7 @@ CREATE TABLE "Payment" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "PaymentStatus" NOT NULL DEFAULT 'CREATED',
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "amount" BIGINT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
     "contractAddress" TEXT,
     "fromAddress" TEXT,
 
@@ -33,7 +33,7 @@ CREATE TABLE "Transfer" (
     "hash" TEXT NOT NULL,
     "blockNumber" BIGINT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "amount" BIGINT NOT NULL,
+    "value" BIGINT NOT NULL,
     "contractAddress" TEXT NOT NULL,
     "fromAddress" TEXT NOT NULL,
     "status" "TransferStatus" NOT NULL DEFAULT 'NEW',
@@ -51,7 +51,7 @@ CREATE INDEX "Payment_status_idx" ON "Payment"("status");
 CREATE INDEX "Payment_createdAt_idx" ON "Payment"("createdAt");
 
 -- CreateIndex
-CREATE INDEX "Transfer_status_amount_contractAddress_fromAddress_idx" ON "Transfer"("status", "amount", "contractAddress", "fromAddress");
+CREATE INDEX "Transfer_status_value_contractAddress_fromAddress_idx" ON "Transfer"("status", "value", "contractAddress", "fromAddress");
 
 -- AddForeignKey
 ALTER TABLE "Payment" ADD CONSTRAINT "Payment_transferHash_fkey" FOREIGN KEY ("transferHash") REFERENCES "Transfer"("hash") ON DELETE SET NULL ON UPDATE CASCADE;

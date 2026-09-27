@@ -28,6 +28,10 @@
     "waiting": "Waiting for payment...",
     "autoUpdate": "This page will update automatically once the payment is detected."
   },
+  "successPayment": {
+    "title": "Payment successful!",
+    "description": "Your payment has been confirmed and the item will be delivered shortly."
+  },
   "not-found": {
     "title": "Oops! Payment not found",
     "description-1": "The payment you are looking for does not exist.",

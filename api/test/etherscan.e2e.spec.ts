@@ -45,6 +45,14 @@ describe('AppController (e2e)', () => {
     expect(txs.length).toBeGreaterThan(0);
   });
 
+  it('should get ERC20 decimals', async () => {
+    const etherscanService = app.get(EtherscanService);
+    const decimals = await etherscanService.getERC20Decimals(
+      PaymentTokenAddresses[PaymentTokens.USDC][Environment.SEPOLIA],
+    );
+    expect(decimals).toBe(6);
+  });
+
   it('should not exceed rate limit', async () => {
     const etherscanService = app.get(EtherscanService);
     let errors = 0;

@@ -53,7 +53,7 @@ describe('PaymentService (e2e)', () => {
       .post('/payment/create')
       .set('x-api-key', '')
       .send({
-        amount: 100,
+        amount: 0.01,
         paymentToken: PaymentTokens.USDC,
       })
       .expect(201);
@@ -80,7 +80,7 @@ describe('PaymentService (e2e)', () => {
       signer,
     );
 
-    const tx = await token.transfer(accountService.root.address, 100);
+    const tx = await token.transfer(accountService.root.address, 0.01 * 10 ** 6);
 
     let payment = await dbService.payment.findUnique({
       where: { transferHash: tx.hash },
