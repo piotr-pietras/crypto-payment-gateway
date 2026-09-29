@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PaymentDto } from "@/utils/types";
 import { CopyPasteIcon } from "../icons/CopyPasteIcon";
 import { Pressable } from "../generic/Pressable";
+import { toast } from "sonner";
 
 type Props = {
   payment: PaymentDto;
@@ -18,6 +19,7 @@ export function PayAddressSection({ payment }: Props) {
   const handleCopy = async () => {
     if (!payment.toAddress) return;
     await navigator.clipboard.writeText(payment.toAddress);
+    toast.success(t("payAddress.copied"));
   };
 
   return (
@@ -56,17 +58,16 @@ export function PayAddressSection({ payment }: Props) {
             <div className="text-caption text-text-secondary">
               {t("payAddress.addressLabel")}
             </div>
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-background p-2">
-              <span className="flex-1 break-all text-body text-text-primary font-mono">
-                {payment.toAddress}
-              </span>
-              <Pressable
-                onClick={handleCopy}
-                className="p-2 text-text-secondary"
-              >
-                <CopyPasteIcon size={32} />
-              </Pressable>
-            </div>
+            <Pressable onClick={handleCopy}>
+              <div className="flex items-center gap-2 rounded-lg border border-border bg-background p-2">
+                <span className="flex-1 break-all text-body text-text-primary font-mono">
+                  {payment.toAddress}
+                </span>
+                <div className="p-2 text-text-secondary">
+                  <CopyPasteIcon size={32} />
+                </div>
+              </div>
+            </Pressable>
             <div className="text-caption text-text-tertiary">
               {t("payAddress.warning", { currency: "USDC" })}
             </div>

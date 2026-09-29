@@ -47,7 +47,7 @@ describe('PaymentService (e2e)', () => {
   beforeEach(async () => {});
 
   it('should link payment to transfer', async () => {
-    const wallet = new Wallet(e2eUtils.E2E_SEPOLIA_PRIV_KEY);
+    const wallet = new Wallet(e2eUtils.E2E_SEPOLIA_PRIV_KEY_1);
 
     const { body } = await request(app.getHttpServer())
       .post('/payment/create')
@@ -80,12 +80,12 @@ describe('PaymentService (e2e)', () => {
       signer,
     );
 
-    const tx = await token.transfer(accountService.root.address, 0.01 * 10 ** 6);
+    const tx = await token.transfer(
+      accountService.root.address,
+      0.01 * 10 ** 6,
+    );
 
-    let payment = await dbService.payment.findUnique({
-      where: { transferHash: tx.hash },
-      include: { transfer: true },
-    });
+    let payment;
 
     for (let i = 0; i < 30; i++) {
       await blockService.syncNewestBlock();
@@ -100,6 +100,74 @@ describe('PaymentService (e2e)', () => {
     }
 
     expect(payment?.transfer?.hash).toBe(tx.hash);
+    expect(payment?.status).toBe(PaymentStatus.COMPLETED);
+  }, 60_000);
+
+  it('should link payment to transferFrom', async () => {
+    const wallet1 = new Wallet(e2eUtils.E2E_SEPOLIA_PRIV_KEY_1);
+    const wallet2 = new Wallet(e2eUtils.E2E_SEPOLIA_PRIV_KEY_2);
+
+    const { body } = await request(app.getHttpServer())
+      .post('/payment/create')
+      .set('x-api-key', '')
+      .send({
+        amount: 0.01,
+        paymentToken: PaymentTokens.USDC,
+      })
+      .expect(201);
+
+    await request(app.getHttpServer())
+      .post('/payment/add-from-address')
+      .set('x-api-key', '')
+      .send({
+        id: body.id,
+        fromAddress: wallet1.address,
+      })
+      .expect(201);
+
+    const env = app.get(ConfigService).get('ENV');
+    const provider = new JsonRpcProvider(
+      e2eUtils.E2E_SEPOLIA_RPC,
+      ChainId[env],
+    );
+    const signer1 = wallet1.connect(provider);
+    const signer2 = wallet2.connect(provider);
+
+    const token1 = new Contract(
+      PaymentTokenAddresses[PaymentTokens.USDC][Environment.SEPOLIA],
+      e2eUtils.ERC20_ABI,
+      signer1,
+    );
+    const token2 = new Contract(
+      PaymentTokenAddresses[PaymentTokens.USDC][Environment.SEPOLIA],
+      e2eUtils.ERC20_ABI,
+      signer2,
+    );
+    const tx1 = await token1.approve(wallet2.address, 0.01 * 10 ** 6);
+    await tx1.wait();
+
+    const tx2 = await token2.transferFrom(
+      wallet1.address,
+      accountService.root.address,
+      0.01 * 10 ** 6,
+    );
+    await tx2.wait();
+
+    let payment;
+
+    for (let i = 0; i < 30; i++) {
+      await blockService.syncNewestBlock();
+      payment = await dbService.payment.findUnique({
+        where: { transferHash: tx2.hash },
+        include: { transfer: true },
+      });
+      if (payment?.status === PaymentStatus.COMPLETED) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+
+    expect(payment?.transfer?.hash).toBe(tx2.hash);
     expect(payment?.status).toBe(PaymentStatus.COMPLETED);
   }, 60_000);
 

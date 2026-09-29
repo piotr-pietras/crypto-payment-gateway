@@ -5,8 +5,7 @@ import { DbService } from '../db/db.service';
 import { Mutex } from 'async-mutex';
 import { AccountService } from '../account/account.service';
 import { PaymentService } from '../payment/payment.service';
-import { ERC20TransferABI } from 'src/types';
-import { isToAddressPaymentToken } from 'src/common/utils/isToAddressPaymentToken';
+import { ERC20TransferABI, PaymentTokenAddresses } from 'src/types';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { Interface } from 'ethers';
@@ -61,33 +60,30 @@ export class BlockService {
       );
 
       for (const tx of block.transactions) {
-        if (isToAddressPaymentToken(tx.to, this.env.get('ENV'))) {
-          const iface = new Interface(ERC20TransferABI);
-          const decodedTx = iface.parseTransaction({
-            data: tx.input,
-            value: tx.value,
-          });
-          const funcName = decodedTx?.fragment.name;
-          const toAddress = decodedTx?.args[0];
-          const value = decodedTx?.args[1];
+        if (this.isToAddressPaymentToken(tx.to)) {
+          const parsed = await this.parseERC20TransferArgs(tx);
+          if (!parsed) continue;
+
           if (
-            funcName === 'transfer' &&
-            toAddress === this.account.root.address
+            (parsed.funcName === 'transfer' ||
+              parsed.funcName === 'transferFrom') &&
+            parsed.toAddress === this.account.root.address.toLowerCase()
           ) {
             const exists = await this.db.transfer.findUnique({
               where: {
                 hash: tx.hash,
               },
             });
+
             if (exists) return;
 
             await this.db.transfer.create({
               data: {
                 hash: tx.hash,
                 blockNumber: BigInt(tx.blockNumber),
-                value: BigInt(value),
+                value: BigInt(parsed.value),
                 contractAddress: tx.to,
-                fromAddress: tx.from,
+                fromAddress: parsed.fromAddress,
               },
             });
             await this.payment.linkPayment(tx.hash);
@@ -140,6 +136,7 @@ export class BlockService {
           endblock: currentBlockNumber,
         })
       ).filter(
+        // TODO: Shouldn't be transferFrom also?
         (tx) => tx.functionName === 'transfer(address to, uint256 amount)',
       );
 
@@ -169,5 +166,43 @@ export class BlockService {
     } finally {
       this.mutex.release();
     }
+  }
+
+  private async parseERC20TransferArgs(
+    tx: Awaited<
+      ReturnType<typeof this.etherscan.getBlockByNumber>
+    >['transactions'][number],
+  ) {
+    const iface = new Interface(ERC20TransferABI);
+    const decodedTx = iface.parseTransaction({
+      data: tx.input,
+      value: tx.value,
+    });
+
+    switch (decodedTx?.name) {
+      case 'transfer':
+        return {
+          funcName: 'transfer',
+          fromAddress: tx.from.toLowerCase(),
+          toAddress: decodedTx?.args?.[0]?.toLowerCase(),
+          value: decodedTx?.args?.[1],
+        };
+      case 'transferFrom':
+        return {
+          funcName: 'transferFrom',
+          fromAddress: decodedTx?.args?.[0]?.toLowerCase(),
+          toAddress: decodedTx?.args?.[1]?.toLowerCase(),
+          value: decodedTx?.args[2],
+        };
+      default:
+        return null;
+    }
+  }
+
+  private isToAddressPaymentToken(toAddress: string) {
+    const env = this.env.get('ENV');
+    return Object.keys(PaymentTokenAddresses).some((token) => {
+      return PaymentTokenAddresses[token][env] === toAddress;
+    });
   }
 }

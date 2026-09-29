@@ -33,9 +33,8 @@ export default async function Home({
     redirect(redirectUrl);
   }
 
-
   return (
-    <div className="p-4 max-w-[768px] flex flex-1">
+    <div className="flex flex-1 max-w-[768px] min-w-0 p-4">
       <Card>
         <EnterFromAddressSection id={id} />
       </Card>

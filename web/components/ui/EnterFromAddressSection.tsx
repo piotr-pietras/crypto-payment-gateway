@@ -7,6 +7,11 @@ import Button from "../generic/Button";
 import { isAddress } from "ethers";
 import { Api } from "@/utils/api";
 import { redirect } from "next/navigation";
+import { Storage } from "@/utils/storage";
+import { Pressable } from "../generic/Pressable";
+import { formatUsedAt } from "@/utils/date";
+import makeBlockie from "ethereum-blockies-base64";
+import Image from "next/image";
 
 type Props = {
   id: string;
@@ -19,6 +24,7 @@ export function EnterFromAddressSection({ id }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const recentAddresses = Storage.getRecentAddresses();
 
   const handleContinue = async () => {
     setLoading(true);
@@ -28,6 +34,7 @@ export function EnterFromAddressSection({ id }: Props) {
     if (!res.ok) {
       setError(t("fromAddress.error"));
     }
+    Storage.saveRecentAddress(address);
     redirect(`/pay/?id=${id}`);
   };
 
@@ -64,6 +71,23 @@ export function EnterFromAddressSection({ id }: Props) {
             label={t("fromAddress.label")}
             showPaste
             placeholder="0x..."
+            leftIcon={(v) => {
+              const isValid = isAddress(v);
+              if (isValid) {
+                return (
+                  <Image
+                    className="size-6 rounded-sm"
+                    width={32}
+                    height={32}
+                    src={makeBlockie(v)}
+                    alt={""}
+                  />
+                );
+              }
+              return (
+                <div className="size-6 rounded-sm border border-border-strong" />
+              );
+            }}
           />
           {error ? (
             <div className="text-caption text-text-danger">{error}</div>
@@ -73,6 +97,42 @@ export function EnterFromAddressSection({ id }: Props) {
             </div>
           )}
         </div>
+        {recentAddresses.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <div className="text-body text-text-primary font-bold">
+              {t("fromAddress.recentTitle")}
+            </div>
+            {recentAddresses.map((item) => {
+              const selected =
+                address.toLowerCase() === item.address.toLowerCase();
+              return (
+                <Pressable
+                  key={item.address}
+                  onClick={() => onAddressChange(item.address)}
+                  className={`flex w-full items-center gap-2 overflow-hidden rounded-lg border bg-surface p-4 text-left ${
+                    selected
+                      ? "border-border-strong opacity-100"
+                      : "border-transparent opacity-70"
+                  }`}
+                >
+                  <Image
+                    width={32}
+                    height={32}
+                    src={makeBlockie(item.address)}
+                    alt={item.address}
+                    className="size-10 rounded-sm"
+                  />
+                  <div className="flex-1 truncate font-mono text-body text-text-primary">
+                    {item.address}
+                  </div>
+                  <div className="text-caption text-text-tertiary">
+                    {formatUsedAt(item.usedAt, t)}
+                  </div>
+                </Pressable>
+              );
+            })}
+          </div>
+        )}
       </div>
       <Button
         disabled={disabled}

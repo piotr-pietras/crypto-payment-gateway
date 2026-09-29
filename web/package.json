@@ -9,13 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^6.17.0",
     "i18next": "^26.4.2",
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-i18next": "^17.0.14",
-    "socket.io-client": "^4.8.3"
+    "socket.io-client": "^4.8.3",
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

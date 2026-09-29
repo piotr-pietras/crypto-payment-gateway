@@ -10,6 +10,7 @@ type Props = {
   value?: string;
   onChange?: (value: string) => void;
   defaultValue?: string;
+  leftIcon?: (value: string) => React.ReactNode;
 } & Omit<
   React.ComponentPropsWithoutRef<"input">,
   "className" | "value" | "onChange" | "defaultValue"
@@ -21,6 +22,7 @@ export default function Input({
   value: valueProp,
   onChange,
   defaultValue = "",
+  leftIcon,
   ...props
 }: Props) {
   const [internalValue, setInternalValue] = useState(defaultValue);
@@ -43,6 +45,7 @@ export default function Input({
     <div className="flex flex-col gap-2">
       {label && <label className="text-body text-text-primary">{label}</label>}
       <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2">
+        {leftIcon && leftIcon(value)}
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -51,11 +54,7 @@ export default function Input({
         />
         {showPaste && (
           <Pressable onClick={handlePaste}>
-            <div
-              // type="button"
-              // onClick={handlePaste}
-              className="flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1.5 text-caption text-text-secondary"
-            >
+            <div className="flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1.5 text-caption text-text-secondary">
               <CopyPasteIcon />
               Paste
             </div>

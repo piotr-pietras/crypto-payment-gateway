@@ -50,7 +50,7 @@ export function IncomingTransferSection({ payment }: Props) {
   }, [payment.id, router]);
 
   return (
-    <div className="flex flex-col items-center gap-1 border-t border-border pt-4">
+    <div className="flex flex-col items-center gap-1">
       <div className="flex items-center gap-2 text-body text-text-secondary">
         <ClockIcon size={20} />
         <span>{t("incomingTransfer.waiting")}</span>

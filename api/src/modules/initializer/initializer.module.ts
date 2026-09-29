@@ -88,7 +88,6 @@ import { EtherscanService } from '../etherscan/etherscan.service';
               data: txs.map((tx) => ({
                 hash: tx.hash,
                 contractAddress: tx.contractAddress,
-                tokenSymbol: tx.tokenSymbol,
                 blockNumber: BigInt(tx.blockNumber),
                 value: BigInt(tx.value),
                 fromAddress: tx.from,
@@ -97,6 +96,8 @@ import { EtherscanService } from '../etherscan/etherscan.service';
             });
             console.log(`Synced ${i + 1} of ${batchesToProcess} batches`);
           }
+
+          // TODO: Should link payments?
 
           await db.init.upsert({
             where: {

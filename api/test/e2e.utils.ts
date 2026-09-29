@@ -8,12 +8,24 @@ export default class e2eUtils {
     'https://ethereum-sepolia-rpc.publicnode.com';
   static readonly ERC20_ABI = [
     'function transfer(address to, uint256 amount) returns (bool)',
+    'function transferFrom(address from, address to, uint256 amount) returns (bool)',
+    'function approve(address spender, uint256 amount) returns (bool)',
   ];
   /**
    * @description This sepolia account expects to have some USDC and ETH on it
+   *
+   * @access address: 0x03C3D122f18742ce48034b4d896579a233fb4FC8
    */
-  static readonly E2E_SEPOLIA_PRIV_KEY =
+  static readonly E2E_SEPOLIA_PRIV_KEY_1 =
     '0x3afbf7b18bdcb044a4d9bd71176032fa3140ac9e9be532b6b631b0b75dab75b2';
+
+  /**
+   * @description This sepolia account expects to have some USDC and ETH on it
+   *
+   * @access address: 0xa36cA3AeA53357EE8F56D150C74fC340897eD1dc
+   */
+  static readonly E2E_SEPOLIA_PRIV_KEY_2 =
+    '0xda6200a8d199f1799c8117e4a7a805da7cd856af189b30db61ebe636e8b31d4d';
 
   static stopAllCronJobs = (app: INestApplication) => {
     const registry = app.get(SchedulerRegistry);

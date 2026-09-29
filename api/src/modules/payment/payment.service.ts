@@ -129,6 +129,7 @@ export class PaymentService {
       transfer.contractAddress,
     );
     const amount = erc20ValueToAmount(transfer.value, decimals);
+
     const payment = await this.db.payment.findFirst({
       where: {
         amount,

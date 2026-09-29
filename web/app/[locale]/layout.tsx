@@ -6,6 +6,7 @@ import { I18nProvider } from "@/i18n/client";
 import { isLocale } from "@/i18n/config";
 import Image from "next/image";
 import { getTranslation } from "@/i18n/server";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,9 +61,10 @@ export default async function RootLayout({
               </div>
             </div>
           </header>
-          <div className="flex flex-row flex-1 justify-center items-center">
+          <div className="flex w-full min-w-0 flex-1 items-center justify-center">
             {children}
           </div>
+          <Toaster position="top-center" richColors />
         </body>
       </html>
     </I18nProvider>

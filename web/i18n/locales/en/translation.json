@@ -3,6 +3,19 @@
     "title": "CryptoPayment",
     "subtitle": "Secure, Fast, Open"
   },
+  "common": {
+    "usedJustNow": "Used just now",
+    "usedMinutesAgo_one": "Used {{count}} minute ago",
+    "usedMinutesAgo_other": "Used {{count}} minutes ago",
+    "usedHoursAgo_one": "Used {{count}} hour ago",
+    "usedHoursAgo_other": "Used {{count}} hours ago",
+    "usedDaysAgo_one": "Used {{count}} day ago",
+    "usedDaysAgo_other": "Used {{count}} days ago",
+    "usedWeeksAgo_one": "Used {{count}} week ago",
+    "usedWeeksAgo_other": "Used {{count}} weeks ago",
+    "usedMonthsAgo_one": "Used {{count}} month ago",
+    "usedMonthsAgo_other": "Used {{count}} months ago"
+  },
   "fromAddress": {
     "title": "Enter your wallet address",
     "description-1": "Paste the address from which you will send {{ currency }}.",
@@ -10,8 +23,10 @@
     "label": "Wallet address",
     "button": "Continue to payment",
     "error": "Invalid wallet address",
-    "error-placeholder": "Enter a valid wallet address"
+    "error-placeholder": "Enter a valid wallet address",
+    "recentTitle": "Recently used addresses"
   },
+
   "payAddress": {
     "title": "Pay with USD Coin ({{ currency }})",
     "description": "Scan the QR code or send the exact amount to the address below.",
@@ -20,7 +35,7 @@
     "addressLabel": "Send to this address (Ethereum)",
     "warning": "Send only {{ currency }} (Ethereum network). Other assets may be lost.",
     "copy": "Copy address",
-    "copied": "Copied",
+    "copied": "Address copied to clipboard",
     "waiting": "Waiting for payment...",
     "autoUpdate": "This page will update automatically once the payment is detected."
   },

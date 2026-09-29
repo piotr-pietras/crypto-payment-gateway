@@ -17,7 +17,7 @@ export function Pressable({
       className={`cursor-pointer touch-manipulation transition-[transform,opacity] duration-150 ease-out
       ${disabled
         ? "opacity-50 cursor-not-allowed"
-        : "active:scale-[0.90] active:opacity-80"}
+        : "active:scale-[0.97] active:opacity-80"}
       ${className}`}
       {...props}
     >
