@@ -22,8 +22,13 @@ CREATE TABLE "Payment" (
     "status" "PaymentStatus" NOT NULL DEFAULT 'CREATED',
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
-    "contractAddress" TEXT,
+    "contractAddress" TEXT NOT NULL,
     "fromAddress" TEXT,
+    "validUntil" TIMESTAMP(3),
+    "productTitle" TEXT NOT NULL,
+    "productDescription" TEXT NOT NULL,
+    "productImageUrl" TEXT,
+    "callbackUrl" TEXT NOT NULL,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );

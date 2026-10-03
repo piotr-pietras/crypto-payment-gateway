@@ -18,6 +18,7 @@ export type GetERC20TokenTransferResponse = {
   tokenSymbol: string;
   tokenDecimal: string;
   functionName: string;
+  methodId: string;
 }[];
 
 export type GetBlockByNumberResponse = {

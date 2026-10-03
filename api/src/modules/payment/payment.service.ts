@@ -12,6 +12,9 @@ import { AccountService } from '../account/account.service';
 import { WSGateway } from '../ws/ws.gateway';
 import { EtherscanService } from '../etherscan/etherscan.service';
 import { erc20ValueToAmount } from 'src/common/utils/erc20ValueToAmount';
+import { addMinutes } from 'date-fns';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { Mutex } from 'async-mutex';
 
 /**
  * Payment service
@@ -22,6 +25,8 @@ import { erc20ValueToAmount } from 'src/common/utils/erc20ValueToAmount';
  */
 @Injectable()
 export class PaymentService {
+  private readonly mutex = new Mutex();
+
   constructor(
     private readonly env: ConfigService<
       Record<keyof EnvironmentVariables, string>,
@@ -48,6 +53,7 @@ export class PaymentService {
       ...payment,
       amount: payment.amount.toString(),
       toAddress: this.account.root.address,
+      contractName: this.getPaymentTokenName(payment.contractAddress),
     };
   }
 
@@ -55,10 +61,14 @@ export class PaymentService {
     const payment = await this.db.payment.create({
       data: {
         amount: body.amount,
+        productTitle: body.productTitle,
+        productDescription: body.productDescription,
+        productImageUrl: body.productImageUrl,
         contractAddress:
           PaymentTokenAddresses[body.paymentToken][
             this.env.get('ENV')
           ].toLowerCase(),
+        callbackUrl: body.callbackUrl,
       },
     });
 
@@ -107,6 +117,10 @@ export class PaymentService {
       },
       data: {
         fromAddress: body.fromAddress.toLowerCase(),
+        validUntil: addMinutes(
+          new Date(),
+          this.env.get('PAYMENT_EXPIRATION_TIME_MINUTES'),
+        ),
         status: PaymentStatus.PENDING,
       },
     });
@@ -115,6 +129,7 @@ export class PaymentService {
       ...updatedPayment,
       amount: updatedPayment.amount.toString(),
       toAddress: this.account.root.address,
+      contractName: this.getPaymentTokenName(updatedPayment.contractAddress),
     };
   }
 
@@ -154,5 +169,54 @@ export class PaymentService {
     console.log(`Payment ${payment.id} linked to transfer ${transfer.hash}`);
 
     return updatedPayment;
+  }
+
+  @Cron('*/1 * * * * *', {
+    name: 'handlePaymentExpiration',
+  })
+  async handlePaymentExpiration() {
+    if (await this.mutex.isLocked()) return;
+
+    await this.mutex.acquire();
+
+    try {
+      const payments = await this.db.payment.findMany({
+        where: {
+          validUntil: { lt: new Date() },
+          status: {
+            in: [PaymentStatus.PENDING],
+          },
+        },
+      });
+
+      await this.db.payment.updateMany({
+        where: {
+          id: { in: payments.map((payment) => payment.id) },
+        },
+        data: {
+          status: PaymentStatus.EXPIRED,
+        },
+      });
+
+      if (payments.length > 0) {
+        console.log(`Updated ${payments.length} payments to expired`);
+      }
+    } finally {
+      this.mutex.release();
+    }
+  }
+
+  private getPaymentTokenName(contractAddress: string) {
+    let name = '';
+    for (const [key, value] of Object.entries(PaymentTokenAddresses)) {
+      if (
+        value[this.env.get('ENV')].toLowerCase() ===
+        contractAddress.toLowerCase()
+      ) {
+        name = key;
+        break;
+      }
+    }
+    return name;
   }
 }

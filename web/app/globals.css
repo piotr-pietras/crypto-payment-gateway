@@ -15,6 +15,10 @@
   --color-success: #0F766E;
   --color-success-bg: #D1FAE5;
 
+  --color-warning: #8B5A2B;
+  --color-warning-bg: #FFF8F0;
+  --color-warning-border: #F5E6D3;
+
   --font-size-body: 1rem;
   --font-size-heading: 1.5rem;
   --font-size-caption: 0.875rem;
@@ -34,6 +38,9 @@
   --color-text-danger: var(--color-text-danger);
   --color-success: var(--color-success);
   --color-success-bg: var(--color-success-bg);
+  --color-warning: var(--color-warning);
+  --color-warning-bg: var(--color-warning-bg);
+  --color-warning-border: var(--color-warning-border);
 
   /* Font Sizes → text-body, text-heading, text-caption */
   --text-body: var(--font-size-body);

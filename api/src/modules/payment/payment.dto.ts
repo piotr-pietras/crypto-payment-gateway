@@ -3,7 +3,9 @@ import {
   IsEthereumAddress,
   IsNumber,
   IsString,
+  IsUrl,
   IsUUID,
+  IsOptional,
 } from 'class-validator';
 import { PaymentTokens } from 'src/types';
 import { Payment, PaymentStatus } from '../db/prisma/client';
@@ -16,6 +18,21 @@ export class CreatePaymentReqBodyDto {
 
   @IsEnum(PaymentTokens)
   paymentToken: PaymentTokens;
+
+  @IsString()
+  productTitle: string;
+
+  @IsString()
+  productDescription: string;
+
+  @IsString()
+  @IsUrl()
+  @IsOptional()
+  productImageUrl?: string;
+
+  @IsString()
+  @IsUrl()
+  callbackUrl: string;
 }
 
 export class CreatePaymentResBodyDto {
@@ -42,7 +59,8 @@ export class AddFromAddressResBodyDto
   amount: string;
   fromAddress: string | null;
   status: PaymentStatus;
-  contractAddress: string | null;
+  contractAddress: string;
+  contractName: string;
   toAddress: string;
 }
 

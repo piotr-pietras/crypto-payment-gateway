@@ -16,6 +16,8 @@ import {
 import {
   Environment,
   ERC20TransferABI,
+  ERC20TransferFromMethodId,
+  ERC20TransferMethodId,
   PaymentTokenAddresses,
   PaymentTokens,
 } from 'src/types';
@@ -37,6 +39,7 @@ const mockTransfer = (
   tokenSymbol: 'USDC',
   tokenDecimal: '6',
   functionName: 'transfer(address to, uint256 amount)',
+  methodId: '0xa9059cbb',
   ...overrides,
 });
 
@@ -136,18 +139,23 @@ describe('BlockService (e2e)', () => {
   it('filters out non-transfer ERC20 txs in syncHistoryBlocks', async () => {
     etherscanMock.getBlockNumber.mockResolvedValue('1001');
     etherscanMock.getERC20TokenTransfer.mockResolvedValue([
-      mockTransfer({ hash: '0xkeep' }),
+      mockTransfer({ hash: '0xdrop', methodId: '0x00000000' }),
       mockTransfer({
-        hash: '0xdrop',
-        functionName: 'approve(address spender, uint256 amount)',
+        hash: '0xkeep1',
+        methodId: ERC20TransferMethodId,
+      }),
+      mockTransfer({
+        hash: '0xkeep2',
+        methodId: ERC20TransferFromMethodId,
       }),
     ]);
 
     await blockService.syncHistoryBlocks();
 
     const transfers = await dbService.transfer.findMany();
-    expect(transfers).toHaveLength(1);
-    expect(transfers[0].hash).toBe('0xkeep');
+    expect(transfers).toHaveLength(2);
+    expect(transfers[0].hash).toBe('0xkeep1');
+    expect(transfers[1].hash).toBe('0xkeep2');
   });
 
   it('deduplicates transfers on repeated syncHistoryBlocks', async () => {
@@ -203,6 +211,39 @@ describe('BlockService (e2e)', () => {
     await blockService.syncNewestBlock();
 
     expect(await dbService.transfer.count()).toBe(0);
+  });
+
+  it('filters out non-transfer ERC20 txs in syncNewestBlock', async () => {
+    const root = accountService.root.address;
+    const approveIface = new Interface([
+      'function approve(address spender, uint256 amount)',
+    ]);
+
+    etherscanMock.getBlockNumber.mockResolvedValue('1001');
+    etherscanMock.getBlockByNumber.mockResolvedValue({
+      transactions: [
+        mockNewestBlockTx(root, {
+          hash: '0xdrop',
+          input: approveIface.encodeFunctionData('approve', [root, 100000000n]),
+        }),
+        mockNewestBlockTx(root, { hash: '0xkeep1' }),
+        mockNewestBlockTx(root, {
+          hash: '0xkeep2',
+          input: transferIface.encodeFunctionData('transferFrom', [
+            '0x0000000000000000000000000000000000000001',
+            root,
+            100000000n,
+          ]),
+        }),
+      ],
+    });
+
+    await blockService.syncNewestBlock();
+
+    const transfers = await dbService.transfer.findMany();
+    expect(transfers).toHaveLength(2);
+    expect(transfers[0].hash).toBe('0xkeep1');
+    expect(transfers[1].hash).toBe('0xkeep2');
   });
 
   it('throws when the app has not been initialized', async () => {

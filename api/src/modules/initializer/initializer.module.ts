@@ -9,6 +9,8 @@ import { EnvironmentVariables } from '../env/env.validation';
 import { createHash } from 'crypto';
 import { EtherscanModule } from '../etherscan/etherscan.module';
 import { EtherscanService } from '../etherscan/etherscan.service';
+import { PaymentService } from '../payment/payment.service';
+import { ERC20TransferFromMethodId, ERC20TransferMethodId } from 'src/types';
 
 @Module({
   imports: [DbModule, AccountModule, EtherscanModule],
@@ -21,6 +23,7 @@ import { EtherscanService } from '../etherscan/etherscan.service';
         db: DbService,
         account: AccountService,
         etherscan: EtherscanService,
+        payment: PaymentService,
       ) => {
         const phraseHash = createHash('sha256')
           .update(env.get('PHRASE'))
@@ -95,21 +98,17 @@ import { EtherscanService } from '../etherscan/etherscan.service';
               skipDuplicates: true,
             });
             console.log(`Synced ${i + 1} of ${batchesToProcess} batches`);
+
+            for (const tx of txs) {
+              await payment.linkPayment(tx.hash);
+            }
           }
 
-          // TODO: Should link payments?
-
-          await db.init.upsert({
+          await db.init.update({
             where: {
               id: 0,
             },
-            update: {
-              phraseHash,
-              lastBlockNumber: BigInt(currentBlockNumber),
-            },
-            create: {
-              id: 0,
-              phraseHash,
+            data: {
               lastBlockNumber: BigInt(currentBlockNumber),
             },
           });

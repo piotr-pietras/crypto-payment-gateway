@@ -14,7 +14,8 @@
     "usedWeeksAgo_one": "Used {{count}} week ago",
     "usedWeeksAgo_other": "Used {{count}} weeks ago",
     "usedMonthsAgo_one": "Used {{count}} month ago",
-    "usedMonthsAgo_other": "Used {{count}} months ago"
+    "usedMonthsAgo_other": "Used {{count}} months ago",
+    "callbackButton": "Return to home page"
   },
   "fromAddress": {
     "title": "Enter your wallet address",
@@ -39,13 +40,26 @@
     "waiting": "Waiting for payment...",
     "autoUpdate": "This page will update automatically once the payment is detected."
   },
+  "productPreview": {
+    "amountLabel": "Amount"
+  },
   "incomingTransfer": {
     "waiting": "Waiting for payment...",
     "autoUpdate": "This page will update automatically once the payment is detected."
   },
+  "paymentExpiration": {
+    "expiresIn": "Payment expires in",
+    "expiresTodayAt": "Expires today at {{time}} (UTC)",
+    "expiresAt": "Expires on {{date}} at {{time}} (UTC)",
+    "cancelledAutomatically": "If the payment is not received, it will be cancelled automatically."
+  },
   "successPayment": {
     "title": "Payment successful!",
     "description": "Your payment has been confirmed and the item will be delivered shortly."
+  },
+  "failPayment": {
+    "title": "Payment expired or cancelled",
+    "description": "The payment was not completed in time and has been cancelled. You can try again or use a different wallet address."
   },
   "not-found": {
     "title": "Oops! Payment not found",

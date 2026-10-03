@@ -41,6 +41,10 @@ export class PaymentController {
         value: {
           amount: 100,
           paymentToken: 'usdc',
+          productTitle: 'Product Title',
+          productDescription: 'Product Description',
+          productImageUrl: 'https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg',
+          callbackUrl: 'https://example.com/en/pay/success',
         },
       },
     },
@@ -52,6 +56,10 @@ export class PaymentController {
     example: {
       id: '01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f',
       url: 'https://example.com/en/pay?id=01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f',
+      productTitle: 'Product Title',
+      productDescription: 'Product Description',
+      productImageUrl: 'https://example.com/image.jpg',
+      callbackUrl: 'https://example.com/en/pay/success',
     },
   })
   @ApiForbiddenResponse({

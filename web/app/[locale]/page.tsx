@@ -1,5 +1,6 @@
 import Card from "@/components/generic/Card";
 import { EnterFromAddressSection } from "@/components/ui/EnterFromAddressSection";
+import { ProductPreviewSection } from "@/components/ui/ProductPreviewSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
 import { Page } from "@/utils/page";
@@ -36,7 +37,8 @@ export default async function Home({
   return (
     <div className="flex flex-1 max-w-[768px] min-w-0 p-4">
       <Card>
-        <EnterFromAddressSection id={id} />
+        <ProductPreviewSection payment={data} showAmount={true} />
+        <EnterFromAddressSection payment={data} />
       </Card>
     </div>
   );

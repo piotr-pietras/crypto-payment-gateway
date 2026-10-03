@@ -34,6 +34,9 @@ export class EnvironmentVariables {
 
   @IsNumber()
   ETH_BLOCK_INTERVAL: number;
+
+  @IsNumber()
+  PAYMENT_EXPIRATION_TIME_MINUTES: number;
 }
 
 export function validate(config: Record<string, unknown>) {

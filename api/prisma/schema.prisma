@@ -43,8 +43,13 @@ model Payment {
   status          PaymentStatus @default(CREATED)
   updatedAt       DateTime      @updatedAt
   amount          Float
-  contractAddress String?
+  contractAddress String
   fromAddress     String?
+  validUntil      DateTime?
+  productTitle    String
+  productDescription String
+  productImageUrl String?
+  callbackUrl     String
 
   @@index([status])
   @@index([createdAt])

@@ -36,3 +36,8 @@ export const ERC20TransferABI = [
 export const ERC20DecimalsABI = [
   'function decimals() view returns (uint8)',
 ] as const;
+
+export const ERC20TransferMethodId = '0xa9059cbb';
+export const ERC20TransferFuncName = 'transfer';
+export const ERC20TransferFromMethodId = '0x23b872dd';
+export const ERC20TransferFromFuncName = 'transferFrom';

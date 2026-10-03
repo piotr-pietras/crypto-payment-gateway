@@ -18,6 +18,12 @@ export type PaymentDto = {
   amount: string;
   fromAddress: string | null;
   status: PaymentStatus;
-  contractAddress: string | null;
+  contractAddress: string;
+  contractName: string;
   toAddress: string;
+  productTitle: string;
+  productDescription: string;
+  productImageUrl: string | null;
+  validUntil: string | null;
+  callbackUrl: string;
 };

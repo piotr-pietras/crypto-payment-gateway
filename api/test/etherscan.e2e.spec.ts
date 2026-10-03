@@ -39,7 +39,7 @@ describe('AppController (e2e)', () => {
     const txs = await etherscanService.getERC20TokenTransfer({
       // This is google USDC's faucet address that used to have some transfer history
       address: '0x70E3Fb28e1794bb91D5bCEB7d66b731d0C61Af8e',
-      startblock: (currentBlock - BigInt(100)).toString(),
+      startblock: (currentBlock - BigInt(500)).toString(),
       endblock: currentBlock.toString(),
     });
     expect(txs.length).toBeGreaterThan(0);

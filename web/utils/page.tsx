@@ -14,6 +14,11 @@ export class Page {
       case PaymentStatus.COMPLETED:
         if (noLocaleRoute === "/pay/success") return null;
         return `/pay/success/?id=${payment.id}`;
+      case PaymentStatus.EXPIRED:
+      case PaymentStatus.CANCELLED:
+      case PaymentStatus.FAILED:
+        if (noLocaleRoute === "/pay/fail") return null;
+        return `/pay/fail/?id=${payment.id}`;
       default:
         return null;
     }

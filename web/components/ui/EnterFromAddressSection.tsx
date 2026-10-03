@@ -12,12 +12,13 @@ import { Pressable } from "../generic/Pressable";
 import { formatUsedAt } from "@/utils/date";
 import makeBlockie from "ethereum-blockies-base64";
 import Image from "next/image";
+import { PaymentDto } from "@/utils/types";
 
 type Props = {
-  id: string;
+  payment: PaymentDto;
 };
 
-export function EnterFromAddressSection({ id }: Props) {
+export function EnterFromAddressSection({ payment }: Props) {
   const { t } = useTranslation();
 
   const [address, setAddress] = useState("");
@@ -30,12 +31,12 @@ export function EnterFromAddressSection({ id }: Props) {
     setLoading(true);
     const origin = window.location.origin;
     const api = new Api(origin);
-    const res = await api.addFromAddress(id, address);
+    const res = await api.addFromAddress(payment.id, address);
     if (!res.ok) {
       setError(t("fromAddress.error"));
     }
     Storage.saveRecentAddress(address);
-    redirect(`/pay/?id=${id}`);
+    redirect(`/pay/?id=${payment.id}`);
   };
 
   const onAddressChange = (value: string) => {
@@ -59,8 +60,10 @@ export function EnterFromAddressSection({ id }: Props) {
             {t("fromAddress.title")}
           </div>
           <div className="text-body text-text-secondary">
-            {/* TODO: Replace with currency */}
-            {t("fromAddress.description-1", { currency: "USDC" })} <br />
+            {t("fromAddress.description-1", {
+              currency: payment.contractName.toUpperCase(),
+            })}{" "}
+            <br />
             {t("fromAddress.description-2")}
           </div>
         </div>

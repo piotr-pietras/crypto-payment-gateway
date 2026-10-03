@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
-import { ChainId, ERC20DecimalsABI, PaymentTokens } from 'src/types';
+import {
+  ChainId,
+  ERC20DecimalsABI,
+  ERC20TransferFromMethodId,
+  ERC20TransferMethodId,
+  PaymentTokens,
+} from 'src/types';
 import {
   EtherscanResponse,
   GetBlockByNumberResponse,
@@ -57,6 +63,9 @@ export class EtherscanService {
     });
   }
 
+  /**
+   * Get ERC20 token transfers filter for transfer and transferFrom methods
+   */
   async getERC20TokenTransfer(params: {
     address: string;
     startblock: string | bigint | number;
@@ -75,7 +84,11 @@ export class EtherscanService {
       const response = await fetch(`${this.baseUrl}?${queryParams.toString()}`);
       const data =
         (await response.json()) as EtherscanResponse<GetERC20TokenTransferResponse>;
-      return data.result;
+      return data.result.filter(
+        (tx) =>
+          tx.methodId.toLowerCase() === ERC20TransferMethodId ||
+          tx.methodId.toLowerCase() === ERC20TransferFromMethodId,
+      );
     });
   }
 

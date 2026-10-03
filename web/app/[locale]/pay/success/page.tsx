@@ -1,5 +1,6 @@
 import Card from "@/components/generic/Card";
 import { SuccessCheckIcon } from "@/components/icons/SuccessCheckIcon";
+import { CallbackButton } from "@/components/ui/CallbackButton";
 import { isLocale } from "@/i18n/config";
 import { getTranslation } from "@/i18n/server";
 import { Api } from "@/utils/api";
@@ -38,16 +39,21 @@ export default async function SuccessPage({
   return (
     <div className="p-4 max-w-[768px] flex flex-1">
       <Card>
-        <div className="flex flex-col items-center gap-4 text-center">
-          <SuccessCheckIcon size={32} />
-          <div className="flex flex-col gap-1">
-            <h1 className="text-heading text-text-primary font-bold">
-              {t("successPayment.title")}
-            </h1>
-            <span className="text-body text-text-secondary max-w-sm">
-              {t("successPayment.description")}
-            </span>
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="bg-success-bg p-4 rounded-full">
+              <SuccessCheckIcon size={32} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <h1 className="text-heading text-text-primary font-bold">
+                {t("successPayment.title")}
+              </h1>
+              <span className="text-body text-text-secondary max-w-sm">
+                {t("successPayment.description")}
+              </span>
+            </div>
           </div>
+          <CallbackButton payment={data} />
         </div>
       </Card>
     </div>

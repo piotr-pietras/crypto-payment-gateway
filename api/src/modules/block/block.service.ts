@@ -5,7 +5,14 @@ import { DbService } from '../db/db.service';
 import { Mutex } from 'async-mutex';
 import { AccountService } from '../account/account.service';
 import { PaymentService } from '../payment/payment.service';
-import { ERC20TransferABI, PaymentTokenAddresses } from 'src/types';
+import {
+  ERC20TransferABI,
+  ERC20TransferFromFuncName,
+  ERC20TransferFromMethodId,
+  ERC20TransferFuncName,
+  ERC20TransferMethodId,
+  PaymentTokenAddresses,
+} from 'src/types';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { Interface } from 'ethers';
@@ -65,8 +72,8 @@ export class BlockService {
           if (!parsed) continue;
 
           if (
-            (parsed.funcName === 'transfer' ||
-              parsed.funcName === 'transferFrom') &&
+            (parsed.funcName === ERC20TransferFuncName ||
+              parsed.funcName === ERC20TransferFromFuncName) &&
             parsed.toAddress === this.account.root.address.toLowerCase()
           ) {
             const exists = await this.db.transfer.findUnique({
@@ -128,17 +135,12 @@ export class BlockService {
       console.log(
         `Checking for new transactions from ${init.lastBlockNumber - BigInt(10)} to ${BigInt(currentBlockNumber)}`,
       );
-      const txs = (
-        await this.etherscan.getERC20TokenTransfer({
-          address: this.account.root.address,
-          // Read small window of blocks to avoid missing any transactions
-          startblock: init.lastBlockNumber - BigInt(10),
-          endblock: currentBlockNumber,
-        })
-      ).filter(
-        // TODO: Shouldn't be transferFrom also?
-        (tx) => tx.functionName === 'transfer(address to, uint256 amount)',
-      );
+      const txs = await this.etherscan.getERC20TokenTransfer({
+        address: this.account.root.address,
+        // Read small window of blocks to avoid missing any transactions
+        startblock: init.lastBlockNumber - BigInt(10),
+        endblock: currentBlockNumber,
+      });
 
       await this.db.transfer.createMany({
         data: txs.map((tx) => ({
@@ -180,16 +182,16 @@ export class BlockService {
     });
 
     switch (decodedTx?.name) {
-      case 'transfer':
+      case ERC20TransferFuncName:
         return {
-          funcName: 'transfer',
+          funcName: ERC20TransferFuncName,
           fromAddress: tx.from.toLowerCase(),
           toAddress: decodedTx?.args?.[0]?.toLowerCase(),
           value: decodedTx?.args?.[1],
         };
-      case 'transferFrom':
+      case ERC20TransferFromFuncName:
         return {
-          funcName: 'transferFrom',
+          funcName: ERC20TransferFromFuncName,
           fromAddress: decodedTx?.args?.[0]?.toLowerCase(),
           toAddress: decodedTx?.args?.[1]?.toLowerCase(),
           value: decodedTx?.args[2],

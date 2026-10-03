@@ -55,6 +55,8 @@ describe('PaymentService (e2e)', () => {
       .send({
         amount: 0.01,
         paymentToken: PaymentTokens.USDC,
+        productTitle: 'Test Product',
+        productDescription: 'Test Description',
       })
       .expect(201);
 
@@ -113,6 +115,8 @@ describe('PaymentService (e2e)', () => {
       .send({
         amount: 0.01,
         paymentToken: PaymentTokens.USDC,
+        productTitle: 'Test Product',
+        productDescription: 'Test Description',
       })
       .expect(201);
 

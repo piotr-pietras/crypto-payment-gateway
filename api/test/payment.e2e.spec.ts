@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpException, INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { SchedulerRegistry } from '@nestjs/schedule';
 import { App } from 'supertest/types';
+import { addMinutes, subMinutes } from 'date-fns';
 import { AppModule } from './../src/app.module';
 import { InitializerService } from './../src/modules/initializer/initializer.service';
 import { DbService } from './../src/modules/db/db.service';
@@ -20,6 +22,13 @@ describe('PaymentService (e2e)', () => {
   let dbClear: () => void;
   let etherscanMock: {
     getERC20Decimals: jest.Mock;
+  };
+
+  const basePaymentBody = {
+    amount: 100,
+    paymentToken: PaymentTokens.USDC,
+    productTitle: 'Test Product',
+    productDescription: 'Test Description',
   };
 
   beforeAll(async () => {
@@ -58,8 +67,8 @@ describe('PaymentService (e2e)', () => {
 
   it('creates new payment', async () => {
     const result = await paymentService.createPayment({
+      ...basePaymentBody,
       amount: 100.02,
-      paymentToken: PaymentTokens.USDC,
     });
 
     const payment = await dbService.payment.findUnique({
@@ -76,23 +85,35 @@ describe('PaymentService (e2e)', () => {
 
   it('adds from address to payment', async () => {
     const { id } = await paymentService.createPayment({
-      amount: 100,
-      paymentToken: PaymentTokens.USDC,
+      ...basePaymentBody,
     });
 
+    const before = new Date();
     const updated = await paymentService.addFromAddress({
       id: id,
       fromAddress: FROM_ADDRESS,
     });
+    const after = new Date();
+
+    const expirationMinutes = app
+      .get(ConfigService)
+      .get('PAYMENT_EXPIRATION_TIME_MINUTES');
+    const payment = await dbService.payment.findUnique({ where: { id } });
 
     expect(updated.fromAddress).toBe(FROM_ADDRESS);
     expect(updated.status).toBe(PaymentStatus.PENDING);
+    expect(payment!.validUntil).toBeDefined();
+    expect(payment!.validUntil!.getTime()).toBeGreaterThanOrEqual(
+      addMinutes(before, expirationMinutes).getTime(),
+    );
+    expect(payment!.validUntil!.getTime()).toBeLessThanOrEqual(
+      addMinutes(after, expirationMinutes).getTime(),
+    );
   });
 
   it('allows adding from address only when payment is created', async () => {
     const { id } = await paymentService.createPayment({
-      amount: 100,
-      paymentToken: PaymentTokens.USDC,
+      ...basePaymentBody,
     });
 
     await dbService.payment.update({
@@ -110,8 +131,7 @@ describe('PaymentService (e2e)', () => {
 
   it('does not allow adding from address if conflict payment exists', async () => {
     const { id: id1 } = await paymentService.createPayment({
-      amount: 100,
-      paymentToken: PaymentTokens.USDC,
+      ...basePaymentBody,
     });
 
     await paymentService.addFromAddress({
@@ -120,8 +140,7 @@ describe('PaymentService (e2e)', () => {
     });
 
     const { id: id2 } = await paymentService.createPayment({
-      amount: 100,
-      paymentToken: PaymentTokens.USDC,
+      ...basePaymentBody,
     });
 
     await expect(
@@ -138,8 +157,7 @@ describe('PaymentService (e2e)', () => {
     const transferHash = '0xtransfer123';
 
     const { id } = await paymentService.createPayment({
-      amount: 100,
-      paymentToken: PaymentTokens.USDC,
+      ...basePaymentBody,
     });
 
     await paymentService.addFromAddress({
@@ -169,6 +187,61 @@ describe('PaymentService (e2e)', () => {
 
     expect(payment!.transferHash).toBe(transferHash);
     expect(payment!.transfer!.hash).toBe(transferHash);
+  });
+
+  it('expires pending payments past validUntil', async () => {
+    const { id: expiredId } = await paymentService.createPayment({
+      ...basePaymentBody,
+    });
+    const { id: activeId } = await paymentService.createPayment({
+      ...basePaymentBody,
+      amount: 200,
+    });
+    const { id: completedId } = await paymentService.createPayment({
+      ...basePaymentBody,
+      amount: 300,
+    });
+
+    await paymentService.addFromAddress({
+      id: expiredId,
+      fromAddress: '0x0000000000000000000000000000000000000001',
+    });
+    await paymentService.addFromAddress({
+      id: activeId,
+      fromAddress: '0x0000000000000000000000000000000000000002',
+    });
+    await paymentService.addFromAddress({
+      id: completedId,
+      fromAddress: '0x0000000000000000000000000000000000000003',
+    });
+
+    await dbService.payment.update({
+      where: { id: expiredId },
+      data: { validUntil: subMinutes(new Date(), 1) },
+    });
+    await dbService.payment.update({
+      where: { id: completedId },
+      data: {
+        validUntil: subMinutes(new Date(), 1),
+        status: PaymentStatus.COMPLETED,
+      },
+    });
+
+    await paymentService.handlePaymentExpiration();
+
+    const expired = await dbService.payment.findUnique({
+      where: { id: expiredId },
+    });
+    const active = await dbService.payment.findUnique({
+      where: { id: activeId },
+    });
+    const completed = await dbService.payment.findUnique({
+      where: { id: completedId },
+    });
+
+    expect(expired!.status).toBe(PaymentStatus.EXPIRED);
+    expect(active!.status).toBe(PaymentStatus.PENDING);
+    expect(completed!.status).toBe(PaymentStatus.COMPLETED);
   });
 
   afterAll(async () => {

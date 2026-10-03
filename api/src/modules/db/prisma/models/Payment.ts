@@ -43,6 +43,11 @@ export type PaymentMinAggregateOutputType = {
   amount: number | null
   contractAddress: string | null
   fromAddress: string | null
+  validUntil: Date | null
+  productTitle: string | null
+  productDescription: string | null
+  productImageUrl: string | null
+  callbackUrl: string | null
 }
 
 export type PaymentMaxAggregateOutputType = {
@@ -54,6 +59,11 @@ export type PaymentMaxAggregateOutputType = {
   amount: number | null
   contractAddress: string | null
   fromAddress: string | null
+  validUntil: Date | null
+  productTitle: string | null
+  productDescription: string | null
+  productImageUrl: string | null
+  callbackUrl: string | null
 }
 
 export type PaymentCountAggregateOutputType = {
@@ -65,6 +75,11 @@ export type PaymentCountAggregateOutputType = {
   amount: number
   contractAddress: number
   fromAddress: number
+  validUntil: number
+  productTitle: number
+  productDescription: number
+  productImageUrl: number
+  callbackUrl: number
   _all: number
 }
 
@@ -86,6 +101,11 @@ export type PaymentMinAggregateInputType = {
   amount?: true
   contractAddress?: true
   fromAddress?: true
+  validUntil?: true
+  productTitle?: true
+  productDescription?: true
+  productImageUrl?: true
+  callbackUrl?: true
 }
 
 export type PaymentMaxAggregateInputType = {
@@ -97,6 +117,11 @@ export type PaymentMaxAggregateInputType = {
   amount?: true
   contractAddress?: true
   fromAddress?: true
+  validUntil?: true
+  productTitle?: true
+  productDescription?: true
+  productImageUrl?: true
+  callbackUrl?: true
 }
 
 export type PaymentCountAggregateInputType = {
@@ -108,6 +133,11 @@ export type PaymentCountAggregateInputType = {
   amount?: true
   contractAddress?: true
   fromAddress?: true
+  validUntil?: true
+  productTitle?: true
+  productDescription?: true
+  productImageUrl?: true
+  callbackUrl?: true
   _all?: true
 }
 
@@ -204,8 +234,13 @@ export type PaymentGroupByOutputType = {
   status: $Enums.PaymentStatus
   updatedAt: Date
   amount: number
-  contractAddress: string | null
+  contractAddress: string
   fromAddress: string | null
+  validUntil: Date | null
+  productTitle: string
+  productDescription: string
+  productImageUrl: string | null
+  callbackUrl: string
   _count: PaymentCountAggregateOutputType | null
   _avg: PaymentAvgAggregateOutputType | null
   _sum: PaymentSumAggregateOutputType | null
@@ -238,8 +273,13 @@ export type PaymentWhereInput = {
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   amount?: Prisma.FloatFilter<"Payment"> | number
-  contractAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
+  contractAddress?: Prisma.StringFilter<"Payment"> | string
   fromAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
+  validUntil?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  productTitle?: Prisma.StringFilter<"Payment"> | string
+  productDescription?: Prisma.StringFilter<"Payment"> | string
+  productImageUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  callbackUrl?: Prisma.StringFilter<"Payment"> | string
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
 }
 
@@ -250,8 +290,13 @@ export type PaymentOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  contractAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  productTitle?: Prisma.SortOrder
+  productDescription?: Prisma.SortOrder
+  productImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  callbackUrl?: Prisma.SortOrder
   transfer?: Prisma.TransferOrderByWithRelationInput
 }
 
@@ -265,8 +310,13 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   amount?: Prisma.FloatFilter<"Payment"> | number
-  contractAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
+  contractAddress?: Prisma.StringFilter<"Payment"> | string
   fromAddress?: Prisma.StringNullableFilter<"Payment"> | string | null
+  validUntil?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  productTitle?: Prisma.StringFilter<"Payment"> | string
+  productDescription?: Prisma.StringFilter<"Payment"> | string
+  productImageUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  callbackUrl?: Prisma.StringFilter<"Payment"> | string
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
 }, "id" | "transferHash">
 
@@ -277,8 +327,13 @@ export type PaymentOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  contractAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  productTitle?: Prisma.SortOrder
+  productDescription?: Prisma.SortOrder
+  productImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  callbackUrl?: Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
   _avg?: Prisma.PaymentAvgOrderByAggregateInput
   _max?: Prisma.PaymentMaxOrderByAggregateInput
@@ -296,8 +351,13 @@ export type PaymentScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   amount?: Prisma.FloatWithAggregatesFilter<"Payment"> | number
-  contractAddress?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  contractAddress?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   fromAddress?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  productTitle?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  productDescription?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  productImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  callbackUrl?: Prisma.StringWithAggregatesFilter<"Payment"> | string
 }
 
 export type PaymentCreateInput = {
@@ -306,8 +366,13 @@ export type PaymentCreateInput = {
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
   amount: number
-  contractAddress?: string | null
+  contractAddress: string
   fromAddress?: string | null
+  validUntil?: Date | string | null
+  productTitle: string
+  productDescription: string
+  productImageUrl?: string | null
+  callbackUrl: string
   transfer?: Prisma.TransferCreateNestedOneWithoutPaymentInput
 }
 
@@ -318,8 +383,13 @@ export type PaymentUncheckedCreateInput = {
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
   amount: number
-  contractAddress?: string | null
+  contractAddress: string
   fromAddress?: string | null
+  validUntil?: Date | string | null
+  productTitle: string
+  productDescription: string
+  productImageUrl?: string | null
+  callbackUrl: string
 }
 
 export type PaymentUpdateInput = {
@@ -328,8 +398,13 @@ export type PaymentUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
   transfer?: Prisma.TransferUpdateOneWithoutPaymentNestedInput
 }
 
@@ -340,8 +415,13 @@ export type PaymentUncheckedUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PaymentCreateManyInput = {
@@ -351,8 +431,13 @@ export type PaymentCreateManyInput = {
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
   amount: number
-  contractAddress?: string | null
+  contractAddress: string
   fromAddress?: string | null
+  validUntil?: Date | string | null
+  productTitle: string
+  productDescription: string
+  productImageUrl?: string | null
+  callbackUrl: string
 }
 
 export type PaymentUpdateManyMutationInput = {
@@ -361,8 +446,13 @@ export type PaymentUpdateManyMutationInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PaymentUncheckedUpdateManyInput = {
@@ -372,8 +462,13 @@ export type PaymentUncheckedUpdateManyInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PaymentCountOrderByAggregateInput = {
@@ -385,6 +480,11 @@ export type PaymentCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  productTitle?: Prisma.SortOrder
+  productDescription?: Prisma.SortOrder
+  productImageUrl?: Prisma.SortOrder
+  callbackUrl?: Prisma.SortOrder
 }
 
 export type PaymentAvgOrderByAggregateInput = {
@@ -400,6 +500,11 @@ export type PaymentMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  productTitle?: Prisma.SortOrder
+  productDescription?: Prisma.SortOrder
+  productImageUrl?: Prisma.SortOrder
+  callbackUrl?: Prisma.SortOrder
 }
 
 export type PaymentMinOrderByAggregateInput = {
@@ -411,6 +516,11 @@ export type PaymentMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   contractAddress?: Prisma.SortOrder
   fromAddress?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  productTitle?: Prisma.SortOrder
+  productDescription?: Prisma.SortOrder
+  productImageUrl?: Prisma.SortOrder
+  callbackUrl?: Prisma.SortOrder
 }
 
 export type PaymentSumOrderByAggregateInput = {
@@ -436,6 +546,10 @@ export type FloatFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type PaymentCreateNestedOneWithoutTransferInput = {
@@ -476,8 +590,13 @@ export type PaymentCreateWithoutTransferInput = {
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
   amount: number
-  contractAddress?: string | null
+  contractAddress: string
   fromAddress?: string | null
+  validUntil?: Date | string | null
+  productTitle: string
+  productDescription: string
+  productImageUrl?: string | null
+  callbackUrl: string
 }
 
 export type PaymentUncheckedCreateWithoutTransferInput = {
@@ -486,8 +605,13 @@ export type PaymentUncheckedCreateWithoutTransferInput = {
   status?: $Enums.PaymentStatus
   updatedAt?: Date | string
   amount: number
-  contractAddress?: string | null
+  contractAddress: string
   fromAddress?: string | null
+  validUntil?: Date | string | null
+  productTitle: string
+  productDescription: string
+  productImageUrl?: string | null
+  callbackUrl: string
 }
 
 export type PaymentCreateOrConnectWithoutTransferInput = {
@@ -512,8 +636,13 @@ export type PaymentUpdateWithoutTransferInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PaymentUncheckedUpdateWithoutTransferInput = {
@@ -522,8 +651,13 @@ export type PaymentUncheckedUpdateWithoutTransferInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  contractAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contractAddress?: Prisma.StringFieldUpdateOperationsInput | string
   fromAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  productTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  productDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  callbackUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -537,6 +671,11 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   amount?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
+  validUntil?: boolean
+  productTitle?: boolean
+  productDescription?: boolean
+  productImageUrl?: boolean
+  callbackUrl?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -549,6 +688,11 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
+  validUntil?: boolean
+  productTitle?: boolean
+  productDescription?: boolean
+  productImageUrl?: boolean
+  callbackUrl?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -561,6 +705,11 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
+  validUntil?: boolean
+  productTitle?: boolean
+  productDescription?: boolean
+  productImageUrl?: boolean
+  callbackUrl?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -573,9 +722,14 @@ export type PaymentSelectScalar = {
   amount?: boolean
   contractAddress?: boolean
   fromAddress?: boolean
+  validUntil?: boolean
+  productTitle?: boolean
+  productDescription?: boolean
+  productImageUrl?: boolean
+  callbackUrl?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transferHash" | "createdAt" | "status" | "updatedAt" | "amount" | "contractAddress" | "fromAddress", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transferHash" | "createdAt" | "status" | "updatedAt" | "amount" | "contractAddress" | "fromAddress" | "validUntil" | "productTitle" | "productDescription" | "productImageUrl" | "callbackUrl", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }
@@ -598,8 +752,13 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     status: $Enums.PaymentStatus
     updatedAt: Date
     amount: number
-    contractAddress: string | null
+    contractAddress: string
     fromAddress: string | null
+    validUntil: Date | null
+    productTitle: string
+    productDescription: string
+    productImageUrl: string | null
+    callbackUrl: string
   }, ExtArgs["result"]["payment"]>
   composites: {}
 }
@@ -1032,6 +1191,11 @@ export interface PaymentFieldRefs {
   readonly amount: Prisma.FieldRef<"Payment", 'Float'>
   readonly contractAddress: Prisma.FieldRef<"Payment", 'String'>
   readonly fromAddress: Prisma.FieldRef<"Payment", 'String'>
+  readonly validUntil: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly productTitle: Prisma.FieldRef<"Payment", 'String'>
+  readonly productDescription: Prisma.FieldRef<"Payment", 'String'>
+  readonly productImageUrl: Prisma.FieldRef<"Payment", 'String'>
+  readonly callbackUrl: Prisma.FieldRef<"Payment", 'String'>
 }
     
 

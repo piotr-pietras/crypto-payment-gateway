@@ -26,16 +26,18 @@ export function PayAddressSection({ payment }: Props) {
     <div className="w-full flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <div className="text-heading text-text-primary font-bold">
-          {t("payAddress.title", { currency: "USDC" })}
+          {t("payAddress.title", {
+            currency: payment.contractName.toUpperCase(),
+          })}
         </div>
         <div className="text-body text-text-secondary">
           {t("payAddress.description")}
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+      <div className="flex-col sm:flex-row gap-6 sm:gap-8">
         {/* TODO: Replace with QR code */}
-        <div className="flex flex-col items-center gap-2 shrink-0">
+        <div className="hidden sm:flex flex-col items-center gap-2 shrink-0">
           <div className="rounded-lg border border-border bg-surface p-3">
             <div className="size-40 bg-text-primary rounded-sm" aria-hidden />
           </div>
