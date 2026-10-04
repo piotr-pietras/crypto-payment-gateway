@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CopyPasteIcon } from "../icons/CopyPasteIcon";
 import { Pressable } from "./Pressable";
 

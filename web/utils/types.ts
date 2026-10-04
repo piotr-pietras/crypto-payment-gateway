@@ -13,17 +13,25 @@ export enum PaymentStatus {
   EXPIRED = "EXPIRED",
 }
 
+export type PaymentTokenName = "usdc" | "usdt";
+
+export type TokenMetadata = {
+  name: PaymentTokenName;
+  chainId: number;
+  decimals: number;
+};
+
 export type PaymentDto = {
   id: string;
   amount: string;
   fromAddress: string | null;
   status: PaymentStatus;
   contractAddress: string;
-  contractName: string;
   toAddress: string;
   productTitle: string;
   productDescription: string;
   productImageUrl: string | null;
   validUntil: string | null;
   callbackUrl: string;
+  tokenMetadata: TokenMetadata;
 };

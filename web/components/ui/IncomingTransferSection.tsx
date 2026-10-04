@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { io } from "socket.io-client";
 import { ClockIcon } from "../icons/ClockIcon";
 import { useRouter } from "next/navigation";
+import LoadingIndicator from "../generic/LoadingIndicator";
 
 type Props = {
   payment: PaymentDto;
@@ -52,7 +53,7 @@ export function IncomingTransferSection({ payment }: Props) {
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="flex items-center gap-2 text-body text-text-secondary">
-        <ClockIcon size={20} />
+        <LoadingIndicator size={24} />
         <span>{t("incomingTransfer.waiting")}</span>
       </div>
       <p className="text-caption text-text-tertiary text-center">

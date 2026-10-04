@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpException, INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { SchedulerRegistry } from '@nestjs/schedule';
 import { App } from 'supertest/types';
 import { addMinutes, subMinutes } from 'date-fns';
 import { AppModule } from './../src/app.module';
@@ -22,6 +21,7 @@ describe('PaymentService (e2e)', () => {
   let dbClear: () => void;
   let etherscanMock: {
     getERC20Decimals: jest.Mock;
+    getTokenMetadata: jest.Mock;
   };
 
   const basePaymentBody = {
@@ -29,6 +29,7 @@ describe('PaymentService (e2e)', () => {
     paymentToken: PaymentTokens.USDC,
     productTitle: 'Test Product',
     productDescription: 'Test Description',
+    callbackUrl: 'https://example.com',
   };
 
   beforeAll(async () => {
@@ -36,13 +37,18 @@ describe('PaymentService (e2e)', () => {
 
     etherscanMock = {
       getERC20Decimals: jest.fn().mockResolvedValue(6),
+      getTokenMetadata: jest.fn().mockResolvedValue({
+        name: 'USDC',
+        chainId: 1,
+        decimals: 6,
+      }),
     };
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
       .overrideProvider(InitializerService)
-      .useValue(new InitializerService())
+      .useValue({ onModuleInit: async () => {} })
       .overrideProvider(EtherscanService)
       .useValue(etherscanMock)
       .compile();
@@ -187,6 +193,50 @@ describe('PaymentService (e2e)', () => {
 
     expect(payment!.transferHash).toBe(transferHash);
     expect(payment!.transfer!.hash).toBe(transferHash);
+  });
+
+  it('does not re-link an already claimed transfer to a newer pending payment', async () => {
+    const env = app.get(ConfigService).get('ENV');
+    const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
+    const transferHash = '0xtransfer-already-claimed';
+
+    const { id: firstId } = await paymentService.createPayment({
+      ...basePaymentBody,
+    });
+    await paymentService.addFromAddress({
+      id: firstId,
+      fromAddress: FROM_ADDRESS,
+    });
+
+    await dbService.transfer.create({
+      data: {
+        hash: transferHash,
+        blockNumber: BigInt(1002),
+        value: BigInt(100 * 10 ** 6),
+        contractAddress,
+        fromAddress: FROM_ADDRESS,
+      },
+    });
+
+    await paymentService.linkPayment(transferHash);
+
+    const { id: secondId } = await paymentService.createPayment({
+      ...basePaymentBody,
+    });
+    await paymentService.addFromAddress({
+      id: secondId,
+      fromAddress: FROM_ADDRESS,
+    });
+
+    await expect(paymentService.linkPayment(transferHash)).resolves.toBeUndefined();
+
+    const first = await dbService.payment.findUnique({ where: { id: firstId } });
+    const second = await dbService.payment.findUnique({ where: { id: secondId } });
+
+    expect(first!.transferHash).toBe(transferHash);
+    expect(first!.status).toBe(PaymentStatus.COMPLETED);
+    expect(second!.transferHash).toBeNull();
+    expect(second!.status).toBe(PaymentStatus.PENDING);
   });
 
   it('expires pending payments past validUntil', async () => {

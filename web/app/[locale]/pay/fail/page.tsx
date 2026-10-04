@@ -38,7 +38,7 @@ export default async function FailPage({
   }
 
   return (
-    <div className="p-4 max-w-[768px] flex flex-1">
+    <div className="max-w-[768px] flex flex-1 sm:p-4 p-2">
       <Card>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4 text-center">

@@ -6,7 +6,9 @@ import {
   ERC20DecimalsABI,
   ERC20TransferFromMethodId,
   ERC20TransferMethodId,
+  PaymentTokenAddresses,
   PaymentTokens,
+  TokenMetadata,
 } from 'src/types';
 import {
   EtherscanResponse,
@@ -30,6 +32,7 @@ export class EtherscanService {
   private readonly baseUrl: string = 'https://api.etherscan.io/v2/api';
   private decimalsCache: Record<PaymentTokens, number | null> = {
     [PaymentTokens.USDC]: null,
+    [PaymentTokens.USDT]: null,
   };
 
   constructor(
@@ -134,5 +137,21 @@ export class EtherscanService {
       const delay = Math.max(0, 1000 / this.callsPerSec);
       setTimeout(release, delay);
     }
+  }
+
+  async getTokenMetadata(address: string): Promise<TokenMetadata> {
+    let name = '';
+    for (const [key, value] of Object.entries(PaymentTokenAddresses)) {
+      if (value[this.env.get('ENV')].toLowerCase() === address.toLowerCase()) {
+        name = key;
+        break;
+      }
+    }
+
+    return {
+      name,
+      chainId: this.chainId,
+      decimals: await this.getERC20Decimals(address),
+    };
   }
 }

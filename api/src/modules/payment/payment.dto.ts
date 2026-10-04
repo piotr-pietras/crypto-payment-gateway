@@ -7,7 +7,7 @@ import {
   IsUUID,
   IsOptional,
 } from 'class-validator';
-import { PaymentTokens } from 'src/types';
+import { PaymentTokens, TokenMetadata } from 'src/types';
 import { Payment, PaymentStatus } from '../db/prisma/client';
 
 export class CreatePaymentReqBodyDto {
@@ -60,8 +60,8 @@ export class AddFromAddressResBodyDto
   fromAddress: string | null;
   status: PaymentStatus;
   contractAddress: string;
-  contractName: string;
   toAddress: string;
+  tokenMetadata: TokenMetadata;
 }
 
 export class GetPaymentResBodyDto extends AddFromAddressResBodyDto {}

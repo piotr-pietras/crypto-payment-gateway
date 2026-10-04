@@ -35,7 +35,7 @@ export default async function Home({
   }
 
   return (
-    <div className="flex flex-1 max-w-[768px] min-w-0 p-4">
+    <div className="flex flex-1 max-w-[768px] min-w-0 sm:p-4 p-2">
       <Card>
         <ProductPreviewSection payment={data} showAmount={true} />
         <EnterFromAddressSection payment={data} />

@@ -15,7 +15,7 @@ export function ProductPreviewSection({ payment, showAmount = true }: Props) {
 
   const amountLabel = `${amount.toFixed(
     2
-  )} ${payment.contractName.toUpperCase()}`;
+  )} ${payment.tokenMetadata.name.toUpperCase()}`;
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-xl border border-border bg-background p-4 sm:flex-row sm:items-center sm:gap-6 sm:p-6">

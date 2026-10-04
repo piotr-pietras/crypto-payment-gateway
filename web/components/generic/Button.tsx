@@ -1,6 +1,6 @@
 import LoadingIndicator from "./LoadingIndicator";
 
-type Variant = "primary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "soft";
 
 type Props = {
   variant?: Variant;
@@ -10,8 +10,12 @@ type Props = {
 } & Omit<React.ComponentPropsWithoutRef<"button">, "className">;
 
 const variantClasses: Record<Variant, string> = {
-  primary: "rounded-lg bg-text-primary px-5 py-3 text-body text-surface",
+  primary:
+    "w-full rounded-lg bg-text-primary px-5 py-3 text-body text-surface",
+  secondary:
+    "w-full rounded-lg border border-border-strong bg-surface px-5 py-3 text-body text-text-secondary",
   ghost: "text-body text-text-secondary",
+  soft: "w-full rounded-xl bg-background px-5 py-3 text-caption font-bold text-text-primary shadow-md",
 };
 
 export default function Button({

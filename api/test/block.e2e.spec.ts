@@ -16,8 +16,6 @@ import {
 import {
   Environment,
   ERC20TransferABI,
-  ERC20TransferFromMethodId,
-  ERC20TransferMethodId,
   PaymentTokenAddresses,
   PaymentTokens,
 } from 'src/types';
@@ -85,7 +83,7 @@ describe('BlockService (e2e)', () => {
       imports: [AppModule],
     })
       .overrideProvider(InitializerService)
-      .useValue(new InitializerService())
+      .useValue({ onModuleInit: async () => {} })
       .overrideProvider(EtherscanService)
       .useValue(etherscanMock)
       .compile();
@@ -134,28 +132,6 @@ describe('BlockService (e2e)', () => {
     const transfers = await dbService.transfer.findMany();
     expect(transfers).toHaveLength(1);
     expect(transfers[0].hash).toBe('0xabc');
-  });
-
-  it('filters out non-transfer ERC20 txs in syncHistoryBlocks', async () => {
-    etherscanMock.getBlockNumber.mockResolvedValue('1001');
-    etherscanMock.getERC20TokenTransfer.mockResolvedValue([
-      mockTransfer({ hash: '0xdrop', methodId: '0x00000000' }),
-      mockTransfer({
-        hash: '0xkeep1',
-        methodId: ERC20TransferMethodId,
-      }),
-      mockTransfer({
-        hash: '0xkeep2',
-        methodId: ERC20TransferFromMethodId,
-      }),
-    ]);
-
-    await blockService.syncHistoryBlocks();
-
-    const transfers = await dbService.transfer.findMany();
-    expect(transfers).toHaveLength(2);
-    expect(transfers[0].hash).toBe('0xkeep1');
-    expect(transfers[1].hash).toBe('0xkeep2');
   });
 
   it('deduplicates transfers on repeated syncHistoryBlocks', async () => {

@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import { PaymentDto } from "@/utils/types";
 import { ClockIcon } from "../icons/ClockIcon";
 import { Divider } from "../generic/Divider";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Props = {
   payment: PaymentDto;
+  isConflict?: boolean;
 };
 
 function formatCountdown(ms: number): string {
@@ -21,7 +22,10 @@ function formatCountdown(ms: number): string {
   )}`;
 }
 
-export function PaymentExpirationSection({ payment }: Props) {
+export function PaymentExpirationSection({
+  payment,
+  isConflict = false,
+}: Props) {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -38,17 +42,20 @@ export function PaymentExpirationSection({ payment }: Props) {
       const remaining = expiresAt - Date.now();
       setRemainingMs(Math.max(0, remaining));
       if (remaining <= 0 && !isRedirecting) {
-        setTimeout(() => {
-          router.push(`/pay/fail?id=${payment.id}`);
-          isRedirecting = true;
-        }, 2500);
+        isRedirecting = true;
+        if (isConflict) {
+          router.back();
+          return;
+        } else {
+          setTimeout(() => router.push(`/pay/fail?id=${payment.id}`), 2500);
+        }
       }
     };
 
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [payment.validUntil, payment.id, router]);
+  }, [payment.validUntil, payment.id, router, isConflict]);
 
   if (!payment.validUntil) return null;
 

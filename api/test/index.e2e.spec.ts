@@ -57,6 +57,7 @@ describe('PaymentService (e2e)', () => {
         paymentToken: PaymentTokens.USDC,
         productTitle: 'Test Product',
         productDescription: 'Test Description',
+        callbackUrl: 'https://example.com',
       })
       .expect(201);
 
@@ -117,6 +118,7 @@ describe('PaymentService (e2e)', () => {
         paymentToken: PaymentTokens.USDC,
         productTitle: 'Test Product',
         productDescription: 'Test Description',
+        callbackUrl: 'https://example.com',
       })
       .expect(201);
 

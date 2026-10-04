@@ -42,26 +42,27 @@ export default async function RootLayout({
       >
         <body className="min-h-full flex flex-col bg-background">
           <header>
-            <div className="p-4 flex justify-between items-center">
+            <div className="sm:p-4 p-1 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Image
+                  className="sm:size-10 size-8"
                   src={"/icon.png"}
                   alt="CryptoPayment"
                   width={64}
                   height={64}
                 />
-                <span className="text-heading text-text-primary font-bold">
+                <span className="sm:text-heading text-body text-text-primary font-bold">
                   {t("layout.title")}
                 </span>
               </div>
               <div>
-                <span className="text-body text-text-tertiary">
+                <span className="sm:text-body text-caption text-text-tertiary">
                   {t("layout.subtitle")}
                 </span>
               </div>
             </div>
           </header>
-          <div className="flex w-full min-w-0 flex-1 items-center justify-center">
+          <div className="flex sm:flex-1 flex-none items-center justify-center w-full min-w-0">
             {children}
           </div>
           <Toaster position="top-center" richColors />

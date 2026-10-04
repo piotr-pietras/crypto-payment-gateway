@@ -48,19 +48,7 @@ export class WSGateway implements OnGatewayConnection, OnGatewayDisconnect {
     return { event: 'transfer:subscribe', data: { paymentId } };
   }
 
-  // @SubscribeMessage('block')
-  // handleNewBlock(
-  //   @ConnectedSocket() client: Socket,
-  //   @MessageBody() block: string,
-  // ) {
-  //   return { event: 'block', data: { block } };
-  // }
-
   emitTransfer(paymentId: string, data: unknown) {
     this.server.to(this.transferRoom(paymentId)).emit('transfer', data);
   }
-
-  // emitNewBlock(block: string) {
-  //   this.server.emit('block', { block });
-  // }
 }

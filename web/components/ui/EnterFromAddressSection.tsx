@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../generic/Button";
 import { isAddress } from "ethers";
 import { Api } from "@/utils/api";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Storage } from "@/utils/storage";
 import { Pressable } from "../generic/Pressable";
 import { formatUsedAt } from "@/utils/date";
@@ -20,7 +20,7 @@ type Props = {
 
 export function EnterFromAddressSection({ payment }: Props) {
   const { t } = useTranslation();
-
+  const router = useRouter();
   const [address, setAddress] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [disabled, setDisabled] = useState(true);
@@ -32,8 +32,12 @@ export function EnterFromAddressSection({ payment }: Props) {
     const origin = window.location.origin;
     const api = new Api(origin);
     const res = await api.addFromAddress(payment.id, address);
-    if (!res.ok) {
-      setError(t("fromAddress.error"));
+    if (!res.ok && res.status === 409) {
+      const data = (await res.json()) as { conflictPayment: { id: string } };
+      router.push(
+        `/pay/conflict/?id=${data.conflictPayment.id}&returnId=${payment.id}`
+      );
+      return;
     }
     Storage.saveRecentAddress(address);
     redirect(`/pay/?id=${payment.id}`);
@@ -61,7 +65,7 @@ export function EnterFromAddressSection({ payment }: Props) {
           </div>
           <div className="text-body text-text-secondary">
             {t("fromAddress.description-1", {
-              currency: payment.contractName.toUpperCase(),
+              currency: payment.tokenMetadata.name.toUpperCase(),
             })}{" "}
             <br />
             {t("fromAddress.description-2")}

@@ -7,7 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { PaymentTokenAddresses } from 'src/types';
-import { PaymentStatus } from '../db/prisma/enums';
+import { PaymentStatus, Prisma } from '../db/prisma/client';
 import { AccountService } from '../account/account.service';
 import { WSGateway } from '../ws/ws.gateway';
 import { EtherscanService } from '../etherscan/etherscan.service';
@@ -53,7 +53,9 @@ export class PaymentService {
       ...payment,
       amount: payment.amount.toString(),
       toAddress: this.account.root.address,
-      contractName: this.getPaymentTokenName(payment.contractAddress),
+      tokenMetadata: await this.etherscan.getTokenMetadata(
+        payment.contractAddress,
+      ),
     };
   }
 
@@ -93,22 +95,32 @@ export class PaymentService {
           `The statuses that are allowed are: ${PaymentStatus.CREATED}`,
         HttpStatus.BAD_REQUEST,
       );
-    } else if (
-      await this.db.payment.findFirst({
-        where: {
-          id: {
-            not: payment.id,
-          },
-          fromAddress: body.fromAddress.toLowerCase(),
-          contractAddress: payment.contractAddress?.toLowerCase(),
-          amount: payment.amount,
-          status: {
-            in: [PaymentStatus.CREATED, PaymentStatus.PENDING],
+    }
+
+    const conflictPayment = await this.db.payment.findFirst({
+      where: {
+        id: {
+          not: payment.id,
+        },
+        fromAddress: body.fromAddress.toLowerCase(),
+        contractAddress: payment.contractAddress?.toLowerCase(),
+        amount: payment.amount,
+        status: {
+          in: [PaymentStatus.CREATED, PaymentStatus.PENDING],
+        },
+      },
+    });
+
+    if (conflictPayment) {
+      throw new HttpException(
+        {
+          message: 'Conflict payment exists',
+          conflictPayment: {
+            id: conflictPayment.id,
           },
         },
-      })
-    ) {
-      throw new HttpException('Conflict payment exists', HttpStatus.CONFLICT);
+        HttpStatus.CONFLICT,
+      );
     }
 
     const updatedPayment = await this.db.payment.update({
@@ -129,16 +141,20 @@ export class PaymentService {
       ...updatedPayment,
       amount: updatedPayment.amount.toString(),
       toAddress: this.account.root.address,
-      contractName: this.getPaymentTokenName(updatedPayment.contractAddress),
+      tokenMetadata: await this.etherscan.getTokenMetadata(
+        updatedPayment.contractAddress,
+      ),
     };
   }
 
   async linkPayment(transferHash: string) {
     const transfer = await this.db.transfer.findUnique({
       where: { hash: transferHash },
+      include: { payment: true },
     });
 
-    if (!transfer) return;
+    // Already claimed by a payment (e.g. history sync reprocessing the same tx)
+    if (!transfer || transfer.payment) return;
 
     const decimals = await this.etherscan.getERC20Decimals(
       transfer.contractAddress,
@@ -204,19 +220,5 @@ export class PaymentService {
     } finally {
       this.mutex.release();
     }
-  }
-
-  private getPaymentTokenName(contractAddress: string) {
-    let name = '';
-    for (const [key, value] of Object.entries(PaymentTokenAddresses)) {
-      if (
-        value[this.env.get('ENV')].toLowerCase() ===
-        contractAddress.toLowerCase()
-      ) {
-        name = key;
-        break;
-      }
-    }
-    return name;
   }
 }

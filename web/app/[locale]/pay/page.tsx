@@ -1,7 +1,7 @@
 import Card from "@/components/generic/Card";
 import { Divider } from "@/components/generic/Divider";
 import { IncomingTransferSection } from "@/components/ui/IncomingTransferSection";
-import { PayAddressSection } from "@/components/ui/PayAddressSection";
+import { PayAddressSection } from "@/components/ui/PayAddressSection/PayAddressSection";
 import { PaymentExpirationSection } from "@/components/ui/PaymentExpirationSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
@@ -36,7 +36,7 @@ export default async function PayPage({
   }
 
   return (
-    <div className="p-4 max-w-[768px] flex flex-1">
+    <div className="max-w-[768px] flex flex-1 sm:p-4 p-2">
       <Card>
         <PayAddressSection payment={data} />
         <Divider />

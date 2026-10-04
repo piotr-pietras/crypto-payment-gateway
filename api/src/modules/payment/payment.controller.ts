@@ -1,14 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBody,
+  ApiConflictResponse,
+  ApiExcludeEndpoint,
   ApiForbiddenResponse,
   ApiOperation,
   ApiResponse,
@@ -39,11 +33,12 @@ export class PaymentController {
     examples: {
       default: {
         value: {
-          amount: 100,
+          amount: 1,
           paymentToken: 'usdc',
           productTitle: 'Product Title',
           productDescription: 'Product Description',
-          productImageUrl: 'https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg',
+          productImageUrl:
+            'https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg',
           callbackUrl: 'https://example.com/en/pay/success',
         },
       },
@@ -70,21 +65,33 @@ export class PaymentController {
       message: 'Invalid or missing API key',
     },
   })
+  @ApiConflictResponse({
+    description: 'Payment already exists',
+    example: {
+      statusCode: 409,
+      error: 'Conflict',
+      message: 'Payment already exists',
+      conflictPayment: {
+        id: '01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f',
+      },
+    },
+  })
   async createPayment(
     @Body() body: CreatePaymentReqBodyDto,
   ): Promise<CreatePaymentResBodyDto> {
     return this.paymentService.createPayment(body);
   }
 
+  @Get('/')
+  async getPayment(@Query('id') id: string): Promise<GetPaymentResBodyDto> {
+    return this.paymentService.getPayment(id);
+  }
+
   @Post('add-from-address')
+  @ApiExcludeEndpoint()
   async addFromAddress(
     @Body() body: AddFromAddressReqBodyDto,
   ): Promise<AddFromAddressResBodyDto> {
     return this.paymentService.addFromAddress(body);
-  }
-
-  @Get('/')
-  async getPayment(@Query('id') id: string): Promise<GetPaymentResBodyDto> {
-    return this.paymentService.getPayment(id);
   }
 }
