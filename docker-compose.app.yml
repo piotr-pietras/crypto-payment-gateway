@@ -3,8 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dockerfile.app
-    # Set DOCKER_IMAGE=youruser/crypto-payment-gateway before push/pull
-    image: ${DOCKER_IMAGE:-crypto-payment-gateway}:${TAG:-latest}
+    image: peterooo94/crypto-payment-gateway:1.0.0-rc.2
     container_name: crypto-payment-gateway-app
     environment:
       ENV: sepolia

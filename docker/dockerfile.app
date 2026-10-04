@@ -8,6 +8,7 @@ RUN npm ci
 COPY ./api .
 RUN npx prisma generate
 RUN npm run build
+RUN npm prune
 
 # ---- Web ----
 FROM node:20-alpine AS web-builder
@@ -39,11 +40,10 @@ COPY --from=api-builder /app/dist ./api/dist
 COPY --from=api-builder /app/prisma ./api/prisma
 COPY --from=api-builder /app/prisma.config.ts ./api/
 
-COPY --from=web-builder /app/node_modules ./web/node_modules
-COPY --from=web-builder /app/package*.json ./web/
-COPY --from=web-builder /app/.next ./web/.next
+# Next standalone expects static + public beside server.js
+COPY --from=web-builder /app/.next/standalone ./web/
+COPY --from=web-builder /app/.next/static ./web/.next/static
 COPY --from=web-builder /app/public ./web/public
-COPY --from=web-builder /app/next.config.ts ./web/
 
 COPY ./nginx/nginx.app.conf /etc/nginx/nginx.conf
 COPY ./docker/supervisord.conf /etc/supervisord.conf

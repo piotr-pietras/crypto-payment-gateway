@@ -18,7 +18,7 @@ services:
     container_name: crypto-payment-gateway-app
     environment:
       ENV: sepolia
-      PHRASE: "your twelve or twenty four word mnemonic phrase here"
+      PHRASE: "material toward work rib online drive pear word still robot kid man phrase here"
       API_KEY: "test"
       ETHERSCAN_API_KEY: "your_etherscan_api_key"
     ports:
