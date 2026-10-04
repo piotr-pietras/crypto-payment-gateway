@@ -24,9 +24,6 @@ export class EnvironmentVariables {
   ETHERSCAN_API_KEY: string;
 
   @IsNumber()
-  PORT: number;
-
-  @IsNumber()
   INIT_TX_SYNC_BLOCK_BATCH_SIZE: number;
 
   @IsNumber()

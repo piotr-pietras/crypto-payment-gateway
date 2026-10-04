@@ -76,7 +76,7 @@ export class PaymentService {
 
     return {
       id: payment.id,
-      url: ``,
+      url: `/en?id=${payment.id}`,
     };
   }
 

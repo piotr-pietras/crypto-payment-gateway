@@ -9,6 +9,8 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: 'postgres://postgres:postgres@db:5432/crypto_payment_gateway',
+    url:
+      process.env.DATABASE_URL ||
+      'postgres://postgres:postgres@127.0.0.1:5432/crypto_payment_gateway',
   },
 });
