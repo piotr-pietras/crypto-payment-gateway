@@ -58,11 +58,11 @@ curl -X POST http://localhost:7272/api/payment/create \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: test' \
   -d '{
-    "amount": 1,
+    "amount": "1",
     "paymentToken": "usdc",
     "productTitle": "Product Title",
     "productDescription": "Product Description",
-    "productImageUrl": "https://example.com/image.jpg",
+    "productImageUrl": "https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg",
     "callbackUrl": "https://example.com/pay/success"
   }'
 ```

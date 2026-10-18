@@ -32,7 +32,7 @@ export class BlockService implements OnModuleInit {
   /**
    * @description Minus from the block interval to prevent stacking in the loop
    */
-  private readonly blockIntervalPoke = 2000;
+  private readonly blockIntervalPoke = 1000;
   private readonly mutex = new Mutex();
 
   constructor(

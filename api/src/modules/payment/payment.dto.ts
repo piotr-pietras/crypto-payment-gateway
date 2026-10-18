@@ -2,22 +2,24 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
   IsEthereumAddress,
-  IsNumber,
   IsString,
   IsUrl,
   IsUUID,
   IsOptional,
+  IsNumberString,
+  Matches,
 } from 'class-validator';
 import { PaymentTokens } from 'src/types';
 import type { TokenMetadata } from 'src/types';
 import { Payment, PaymentStatus } from '../db/prisma/client';
 
 export class CreatePaymentReqBodyDto {
-  @ApiProperty({ example: 1 })
-  @IsNumber({
-    maxDecimalPlaces: 2,
+  @ApiProperty({ example: '1.00' })
+  @IsNumberString()
+  @Matches(/^\d+(\.\d{1,2})?$/, {
+    message: '"amount" must be a number string with at most 2 decimal places',
   })
-  amount: number;
+  amount: string;
 
   @ApiProperty({ enum: PaymentTokens, example: PaymentTokens.USDC })
   @IsEnum(PaymentTokens)
@@ -108,3 +110,8 @@ export class AddFromAddressResBodyDto
 }
 
 export class GetPaymentResBodyDto extends AddFromAddressResBodyDto {}
+
+export class CancelPaymentResBodyDto {
+  @ApiProperty({ example: '01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f' })
+  id: string;
+}

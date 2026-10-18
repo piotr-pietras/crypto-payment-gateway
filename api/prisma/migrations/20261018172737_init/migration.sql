@@ -21,7 +21,7 @@ CREATE TABLE "Payment" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "PaymentStatus" NOT NULL DEFAULT 'CREATED',
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "amount" DOUBLE PRECISION NOT NULL,
+    "amount" DECIMAL(18,4) NOT NULL,
     "contractAddress" TEXT NOT NULL,
     "fromAddress" TEXT,
     "validUntil" TIMESTAMP(3),

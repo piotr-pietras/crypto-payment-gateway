@@ -59,7 +59,7 @@ describe('PaymentService (e2e)', () => {
       .post('/payment/create')
       .set('x-api-key', '')
       .send({
-        amount: 0.01,
+        amount: '0.01',
         paymentToken: PaymentTokens.USDC,
         productTitle: 'Test Product',
         productDescription: 'Test Description',

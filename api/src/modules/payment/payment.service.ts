@@ -7,7 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { PaymentTokenAddresses } from 'src/types';
-import { PaymentStatus } from '../db/prisma/client';
+import { PaymentStatus, Prisma } from '../db/prisma/client';
 import { AccountService } from '../account/account.service';
 import { WSGateway } from '../ws/ws.gateway';
 import { EtherscanService } from '../etherscan/etherscan.service';
@@ -80,6 +80,22 @@ export class PaymentService {
     };
   }
 
+  async cancelPayment(id: string) {
+    const claimed = await this.db.payment.updateMany({
+      where: { id },
+      data: {
+        status: PaymentStatus.CANCELLED,
+      },
+    });
+
+    if (claimed.count === 0) {
+      throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
+    }
+
+    return {
+      id,
+    };
+  }
   async addFromAddress(body: AddFromAddressReqBodyDto) {
     const payment = await this.db.payment.findUnique({
       where: {
@@ -98,9 +114,9 @@ export class PaymentService {
     }
 
     /*
-    * Important! Conflict payment address check.
-    * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending or Created state.
-    */
+     * Important! Conflict payment address check.
+     * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending or Created state.
+     */
     const conflictPayment = await this.db.payment.findFirst({
       where: {
         id: {
@@ -165,14 +181,13 @@ export class PaymentService {
     );
     const amount = erc20ValueToAmount(transfer.value, decimals);
 
-
     /*
-    * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending state.
-    * When payment has the same amount, contract address payment.addFromAddress() should throw conflict error.
-    */
+     * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending state.
+     * When payment has the same amount, contract address payment.addFromAddress() should throw conflict error.
+     */
     const payment = await this.db.payment.findFirst({
       where: {
-        amount,
+        amount: new Prisma.Decimal(amount),
         fromAddress: transfer.fromAddress,
         contractAddress: transfer.contractAddress,
         status: PaymentStatus.PENDING,

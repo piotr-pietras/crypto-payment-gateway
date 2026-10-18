@@ -42,7 +42,7 @@ model Payment {
   createdAt       DateTime      @default(now())
   status          PaymentStatus @default(CREATED)
   updatedAt       DateTime      @updatedAt
-  amount          Float
+  amount          Decimal       @db.Decimal(18, 4)
   contractAddress String
   fromAddress     String?
   validUntil      DateTime?

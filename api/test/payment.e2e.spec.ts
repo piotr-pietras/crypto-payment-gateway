@@ -1,6 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HttpException, INestApplication } from '@nestjs/common';
+import {
+  HttpException,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import request from 'supertest';
 import { App } from 'supertest/types';
 import { addMinutes, subMinutes } from 'date-fns';
 import { AppModule } from './../src/app.module';
@@ -27,7 +32,7 @@ describe('PaymentService (e2e)', () => {
   };
 
   const basePaymentBody = {
-    amount: 100,
+    amount: '100.00',
     paymentToken: PaymentTokens.USDC,
     productTitle: 'Test Product',
     productDescription: 'Test Description',
@@ -59,6 +64,13 @@ describe('PaymentService (e2e)', () => {
     jest.spyOn(blockService, 'onModuleInit').mockResolvedValue(undefined);
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
     await app.init();
 
     dbService = app.get(DbService);
@@ -79,7 +91,7 @@ describe('PaymentService (e2e)', () => {
   it('creates new payment', async () => {
     const result = await paymentService.createPayment({
       ...basePaymentBody,
-      amount: 100.02,
+      amount: '100.02',
     });
 
     const payment = await dbService.payment.findUnique({
@@ -88,10 +100,29 @@ describe('PaymentService (e2e)', () => {
     const env = app.get(ConfigService).get('ENV');
 
     expect(result.path).toBe(`/en?id=${result.id}`);
-    expect(payment!.amount).toBe(100.02);
+    expect(payment!.amount.toString()).toBe('100.02');
     expect(payment!.status).toBe(PaymentStatus.CREATED);
     expect(payment!.contractAddress).toBe(
       PaymentTokenAddresses[PaymentTokens.USDC][env],
+    );
+  });
+
+  it('rejects create payment when amount has more than 2 decimal places', async () => {
+    const apiKey = app.get(ConfigService).get('API_KEY');
+
+    const { body } = await request(app.getHttpServer())
+      .post('/payment/create')
+      .set('x-api-key', apiKey)
+      .send({
+        ...basePaymentBody,
+        amount: '1.001',
+      })
+      .expect(400);
+
+    expect(body.message).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/at most 2 decimal places/i),
+      ]),
     );
   });
 
@@ -257,11 +288,11 @@ describe('PaymentService (e2e)', () => {
     });
     const { id: activeId } = await paymentService.createPayment({
       ...basePaymentBody,
-      amount: 200,
+      amount: '200.00',
     });
     const { id: completedId } = await paymentService.createPayment({
       ...basePaymentBody,
-      amount: 300,
+      amount: '300.00',
     });
 
     await paymentService.addFromAddress({

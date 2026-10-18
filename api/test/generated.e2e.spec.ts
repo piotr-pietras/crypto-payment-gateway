@@ -93,7 +93,7 @@ describe('Generated Payment/Block (e2e)', () => {
   };
 
   const basePaymentBody = {
-    amount: 100,
+    amount: '100.00',
     paymentToken: PaymentTokens.USDC,
     productTitle: 'Test Product',
     productDescription: 'Test Description',

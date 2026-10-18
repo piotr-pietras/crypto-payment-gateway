@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBody,
   ApiConflictResponse,
@@ -14,6 +14,7 @@ import { ApiKeyGuard } from 'src/guards/apikey.guard';
 import {
   AddFromAddressReqBodyDto,
   AddFromAddressResBodyDto,
+  CancelPaymentResBodyDto,
   CreatePaymentReqBodyDto,
   CreatePaymentResBodyDto,
   GetPaymentResBodyDto,
@@ -34,7 +35,7 @@ export class PaymentController {
     examples: {
       default: {
         value: {
-          amount: 1,
+          amount: '1.00',
           paymentToken: 'usdc',
           productTitle: 'Product Title',
           productDescription: 'Product Description',
@@ -93,6 +94,26 @@ export class PaymentController {
   })
   async getPayment(@Query('id') id: string): Promise<GetPaymentResBodyDto> {
     return this.paymentService.getPayment(id);
+  }
+
+  @Put('cancel')
+  @UseGuards(ApiKeyGuard)
+  @ApiOperation({ summary: 'Cancel a payment by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Payment cancelled successfully',
+    type: CancelPaymentResBodyDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Payment not found',
+    example: {
+      statusCode: 404,
+      error: 'Not Found',
+      message: 'Payment not found',
+    },
+  })
+  async cancelPayment(@Query('id') id: string): Promise<CancelPaymentResBodyDto> {
+    return this.paymentService.cancelPayment(id);
   }
 
   @Post('add-from-address')
