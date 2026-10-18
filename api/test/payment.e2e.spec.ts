@@ -11,12 +11,14 @@ import { PaymentStatus } from './../src/modules/db/prisma/enums';
 import { PaymentTokenAddresses, PaymentTokens } from 'src/types';
 import e2eUtils from './e2e.utils';
 import { EtherscanService } from 'src/modules/etherscan/etherscan.service';
+import { BlockService } from 'src/modules/block/block.service';
 
 const FROM_ADDRESS = '0x742d35cc6634c0532925a3b844bc9e7595f0beb';
 
 describe('PaymentService (e2e)', () => {
   let app: INestApplication<App>;
   let paymentService: PaymentService;
+  let blockService: BlockService;
   let dbService: DbService;
   let dbClear: () => void;
   let etherscanMock: {
@@ -53,6 +55,9 @@ describe('PaymentService (e2e)', () => {
       .useValue(etherscanMock)
       .compile();
 
+    blockService = moduleFixture.get(BlockService);
+    jest.spyOn(blockService, 'onModuleInit').mockResolvedValue(undefined);
+
     app = moduleFixture.createNestApplication();
     await app.init();
 
@@ -82,6 +87,7 @@ describe('PaymentService (e2e)', () => {
     });
     const env = app.get(ConfigService).get('ENV');
 
+    expect(result.path).toBe(`/en?id=${result.id}`);
     expect(payment!.amount).toBe(100.02);
     expect(payment!.status).toBe(PaymentStatus.CREATED);
     expect(payment!.contractAddress).toBe(
@@ -228,10 +234,16 @@ describe('PaymentService (e2e)', () => {
       fromAddress: FROM_ADDRESS,
     });
 
-    await expect(paymentService.linkPayment(transferHash)).resolves.toBeUndefined();
+    await expect(
+      paymentService.linkPayment(transferHash),
+    ).resolves.toBeUndefined();
 
-    const first = await dbService.payment.findUnique({ where: { id: firstId } });
-    const second = await dbService.payment.findUnique({ where: { id: secondId } });
+    const first = await dbService.payment.findUnique({
+      where: { id: firstId },
+    });
+    const second = await dbService.payment.findUnique({
+      where: { id: secondId },
+    });
 
     expect(first!.transferHash).toBe(transferHash);
     expect(first!.status).toBe(PaymentStatus.COMPLETED);

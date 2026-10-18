@@ -41,4 +41,8 @@ EOF
   echo "PostgreSQL initialized."
 fi
 
+# Add api to host domain for ./web/utils/api.ts to work properly
+echo "127.0.0.1 api" >> /etc/hosts
+
+# Start supervisor
 exec /usr/bin/supervisord -c /etc/supervisord.conf

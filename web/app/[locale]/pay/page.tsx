@@ -5,11 +5,20 @@ import { PayAddressSection } from "@/components/ui/PayAddressSection/PayAddressS
 import { PaymentExpirationSection } from "@/components/ui/PaymentExpirationSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
+import { buildMetadata } from "@/utils/metadata";
 import { Page } from "@/utils/page";
 import { PaymentDto } from "@/utils/types";
+import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 const ROUTE = "/[locale]/pay";
+
+export async function generateMetadata({
+  searchParams,
+}: PageProps<typeof ROUTE>): Promise<Metadata> {
+  const { id } = await searchParams;
+  return await buildMetadata(id);
+}
 
 export default async function PayPage({
   params,

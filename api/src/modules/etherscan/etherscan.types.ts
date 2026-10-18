@@ -31,3 +31,9 @@ export type GetBlockByNumberResponse = {
     input: string;
   }[];
 };
+
+export type GetTransactionReceiptResponse = {
+  blockHash: string;
+  blockNumber: string;
+  status: '0x1' | '0x0';
+} | null;

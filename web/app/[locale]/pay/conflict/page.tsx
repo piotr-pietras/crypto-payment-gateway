@@ -6,13 +6,24 @@ import { ProductPreviewSection } from "@/components/ui/ProductPreviewSection";
 import { isLocale } from "@/i18n/config";
 import { getTranslation } from "@/i18n/server";
 import { Api } from "@/utils/api";
+import { buildMetadata } from "@/utils/metadata";
 import { PaymentDto } from "@/utils/types";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+const ROUTE = "/[locale]/pay/conflict";
+
+export async function generateMetadata({
+  searchParams,
+}: PageProps<typeof ROUTE>): Promise<Metadata> {
+  const { id } = await searchParams;
+  return await buildMetadata(id);
+}
 
 export default async function PayConflictPage({
   params,
   searchParams,
-}: PageProps<"/[locale]/pay/conflict">) {
+}: PageProps<typeof ROUTE>) {
   const { locale } = await params;
   const { id, returnId } = await searchParams;
 

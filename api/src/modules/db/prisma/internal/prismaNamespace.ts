@@ -715,8 +715,7 @@ export const TransferScalarFieldEnum = {
   createdAt: 'createdAt',
   value: 'value',
   contractAddress: 'contractAddress',
-  fromAddress: 'fromAddress',
-  status: 'status'
+  fromAddress: 'fromAddress'
 } as const
 
 export type TransferScalarFieldEnum = (typeof TransferScalarFieldEnum)[keyof typeof TransferScalarFieldEnum]
@@ -833,20 +832,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'TransferStatus'
- */
-export type EnumTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransferStatus'>
-    
-
-
-/**
- * Reference to a field of type 'TransferStatus[]'
- */
-export type ListEnumTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransferStatus[]'>
     
 
 /**

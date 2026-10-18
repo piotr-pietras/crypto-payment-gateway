@@ -4,6 +4,7 @@ import {
   ApiConflictResponse,
   ApiExcludeEndpoint,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOperation,
   ApiResponse,
   ApiSecurity,
@@ -48,14 +49,6 @@ export class PaymentController {
     status: 200,
     description: 'Payment created successfully',
     type: CreatePaymentResBodyDto,
-    example: {
-      id: '01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f',
-      url: 'https://example.com/en/pay?id=01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f',
-      productTitle: 'Product Title',
-      productDescription: 'Product Description',
-      productImageUrl: 'https://example.com/image.jpg',
-      callbackUrl: 'https://example.com/en/pay/success',
-    },
   })
   @ApiForbiddenResponse({
     description: 'Invalid or missing API key',
@@ -82,7 +75,22 @@ export class PaymentController {
     return this.paymentService.createPayment(body);
   }
 
+
   @Get('/')
+  @ApiOperation({ summary: 'Get a payment by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Payment found',
+    type: GetPaymentResBodyDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Payment not found',
+    example: {
+      statusCode: 404,
+      error: 'Not Found',
+      message: 'Payment not found',
+    },
+  })
   async getPayment(@Query('id') id: string): Promise<GetPaymentResBodyDto> {
     return this.paymentService.getPayment(id);
   }

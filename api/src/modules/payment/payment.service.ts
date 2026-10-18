@@ -7,13 +7,13 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../env/env.validation';
 import { PaymentTokenAddresses } from 'src/types';
-import { PaymentStatus, Prisma } from '../db/prisma/client';
+import { PaymentStatus } from '../db/prisma/client';
 import { AccountService } from '../account/account.service';
 import { WSGateway } from '../ws/ws.gateway';
 import { EtherscanService } from '../etherscan/etherscan.service';
 import { erc20ValueToAmount } from 'src/common/utils/erc20ValueToAmount';
 import { addMinutes } from 'date-fns';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { Mutex } from 'async-mutex';
 
 /**
@@ -76,7 +76,7 @@ export class PaymentService {
 
     return {
       id: payment.id,
-      url: `/en?id=${payment.id}`,
+      path: `/en?id=${payment.id}`,
     };
   }
 
@@ -97,6 +97,10 @@ export class PaymentService {
       );
     }
 
+    /*
+    * Important! Conflict payment address check.
+    * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending or Created state.
+    */
     const conflictPayment = await this.db.payment.findFirst({
       where: {
         id: {
@@ -161,28 +165,49 @@ export class PaymentService {
     );
     const amount = erc20ValueToAmount(transfer.value, decimals);
 
+
+    /*
+    * There shouldn't exists multiple payments with the same amount, from address, contract address in Pending state.
+    * When payment has the same amount, contract address payment.addFromAddress() should throw conflict error.
+    */
     const payment = await this.db.payment.findFirst({
       where: {
         amount,
         fromAddress: transfer.fromAddress,
         contractAddress: transfer.contractAddress,
-        status: {
-          in: [PaymentStatus.PENDING],
-        },
+        status: PaymentStatus.PENDING,
         transfer: null,
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
 
     if (!payment) return;
 
-    const updatedPayment = await this.db.payment.update({
-      where: { id: payment.id },
-      data: { transferHash: transfer.hash, status: PaymentStatus.COMPLETED },
+    const claimed = await this.db.payment.updateMany({
+      where: {
+        id: payment.id,
+      },
+      data: {
+        transferHash: transfer.hash,
+        status: PaymentStatus.COMPLETED,
+      },
     });
 
-    this.ws.emitTransfer(payment.id, updatedPayment);
+    if (claimed.count === 0) return;
 
-    console.log(`Payment ${payment.id} linked to transfer ${transfer.hash}`);
+    const updatedPayment = await this.db.payment.findUniqueOrThrow({
+      where: {
+        id: payment.id,
+      },
+    });
+
+    this.ws.emitTransfer(updatedPayment.id, updatedPayment);
+
+    console.log(
+      `Payment ${updatedPayment.id} linked to transfer ${transfer.hash}`,
+    );
 
     return updatedPayment;
   }

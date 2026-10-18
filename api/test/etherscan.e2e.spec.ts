@@ -13,6 +13,7 @@ import {
   PaymentTokens,
 } from 'src/types';
 import e2eUtils from './e2e.utils';
+import { BlockService } from 'src/modules/block/block.service';
 
 const mockTransfer = (
   overrides: Partial<GetERC20TokenTransferResponse[number]> = {},
@@ -36,6 +37,7 @@ const mockTransfer = (
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
+  let blockService: BlockService;
   let currentBlock: bigint;
 
   beforeAll(async () => {
@@ -45,6 +47,9 @@ describe('AppController (e2e)', () => {
       .overrideProvider(InitializerService)
       .useValue({ onModuleInit: async () => {} })
       .compile();
+
+    blockService = moduleFixture.get(BlockService);
+    jest.spyOn(blockService, 'onModuleInit').mockResolvedValue(undefined);
 
     app = moduleFixture.createNestApplication({});
     await app.init();

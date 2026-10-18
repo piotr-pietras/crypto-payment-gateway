@@ -3,11 +3,20 @@ import { EnterFromAddressSection } from "@/components/ui/EnterFromAddressSection
 import { ProductPreviewSection } from "@/components/ui/ProductPreviewSection";
 import { isLocale } from "@/i18n/config";
 import { Api } from "@/utils/api";
+import { buildMetadata } from "@/utils/metadata";
 import { Page } from "@/utils/page";
 import { PaymentDto } from "@/utils/types";
+import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 const ROUTE = "/[locale]";
+
+export async function generateMetadata({
+  searchParams,
+}: PageProps<typeof ROUTE>): Promise<Metadata> {
+  const { id } = await searchParams;
+  return await buildMetadata(id);
+}
 
 export default async function Home({
   params,

@@ -14,6 +14,7 @@ import {
   EtherscanResponse,
   GetBlockByNumberResponse,
   GetERC20TokenTransferResponse,
+  GetTransactionReceiptResponse,
 } from './etherscan.types';
 import { Mutex } from 'async-mutex';
 import { Interface } from 'ethers';
@@ -125,6 +126,21 @@ export class EtherscanService {
       const response = await fetch(`${this.baseUrl}?${queryParams.toString()}`);
       const data =
         (await response.json()) as EtherscanResponse<GetBlockByNumberResponse>;
+      return data.result;
+    });
+  }
+
+  async getTransactionReceipt(txHash: string) {
+    return this.rateLimited(async () => {
+      const queryParams = new URLSearchParams({
+        chainid: this.chainId.toString(),
+        module: 'proxy',
+        action: 'eth_getTransactionReceipt',
+        txhash: txHash,
+        apikey: this.env.get('ETHERSCAN_API_KEY'),
+      });
+      const response = await fetch(`${this.baseUrl}?${queryParams.toString()}`);
+      const data = (await response.json()) as EtherscanResponse<GetTransactionReceiptResponse>;
       return data.result;
     });
   }

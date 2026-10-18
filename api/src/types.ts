@@ -26,11 +26,11 @@ export const PaymentTokenAddresses: Record<
 > = {
   [PaymentTokens.USDC]: {
     [Environment.SEPOLIA]: '0x1c7d4b196cb0c7b01d743fbc6116a902379c7238',
-    [Environment.MAINNET]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    [Environment.MAINNET]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   },
   [PaymentTokens.USDT]: {
     [Environment.SEPOLIA]: '0x7169d38820dfd117c3fa1f22a697dba58d90ba06',
-    [Environment.MAINNET]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    [Environment.MAINNET]: '0xdac17f958d2ee523a2206206994597c13d831ec7',
   },
 } as const;
 

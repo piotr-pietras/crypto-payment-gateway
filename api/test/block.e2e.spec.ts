@@ -67,6 +67,7 @@ describe('BlockService (e2e)', () => {
     getBlockByNumber: jest.Mock;
     getERC20TokenTransfer: jest.Mock;
     getERC20Decimals: jest.Mock;
+    getTransactionReceipt: jest.Mock;
   };
 
   beforeAll(async () => {
@@ -77,6 +78,11 @@ describe('BlockService (e2e)', () => {
       getBlockByNumber: jest.fn(),
       getERC20TokenTransfer: jest.fn(),
       getERC20Decimals: jest.fn().mockResolvedValue(6),
+      getTransactionReceipt: jest.fn().mockResolvedValue({
+        blockHash: '0xblock',
+        blockNumber: '1001',
+        status: '0x1',
+      }),
     };
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -88,24 +94,34 @@ describe('BlockService (e2e)', () => {
       .useValue(etherscanMock)
       .compile();
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-
-    blockService = app.get(BlockService);
-    dbService = app.get(DbService);
-    accountService = app.get(AccountService);
-
-    e2eUtils.stopAllCronJobs(app);
-
+    // Seed init before app.init so BlockService.onModuleInit can set blockCursor
+    dbService = moduleFixture.get(DbService);
     await dbService.init.create({
       data: { id: 0, phraseHash: 'test', lastBlockNumber: BigInt(1000) },
     });
+
+    blockService = moduleFixture.get(BlockService);
+    jest.spyOn(blockService, 'onModuleInit').mockResolvedValue(undefined);
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+
+    accountService = app.get(AccountService);
+    const init = await dbService.init.findUnique({ where: { id: 0 } });
+    (blockService as any).blockCursor = init!.lastBlockNumber;
+
+    e2eUtils.stopAllCronJobs(app);
   }, 120_000);
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    etherscanMock.getTransactionReceipt.mockResolvedValue({
+      blockHash: '0xblock',
+      blockNumber: '1001',
+      status: '0x1',
+    });
     (blockService as any).lastBlockCheckTimestamp = 0;
-    (blockService as any).lastBlockCheckNumber = BigInt(0);
+    (blockService as any).blockCursor = BigInt(1001);
     await dbService.transfer.deleteMany();
     await dbService.init.update({
       where: { id: 0 },
@@ -117,32 +133,6 @@ describe('BlockService (e2e)', () => {
     dbClear();
     await app.close();
   }, 60_000);
-
-  it('registers the syncHistoryBlocks cron job', () => {
-    const registry = app.get(SchedulerRegistry);
-    expect(registry.doesExist('cron', 'syncHistoryBlocks')).toBe(true);
-  });
-
-  it('should sync transfers when the syncHistoryBlocks function is called', async () => {
-    etherscanMock.getBlockNumber.mockResolvedValue('1001');
-    etherscanMock.getERC20TokenTransfer.mockResolvedValue([mockTransfer()]);
-
-    await blockService.syncHistoryBlocks();
-
-    const transfers = await dbService.transfer.findMany();
-    expect(transfers).toHaveLength(1);
-    expect(transfers[0].hash).toBe('0xabc');
-  });
-
-  it('deduplicates transfers on repeated syncHistoryBlocks', async () => {
-    etherscanMock.getBlockNumber.mockResolvedValue('1001');
-    etherscanMock.getERC20TokenTransfer.mockResolvedValue([mockTransfer()]);
-
-    await blockService.syncHistoryBlocks();
-    await blockService.syncHistoryBlocks();
-
-    expect(await dbService.transfer.count()).toBe(1);
-  });
 
   it('registers the syncNewestBlock cron job', () => {
     const registry = app.get(SchedulerRegistry);
@@ -172,7 +162,7 @@ describe('BlockService (e2e)', () => {
     await blockService.syncNewestBlock();
 
     (blockService as any).lastBlockCheckTimestamp = 0;
-    (blockService as any).lastBlockCheckNumber = BigInt(0);
+    (blockService as any).blockCursor = BigInt(1001);
 
     await blockService.syncNewestBlock();
 
@@ -222,10 +212,27 @@ describe('BlockService (e2e)', () => {
     expect(transfers[1].hash).toBe('0xkeep2');
   });
 
-  it('throws when the app has not been initialized', async () => {
-    await dbService.init.delete({ where: { id: 0 } });
+  it('skips reverted transactions in syncNewestBlock', async () => {
+    const root = accountService.root.address;
+    const revertedTx = mockNewestBlockTx(root, { hash: '0xreverted' });
+    const successTx = mockNewestBlockTx(root, { hash: '0xsuccess' });
 
     etherscanMock.getBlockNumber.mockResolvedValue('1001');
-    await expect(blockService.syncHistoryBlocks()).rejects.toThrow();
+    etherscanMock.getBlockByNumber.mockResolvedValue({
+      transactions: [revertedTx, successTx],
+    });
+    etherscanMock.getTransactionReceipt.mockImplementation(
+      async (hash: string) => ({
+        blockHash: '0xblock',
+        blockNumber: '1001',
+        status: hash === '0xreverted' ? '0x0' : '0x1',
+      }),
+    );
+
+    await blockService.syncNewestBlock();
+
+    const transfers = await dbService.transfer.findMany();
+    expect(transfers).toHaveLength(1);
+    expect(transfers[0].hash).toBe('0xsuccess');
   });
 });

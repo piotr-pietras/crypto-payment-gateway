@@ -63,7 +63,6 @@ model Transfer {
   contractAddress String
   fromAddress     String
   payment         Payment?
-  status          TransferStatus @default(NEW)
 
-  @@index([status, value, contractAddress, fromAddress])
+  @@index([value, contractAddress, fromAddress])
 }
