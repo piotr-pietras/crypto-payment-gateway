@@ -17,10 +17,7 @@ import {
   PaymentTokenAddresses,
   PaymentTokens,
 } from 'src/types';
-import {
-  GetBlockByNumberResponse,
-  GetERC20TokenTransferResponse,
-} from './../src/modules/etherscan/etherscan.types';
+import { GetBlockByNumberResponse } from './../src/modules/etherscan/etherscan.types';
 import e2eUtils from './e2e.utils';
 
 /**
@@ -29,6 +26,7 @@ import e2eUtils from './e2e.utils';
  *
  * Focus areas:
  * - BlockService sync paths calling PaymentService.linkPayment
+ * - Cursor catch-up across missed blocks (replaces syncHistoryBlocks)
  * - transferFrom sender (= token `from`, not tx.from) used for matching
  * - linkPayment matching guards (amount / status / from)
  * - getPayment
@@ -40,27 +38,6 @@ const OTHER_FROM = '0x00000000000000000000000000000000000000aa';
 const SPENDER_ADDRESS = '0x00000000000000000000000000000000000000bb';
 
 const transferIface = new Interface(ERC20TransferABI);
-
-const mockHistoryTransfer = (
-  overrides: Partial<GetERC20TokenTransferResponse[number]> = {},
-): GetERC20TokenTransferResponse[number] => ({
-  blockNumber: '1001',
-  timeStamp: '1700000000',
-  hash: '0xhistory',
-  nonce: '0',
-  blockHash: '0xblock',
-  from: FROM_ADDRESS,
-  contractAddress:
-    PaymentTokenAddresses[PaymentTokens.USDC][Environment.SEPOLIA],
-  to: '0xroot',
-  value: String(100 * 10 ** 6),
-  tokenName: 'USD Coin',
-  tokenSymbol: 'USDC',
-  tokenDecimal: '6',
-  functionName: 'transfer(address to, uint256 amount)',
-  methodId: '0xa9059cbb',
-  ...overrides,
-});
 
 const mockNewestBlockTx = (
   toAddress: string,
@@ -86,7 +63,6 @@ describe('Generated Payment/Block (e2e)', () => {
   let etherscanMock: {
     getBlockNumber: jest.Mock;
     getBlockByNumber: jest.Mock;
-    getERC20TokenTransfer: jest.Mock;
     getERC20Decimals: jest.Mock;
     getTokenMetadata: jest.Mock;
     getTransactionReceipt: jest.Mock;
@@ -119,7 +95,6 @@ describe('Generated Payment/Block (e2e)', () => {
     etherscanMock = {
       getBlockNumber: jest.fn(),
       getBlockByNumber: jest.fn(),
-      getERC20TokenTransfer: jest.fn(),
       getERC20Decimals: jest.fn().mockResolvedValue(6),
       getTokenMetadata: jest.fn().mockResolvedValue({
         name: 'USDC',
@@ -402,34 +377,117 @@ describe('Generated Payment/Block (e2e)', () => {
     expect(payment!.transferHash).toBe('0xsync-newest-transferFrom');
   });
 
-  // it('syncHistoryBlocks creates transfers, links payments, and advances lastBlockNumber', async () => {
-  //   const paymentId = await createPendingPayment(FROM_ADDRESS);
-  //   const env = app.get(ConfigService).get('ENV');
-  //   const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
+  it('syncNewestBlock catch-up links payment from a missed intermediate block', async () => {
+    const paymentId = await createPendingPayment(FROM_ADDRESS);
+    const root = accountService.root.address;
+    const missedTx = mockNewestBlockTx(root, {
+      hash: '0xmissed-block',
+      blockNumber: '1002',
+    });
 
-  //   etherscanMock.getBlockNumber.mockResolvedValue('1010');
-  //   etherscanMock.getERC20TokenTransfer.mockResolvedValue([
-  //     mockHistoryTransfer({
-  //       hash: '0xsync-history-complete',
-  //       contractAddress,
-  //       from: FROM_ADDRESS,
-  //       value: String(100 * 10 ** 6),
-  //     }),
-  //   ]);
+    (blockService as any).blockCursor = 1001n;
+    etherscanMock.getBlockNumber.mockResolvedValue('1003');
+    etherscanMock.getBlockByNumber.mockImplementation(async (n: bigint) => ({
+      transactions: n === 1002n ? [missedTx] : [],
+    }));
 
-  //   await blockService.syncHistoryBlocks();
+    await blockService.syncNewestBlock();
 
-  //   const payment = await dbService.payment.findUnique({
-  //     where: { id: paymentId },
-  //     include: { transfer: true },
-  //   });
-  //   expect(payment!.status).toBe(PaymentStatus.COMPLETED);
-  //   expect(payment!.transferHash).toBe('0xsync-history-complete');
+    const payment = await dbService.payment.findUnique({
+      where: { id: paymentId },
+    });
+    expect(payment!.status).toBe(PaymentStatus.COMPLETED);
+    expect(payment!.transferHash).toBe('0xmissed-block');
+    expect(etherscanMock.getBlockByNumber).toHaveBeenCalledTimes(3);
+    expect((blockService as any).blockCursor).toBe(1004n);
+  });
 
-  //   // Safety sync must move the cursor forward so the next window slides
-  //   const init = await dbService.init.findUnique({ where: { id: 0 } });
-  //   expect(init!.lastBlockNumber).toBe(BigInt(1010));
-  // });
+  it('syncNewestBlock catch-up completes payments from different blocks in one run', async () => {
+    const firstId = await createPendingPayment(FROM_ADDRESS);
+    const secondId = await createPendingPayment(OTHER_FROM, {
+      amount: '50.00',
+    });
+    const root = accountService.root.address;
+
+    const firstTx = mockNewestBlockTx(root, {
+      hash: '0xcatchup-first',
+      blockNumber: '1001',
+      from: FROM_ADDRESS,
+    });
+    const secondTx = mockNewestBlockTx(
+      root,
+      {
+        hash: '0xcatchup-second',
+        blockNumber: '1003',
+        from: OTHER_FROM,
+      },
+      50000000n,
+    );
+
+    (blockService as any).blockCursor = 1001n;
+    etherscanMock.getBlockNumber.mockResolvedValue('1003');
+    etherscanMock.getBlockByNumber.mockImplementation(async (n: bigint) => {
+      if (n === 1001n) return { transactions: [firstTx] };
+      if (n === 1003n) return { transactions: [secondTx] };
+      return { transactions: [] };
+    });
+
+    await blockService.syncNewestBlock();
+
+    const first = await dbService.payment.findUnique({ where: { id: firstId } });
+    const second = await dbService.payment.findUnique({
+      where: { id: secondId },
+    });
+
+    expect(first!.status).toBe(PaymentStatus.COMPLETED);
+    expect(first!.transferHash).toBe('0xcatchup-first');
+    expect(second!.status).toBe(PaymentStatus.COMPLETED);
+    expect(second!.transferHash).toBe('0xcatchup-second');
+    expect((blockService as any).blockCursor).toBe(1004n);
+  });
+
+  it('syncNewestBlock advances cursor through empty intermediate blocks', async () => {
+    const paymentId = await createPendingPayment(FROM_ADDRESS);
+    const root = accountService.root.address;
+    const tipTx = mockNewestBlockTx(root, {
+      hash: '0xempty-gap-tip',
+      blockNumber: '1005',
+    });
+
+    (blockService as any).blockCursor = 1001n;
+    etherscanMock.getBlockNumber.mockResolvedValue('1005');
+    etherscanMock.getBlockByNumber.mockImplementation(async (n: bigint) => ({
+      transactions: n === 1005n ? [tipTx] : [],
+    }));
+
+    await blockService.syncNewestBlock();
+
+    const payment = await dbService.payment.findUnique({
+      where: { id: paymentId },
+    });
+    expect(payment!.status).toBe(PaymentStatus.COMPLETED);
+    expect(payment!.transferHash).toBe('0xempty-gap-tip');
+    expect(etherscanMock.getBlockByNumber).toHaveBeenCalledTimes(5);
+    expect((blockService as any).blockCursor).toBe(1006n);
+  });
+
+  it('syncNewestBlock is a no-op when tip is behind the cursor', async () => {
+    const paymentId = await createPendingPayment(FROM_ADDRESS);
+
+    (blockService as any).blockCursor = 1010n;
+    etherscanMock.getBlockNumber.mockResolvedValue('1005');
+
+    await blockService.syncNewestBlock();
+
+    expect(etherscanMock.getBlockByNumber).not.toHaveBeenCalled();
+    expect((blockService as any).blockCursor).toBe(1010n);
+
+    const payment = await dbService.payment.findUnique({
+      where: { id: paymentId },
+    });
+    expect(payment!.status).toBe(PaymentStatus.PENDING);
+    expect(payment!.transferHash).toBeNull();
+  });
 
   it('syncNewestBlock leaves pending payment untouched when amount does not match', async () => {
     const paymentId = await createPendingPayment(FROM_ADDRESS);

@@ -119,7 +119,7 @@ export class BlockService implements OnModuleInit {
                 },
               });
 
-              // If transaction already exists, skip it
+              // If transfer already exists, skip it
               if (exists) continue;
 
               const receipt = await this.etherscan.getTransactionReceipt(

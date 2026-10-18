@@ -83,10 +83,10 @@ export class InitializerService implements OnModuleInit {
       await this.db.transfer.createMany({
         data: txs.map((tx) => ({
           hash: tx.hash,
-          contractAddress: tx.contractAddress,
           blockNumber: BigInt(tx.blockNumber),
           value: BigInt(tx.value),
-          fromAddress: tx.from,
+          contractAddress: tx.contractAddress.toLowerCase(),
+          fromAddress: tx.from.toLowerCase(),
         })),
         skipDuplicates: true,
       });
