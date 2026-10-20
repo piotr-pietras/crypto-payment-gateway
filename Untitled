@@ -1,4 +1,0 @@
-      const signature = crypto
-        .createHmac('sha256', this.env.get('API_KEY'))
-        .update(updatedPayment.id)
-        .digest('hex');

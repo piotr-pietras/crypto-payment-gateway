@@ -126,7 +126,7 @@ function verifyWebhook(paymentId, signatureHeader, apiKey) {
 Rules for production:
 
 1. Set `ENV=mainnet`.
-2. Use a **new** mnemonic for `PHRASE`. Do not reuse a Sepolia / test phrase — it controls the wallets that receive funds. Treat those wallets as an intermediary only: do not leave all your money there — systematically withdraw profits to a separate, secret cold (or otherwise offline) address.
+2. Use a **new** mnemonic for `PHRASE`. Do not reuse a Sepolia / test phrase. Treat those wallets as an intermediary only: do not leave all your money there — systematically withdraw profits to a separate, secret cold (or otherwise offline) address.
 3. Set a strong random `API_KEY`. The process refuses to start on mainnet without one.
 
 > [!CAUTION]
