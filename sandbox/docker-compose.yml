@@ -1,0 +1,25 @@
+services:
+  cpg:
+    image: peterooo94/crypto-payment-gateway:latest
+    container_name: sandbox-crypto-payment-gateway
+    environment:
+      ENV: sepolia
+      PHRASE: "material toward work rib online drive pear word still robot kid man"
+      API_KEY: "test"
+      ETHERSCAN_API_KEY: "your_etherscan_api_key"
+    ports:
+      - "7272:80"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    container_name: sandbox-crypto-payment-server
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
+    name: crypto_payment_gateway_pg

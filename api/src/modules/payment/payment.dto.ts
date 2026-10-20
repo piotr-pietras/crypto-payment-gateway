@@ -57,7 +57,6 @@ export class CreatePaymentReqBodyDto {
       'Webhook url to notify the merchant that the payment is completed. It sends a POST request to the url with the payment "id" and "status"',
   })
   @IsString()
-  @IsUrl()
   @IsOptional()
   webhookUrl?: string;
 }
