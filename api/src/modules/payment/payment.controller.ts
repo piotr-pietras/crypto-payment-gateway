@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Put, Query, UseGuards } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBody,
   ApiConflictResponse,
   ApiExcludeEndpoint,
@@ -110,6 +111,14 @@ export class PaymentController {
       statusCode: 404,
       error: 'Not Found',
       message: 'Payment not found',
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Payment is not in Created or Pending status',
+    example: {
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'Payment is not in Created or Pending status',
     },
   })
   async cancelPayment(@Query('id') id: string): Promise<CancelPaymentResBodyDto> {

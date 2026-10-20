@@ -28,7 +28,8 @@ CREATE TABLE "Payment" (
     "productTitle" TEXT NOT NULL,
     "productDescription" TEXT NOT NULL,
     "productImageUrl" TEXT,
-    "callbackUrl" TEXT NOT NULL,
+    "returnUrl" TEXT NOT NULL,
+    "webhookUrl" TEXT,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );

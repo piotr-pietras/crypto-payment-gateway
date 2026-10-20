@@ -17,6 +17,8 @@ import { PaymentTokenAddresses, PaymentTokens } from 'src/types';
 import e2eUtils from './e2e.utils';
 import { EtherscanService } from 'src/modules/etherscan/etherscan.service';
 import { BlockService } from 'src/modules/block/block.service';
+import * as http from 'http';
+import * as crypto from 'crypto';
 
 const FROM_ADDRESS = '0x742d35cc6634c0532925a3b844bc9e7595f0beb';
 
@@ -36,7 +38,7 @@ describe('PaymentService (e2e)', () => {
     paymentToken: PaymentTokens.USDC,
     productTitle: 'Test Product',
     productDescription: 'Test Description',
-    callbackUrl: 'https://example.com',
+    returnUrl: 'https://example.com',
   };
 
   beforeAll(async () => {
@@ -232,6 +234,45 @@ describe('PaymentService (e2e)', () => {
     expect(payment!.transfer!.hash).toBe(transferHash);
   });
 
+  it('links payment to transfer (even though webhookUrl fails)', async () => {
+    const env = app.get(ConfigService).get('ENV');
+    const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
+    const transferHash = '0xtransfer123';
+
+    const { id } = await paymentService.createPayment({
+      ...basePaymentBody,
+        webhookUrl: 'https://example.com/webhook',
+    });
+
+    await paymentService.addFromAddress({
+      id: id,
+      fromAddress: FROM_ADDRESS,
+    });
+
+    await dbService.transfer.create({
+      data: {
+        hash: transferHash,
+        blockNumber: BigInt(1001),
+        value: BigInt(100 * 10 ** 6),
+        contractAddress,
+        fromAddress: FROM_ADDRESS,
+      },
+    });
+
+    const linked = await paymentService.linkPayment(transferHash);
+
+    expect(linked).toBeDefined();
+    expect(linked!.transferHash).toBe(transferHash);
+
+    const payment = await dbService.payment.findUnique({
+      where: { id },
+      include: { transfer: true },
+    });
+
+    expect(payment!.transferHash).toBe(transferHash);
+    expect(payment!.transfer!.hash).toBe(transferHash);
+  });
+
   it('does not re-link an already claimed transfer to a newer pending payment', async () => {
     const env = app.get(ConfigService).get('ENV');
     const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
@@ -335,6 +376,79 @@ describe('PaymentService (e2e)', () => {
     expect(expired!.status).toBe(PaymentStatus.EXPIRED);
     expect(active!.status).toBe(PaymentStatus.PENDING);
     expect(completed!.status).toBe(PaymentStatus.COMPLETED);
+  });
+
+  it('sends webhook when payment is linked', async () => {
+    const env = app.get(ConfigService).get('ENV');
+    const apiKey = app.get(ConfigService).get('API_KEY');
+    const contractAddress = PaymentTokenAddresses[PaymentTokens.USDC][env];
+    const transferHash = '0xtransfer-webhook';
+
+    let resolveRequest!: (value: {
+      method?: string;
+      headers: http.IncomingHttpHeaders;
+      body: { id: string; status: string };
+    }) => void;
+
+    const received = new Promise<
+      typeof resolveRequest extends (v: infer T) => void ? T : never
+    >((resolve) => {
+      resolveRequest = resolve;
+    });
+
+    const server = http.createServer((req, res) => {
+      const chunks: Buffer[] = [];
+      req.on('data', (chunk) => chunks.push(chunk));
+      req.on('end', () => {
+        res.writeHead(200).end();
+        resolveRequest({
+          method: req.method,
+          headers: req.headers,
+          body: JSON.parse(Buffer.concat(chunks).toString()),
+        });
+      });
+    });
+
+    await new Promise<void>((resolve) =>
+      server.listen(0, '127.0.0.1', resolve),
+    );
+
+    const { port } = server.address() as { port: number };
+    const webhookUrl = `http://127.0.0.1:${port}/webhook`;
+
+    try {
+      const { id } = await paymentService.createPayment({
+        ...basePaymentBody,
+        returnUrl: 'https://example.com/return',
+        webhookUrl,
+      });
+      await paymentService.addFromAddress({ id, fromAddress: FROM_ADDRESS });
+      await dbService.transfer.create({
+        data: {
+          hash: transferHash,
+          blockNumber: BigInt(1003),
+          value: BigInt(100 * 10 ** 6),
+          contractAddress,
+          fromAddress: FROM_ADDRESS,
+        },
+      });
+      await paymentService.linkPayment(transferHash);
+      const request = await received;
+
+      expect(request.method).toBe('POST');
+      expect(request.body).toEqual({
+        id,
+        status: PaymentStatus.COMPLETED,
+      });
+      expect(request.headers['content-type']).toMatch(/application\/json/);
+      expect(request.headers['signature']).toBe(
+        crypto.createHmac('sha256', apiKey).update(id).digest('hex'),
+      );
+    } finally {
+      await new Promise<void>((resolve, reject) =>
+        server.close((err) => (err ? reject(err) : resolve())),
+      );
+    }
   });
 
   afterAll(async () => {

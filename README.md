@@ -11,6 +11,7 @@ Supports **Sepolia** for testing and **mainnet** for production.
 - [How to start](#how-to-start)
   - [Start service](#start-service)
   - [Create payment](#create-payment)
+  - [Webhook notify](#webhook-notify)
 - [Production setup](#production-setup)
 - [API docs](#api-docs)
 - [How it works](#how-it-works)
@@ -29,11 +30,11 @@ Example `docker-compose.app.yml`:
 ```yaml
 services:
   app:
-    image: crypto-payment-gateway:latest
+    image: peterooo94/crypto-payment-gateway:latest
     container_name: crypto-payment-gateway-app
     environment:
       ENV: sepolia
-      PHRASE: "material toward work rib online drive pear word still robot kid man phrase here"
+      PHRASE: "material toward work rib online drive pear word still robot kid man"
       API_KEY: "test"
       ETHERSCAN_API_KEY: "your_etherscan_api_key"
     ports:
@@ -63,7 +64,8 @@ curl -X POST http://localhost:7272/api/payment/create \
     "productTitle": "Product Title",
     "productDescription": "Product Description",
     "productImageUrl": "https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg",
-    "callbackUrl": "https://example.com/pay/success"
+    "returnUrl": "https://example.com/pay/success",
+    "webhookUrl": "https://example.com/webhook"
   }'
 ```
 
@@ -77,6 +79,47 @@ Example response:
 ```
 
 The payment process will be available at `http://localhost:7272` + path (e.g. `http://localhost:7272/en?id=...`).
+
+### Webhook notify
+
+Pass an optional `webhookUrl` when creating a payment. When the payment is marked **completed**, the gateway sends a `POST` to that URL so your backend can fulfill the order without waiting on the browser redirect.
+
+Request body:
+
+```json
+{
+  "id": "${uuid}",
+  "status": "COMPLETED"
+}
+```
+
+Headers:
+
+| Header         | Value                                              |
+| -------------- | -------------------------------------------------- |
+| `Content-Type` | `application/json`                                 |
+| `signature`    | Hex-encoded HMAC-SHA256 of the payment `id` string |
+
+The HMAC key is your `API_KEY` (the same value used for `x-api-key`). Only the payment id is signed — not the full body.
+
+Verify it before trusting the payload — recompute the HMAC over `id` with your `API_KEY` and compare it to the `signature` header (use a constant-time compare if your language provides one):
+
+```js
+const crypto = require('crypto');
+
+function verifyWebhook(paymentId, signatureHeader, apiKey) {
+  const expected = crypto
+    .createHmac('sha256', apiKey)
+    .update(paymentId)
+    .digest('hex');
+
+  const a = Buffer.from(expected, 'utf8');
+  const b = Buffer.from(signatureHeader || '', 'utf8');
+  if (a.length !== b.length) return false;
+
+  return crypto.timingSafeEqual(a, b);
+}
+```
 
 ## Production setup
 

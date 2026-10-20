@@ -4,7 +4,6 @@ import { PaymentDto } from "@/utils/types";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { io } from "socket.io-client";
-import { ClockIcon } from "../icons/ClockIcon";
 import { useRouter } from "next/navigation";
 import LoadingIndicator from "../generic/LoadingIndicator";
 

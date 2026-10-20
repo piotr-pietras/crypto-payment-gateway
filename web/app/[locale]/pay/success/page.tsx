@@ -1,6 +1,6 @@
 import Card from "@/components/generic/Card";
 import { SuccessCheckIcon } from "@/components/icons/SuccessCheckIcon";
-import { CallbackButton } from "@/components/ui/CallbackButton";
+import { ReturnButton } from "@/components/ui/ReturnButton";
 import { ProductPreviewSection } from "@/components/ui/ProductPreviewSection";
 import { isLocale } from "@/i18n/config";
 import { getTranslation } from "@/i18n/server";
@@ -64,7 +64,7 @@ export default async function SuccessPage({
             </div>
           </div>
           <ProductPreviewSection payment={data} />
-          <CallbackButton payment={data} />
+          <ReturnButton payment={data} />
         </div>
       </Card>
     </div>

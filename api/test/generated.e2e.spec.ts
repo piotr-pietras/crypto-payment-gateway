@@ -73,7 +73,7 @@ describe('Generated Payment/Block (e2e)', () => {
     paymentToken: PaymentTokens.USDC,
     productTitle: 'Test Product',
     productDescription: 'Test Description',
-    callbackUrl: 'https://example.com',
+    returnUrl: 'https://example.com',
   };
 
   /** Helper: CREATED → PENDING with a known fromAddress */

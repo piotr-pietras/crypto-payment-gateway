@@ -1,6 +1,6 @@
 import Card from "@/components/generic/Card";
 import { ExpiredClockIcon } from "@/components/icons/ExpiredClockIcon";
-import { CallbackButton } from "@/components/ui/CallbackButton";
+import { ReturnButton } from "@/components/ui/ReturnButton";
 import { isLocale } from "@/i18n/config";
 import { getTranslation } from "@/i18n/server";
 import { Api } from "@/utils/api";
@@ -62,7 +62,7 @@ export default async function FailPage({
               </span>
             </div>
           </div>
-          <CallbackButton payment={data} />
+          <ReturnButton payment={data} />
         </div>
       </Card>
     </div>

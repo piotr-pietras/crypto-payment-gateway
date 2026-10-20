@@ -9,14 +9,14 @@ type Props = {
   payment: PaymentDto;
 };
 
-export function CallbackButton({ payment }: Props) {
+export function ReturnButton({ payment }: Props) {
   const { t } = useTranslation();
 
   const url = useMemo(() => {
-    const url = new URL(payment.callbackUrl);
+    const url = new URL(payment.returnUrl);
     url.searchParams.set("paymentId", payment.id);
     return url.toString();
-  }, [payment.callbackUrl, payment.id]);
+  }, [payment.returnUrl, payment.id]);
 
   return (
     <Button variant="primary" onClick={() => window.location.assign(url)}>

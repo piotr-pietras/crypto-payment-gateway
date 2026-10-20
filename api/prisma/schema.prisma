@@ -49,7 +49,8 @@ model Payment {
   productTitle    String
   productDescription String
   productImageUrl String?
-  callbackUrl     String
+  returnUrl       String
+  webhookUrl      String?
 
   @@index([status])
   @@index([createdAt])

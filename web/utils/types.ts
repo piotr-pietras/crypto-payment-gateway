@@ -32,6 +32,6 @@ export type PaymentDto = {
   productDescription: string;
   productImageUrl: string | null;
   validUntil: string | null;
-  callbackUrl: string;
+  returnUrl: string;
   tokenMetadata: TokenMetadata;
 };

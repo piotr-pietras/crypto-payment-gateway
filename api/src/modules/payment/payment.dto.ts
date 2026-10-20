@@ -45,11 +45,21 @@ export class CreatePaymentReqBodyDto {
   @ApiProperty({
     example: 'https://example.com/en/pay/success',
     description:
-      'Callback URL; additionally supplied with a "paymentId" search query param to easily identify the payment',
+      'Payer return url after payment is completed. Additionally supplied with a "paymentId" search query param to easily identify the payment',
   })
   @IsString()
   @IsUrl()
-  callbackUrl: string;
+  returnUrl: string;
+
+  @ApiProperty({
+    example: 'https://example.com/webhook',
+    description:
+      'Webhook url to notify the merchant that the payment is completed. It sends a POST request to the url with the payment "id" and "status"',
+  })
+  @IsString()
+  @IsUrl()
+  @IsOptional()
+  webhookUrl?: string;
 }
 
 export class CreatePaymentResBodyDto {
@@ -76,7 +86,11 @@ export class AddFromAddressReqBodyDto {
 }
 
 export class AddFromAddressResBodyDto
-  implements Pick<Payment, 'id' | 'fromAddress' | 'status' | 'contractAddress'>
+  implements
+    Pick<
+      Payment,
+      'id' | 'fromAddress' | 'status' | 'contractAddress' | 'returnUrl'
+    >
 {
   @ApiProperty({ example: '01932e4f-3c1a-7b2d-9e8f-1a2b3c4d5e6f' })
   id: string;
@@ -107,6 +121,13 @@ export class AddFromAddressResBodyDto
     },
   })
   tokenMetadata: TokenMetadata;
+
+  @ApiProperty({
+    example: 'https://example.com/en/pay/success',
+    description:
+      'Payer return url after payment is completed. Additionally supplied with a "paymentId" search query param to easily identify the payment',
+  })
+  returnUrl: string;
 }
 
 export class GetPaymentResBodyDto extends AddFromAddressResBodyDto {}

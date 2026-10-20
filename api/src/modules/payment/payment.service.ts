@@ -15,6 +15,7 @@ import { erc20ValueToAmount } from 'src/common/utils/erc20ValueToAmount';
 import { addMinutes } from 'date-fns';
 import { Cron } from '@nestjs/schedule';
 import { Mutex } from 'async-mutex';
+import * as crypto from 'crypto';
 
 /**
  * Payment service
@@ -70,7 +71,8 @@ export class PaymentService {
           PaymentTokenAddresses[body.paymentToken][
             this.env.get('ENV')
           ].toLowerCase(),
-        callbackUrl: body.callbackUrl,
+        returnUrl: body.returnUrl,
+        webhookUrl: body.webhookUrl,
       },
     });
 
@@ -82,14 +84,24 @@ export class PaymentService {
 
   async cancelPayment(id: string) {
     const claimed = await this.db.payment.updateMany({
-      where: { id },
+      where: {
+        id,
+        status: { in: [PaymentStatus.CREATED, PaymentStatus.PENDING] },
+      },
       data: {
         status: PaymentStatus.CANCELLED,
       },
     });
 
     if (claimed.count === 0) {
-      throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
+      if (await this.db.payment.findUnique({ where: { id } })) {
+        throw new HttpException(
+          'Payment is not in Created or Pending status',
+          HttpStatus.BAD_REQUEST,
+        );
+      } else {
+        throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
+      }
     }
 
     return {
@@ -217,6 +229,34 @@ export class PaymentService {
         id: payment.id,
       },
     });
+
+    if (updatedPayment.webhookUrl) {
+      const body = JSON.stringify({
+        id: updatedPayment.id,
+        status: updatedPayment.status,
+      });
+
+      const signature = crypto
+        .createHmac('sha256', this.env.get('API_KEY'))
+        .update(updatedPayment.id)
+        .digest('hex');
+
+      try {
+        fetch(updatedPayment.webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            signature,
+          },
+          body,
+        });
+      } catch (error) {
+        console.error(
+          `Failed to send webhook to ${updatedPayment.webhookUrl}`,
+          error,
+        );
+      }
+    }
 
     this.ws.emitTransfer(updatedPayment.id, updatedPayment);
 
