@@ -42,7 +42,7 @@ export class PaymentController {
           productDescription: 'Product Description',
           productImageUrl:
             'https://www.ortery.com/wp-content/uploads/2019/05/Dawn-Soap-og01.jpg',
-          callbackUrl: 'https://example.com/en/pay/success',
+          returnUrl: 'https://example.com/en/pay/success',
         },
       },
     },
