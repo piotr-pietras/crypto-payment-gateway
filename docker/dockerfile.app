@@ -1,5 +1,5 @@
 # ---- API ----
-FROM node:20-alpine AS api-builder
+FROM node:24.22-alpine AS api-builder
 WORKDIR /app
 
 COPY ./api/package*.json ./
@@ -11,7 +11,7 @@ RUN npm run build
 RUN npm prune
 
 # ---- Web ----
-FROM node:20-alpine AS web-builder
+FROM node:24.22-alpine AS web-builder
 WORKDIR /app
 
 COPY ./web/package*.json ./
@@ -21,7 +21,7 @@ COPY ./web .
 RUN npm run build
 
 # ---- Runtime: postgres + nginx + api + web ----
-FROM node:20-alpine AS runner
+FROM node:24.22-alpine AS runner
 
 RUN apk add --no-cache \
       postgresql \
