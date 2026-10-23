@@ -1,0 +1,70 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Aman, cepat, terbuka"
+  },
+  "common": {
+    "usedJustNow": "Baru saja digunakan",
+    "usedMinutesAgo_other": "Digunakan {{count}} menit yang lalu",
+    "usedHoursAgo_other": "Digunakan {{count}} jam yang lalu",
+    "usedDaysAgo_other": "Digunakan {{count}} hari yang lalu",
+    "usedWeeksAgo_other": "Digunakan {{count}} minggu yang lalu",
+    "usedMonthsAgo_other": "Digunakan {{count}} bulan yang lalu",
+    "callbackButton": "Kembali ke beranda",
+    "or": "ATAU"
+  },
+  "fromAddress": {
+    "title": "Masukkan alamat dompet Anda",
+    "description-1": "Tempel alamat yang akan Anda gunakan untuk mengirim {{ currency }}.",
+    "description-2": "Kami akan menggunakannya untuk mendeteksi pembayaran Anda.",
+    "label": "Alamat dompet",
+    "button": "Lanjut ke pembayaran",
+    "error": "Alamat dompet tidak valid",
+    "error-placeholder": "Masukkan alamat dompet yang valid",
+    "recentTitle": "Alamat yang baru digunakan"
+  },
+  "payAddress": {
+    "mobileTitle": "Bayar dengan dompet seluler",
+    "mobileHint": "Buka dompet kripto seluler favorit Anda dan bayar.",
+    "qrHint": "Buka dompet kripto seluler favorit Anda dan pindai kode QR.",
+    "qrTitle": "Pindai dengan dompet Anda",
+    "copyTitle": "Bayar dengan alamat dompet",
+    "copyHint": "Salin alamat di bawah dan kirim<br/>tepat <bold>{{ amount }} {{ currency }}</bold> dari dompet Anda.",
+    "walletAddressLabel": "Alamat dompet",
+    "amountToSendLabel": "Jumlah yang dikirim",
+    "exactAmountHint": "Pastikan Anda mengirim jumlah yang tepat. Mengirim lebih sedikit atau lebih banyak akan membuat pembayaran gagal.",
+    "copy": "Salin",
+    "copied": "Alamat disalin ke papan klip",
+    "openWalletApp": "Buka aplikasi dompet"
+  },
+  "productPreview": {
+    "amountLabel": "Jumlah"
+  },
+  "incomingTransfer": {
+    "waiting": "Menunggu pembayaran...",
+    "autoUpdate": "Halaman ini akan diperbarui otomatis setelah pembayaran terdeteksi."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Pembayaran berakhir dalam",
+    "canceledAutomatically": "Jika pembayaran tidak diterima, pembayaran akan dibatalkan secara otomatis."
+  },
+  "successPayment": {
+    "title": "Pembayaran berhasil!",
+    "description": "Pembayaran Anda telah dikonfirmasi dan barang akan segera dikirim."
+  },
+  "failPayment": {
+    "title": "Pembayaran kedaluwarsa atau dibatalkan",
+    "description": "Pembayaran tidak selesai tepat waktu dan telah dibatalkan. Anda dapat mencoba lagi atau menggunakan alamat dompet lain."
+  },
+  "conflictPayment": {
+    "title": "Pembayaran tertunda sudah ada",
+    "description": "Sudah ada transaksi tertunda untuk alamat dompet dan harga barang ini. Setiap alamat hanya dapat memiliki satu pembayaran tertunda pada satu waktu.",
+    "goToPending": "Ke pembayaran tertunda",
+    "useDifferentWallet": "Gunakan alamat dompet lain"
+  },
+  "not-found": {
+    "title": "Ups! Pembayaran tidak ditemukan",
+    "description-1": "Pembayaran yang Anda cari tidak ada.",
+    "description-2": "Periksa URL atau kembali ke beranda."
+  }
+}

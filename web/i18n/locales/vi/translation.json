@@ -1,0 +1,70 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "An toàn, nhanh, mở"
+  },
+  "common": {
+    "usedJustNow": "Vừa sử dụng",
+    "usedMinutesAgo_other": "Đã dùng {{count}} phút trước",
+    "usedHoursAgo_other": "Đã dùng {{count}} giờ trước",
+    "usedDaysAgo_other": "Đã dùng {{count}} ngày trước",
+    "usedWeeksAgo_other": "Đã dùng {{count}} tuần trước",
+    "usedMonthsAgo_other": "Đã dùng {{count}} tháng trước",
+    "callbackButton": "Về trang chủ",
+    "or": "HOẶC"
+  },
+  "fromAddress": {
+    "title": "Nhập địa chỉ ví của bạn",
+    "description-1": "Dán địa chỉ bạn sẽ dùng để gửi {{ currency }}.",
+    "description-2": "Chúng tôi sẽ dùng địa chỉ này để nhận diện khoản thanh toán của bạn.",
+    "label": "Địa chỉ ví",
+    "button": "Tiếp tục thanh toán",
+    "error": "Địa chỉ ví không hợp lệ",
+    "error-placeholder": "Nhập địa chỉ ví hợp lệ",
+    "recentTitle": "Địa chỉ đã dùng gần đây"
+  },
+  "payAddress": {
+    "mobileTitle": "Thanh toán bằng ví di động",
+    "mobileHint": "Mở ví tiền mã hóa di động yêu thích và thanh toán.",
+    "qrHint": "Mở ví tiền mã hóa di động yêu thích và quét mã QR.",
+    "qrTitle": "Quét bằng ví của bạn",
+    "copyTitle": "Thanh toán bằng địa chỉ ví",
+    "copyHint": "Sao chép địa chỉ bên dưới và gửi<br/>đúng <bold>{{ amount }} {{ currency }}</bold> từ ví của bạn.",
+    "walletAddressLabel": "Địa chỉ ví",
+    "amountToSendLabel": "Số tiền cần gửi",
+    "exactAmountHint": "Hãy gửi đúng số tiền. Gửi ít hơn hoặc nhiều hơn sẽ khiến thanh toán thất bại.",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép địa chỉ vào bộ nhớ tạm",
+    "openWalletApp": "Mở ứng dụng ví"
+  },
+  "productPreview": {
+    "amountLabel": "Số tiền"
+  },
+  "incomingTransfer": {
+    "waiting": "Đang chờ thanh toán...",
+    "autoUpdate": "Trang này sẽ tự cập nhật khi phát hiện thanh toán."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Thanh toán hết hạn sau",
+    "canceledAutomatically": "Nếu không nhận được thanh toán, giao dịch sẽ tự động bị hủy."
+  },
+  "successPayment": {
+    "title": "Thanh toán thành công!",
+    "description": "Thanh toán của bạn đã được xác nhận và sản phẩm sẽ được giao trong thời gian ngắn."
+  },
+  "failPayment": {
+    "title": "Thanh toán đã hết hạn hoặc bị hủy",
+    "description": "Thanh toán không hoàn tất đúng hạn và đã bị hủy. Bạn có thể thử lại hoặc dùng địa chỉ ví khác."
+  },
+  "conflictPayment": {
+    "title": "Đã có một khoản thanh toán đang chờ",
+    "description": "Đã có giao dịch đang chờ cho địa chỉ ví này và mức giá này. Mỗi địa chỉ chỉ được có một khoản thanh toán đang chờ tại một thời điểm.",
+    "goToPending": "Đến khoản thanh toán đang chờ",
+    "useDifferentWallet": "Dùng địa chỉ ví khác"
+  },
+  "not-found": {
+    "title": "Không tìm thấy thanh toán",
+    "description-1": "Khoản thanh toán bạn tìm không tồn tại.",
+    "description-2": "Hãy kiểm tra URL hoặc quay về trang chủ."
+  }
+}

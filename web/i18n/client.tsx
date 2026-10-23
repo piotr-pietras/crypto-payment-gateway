@@ -3,7 +3,7 @@
 import { createInstance, type i18n as I18nInstance } from "i18next";
 import { useEffect, useState, type ReactNode } from "react";
 import { I18nextProvider, initReactI18next } from "react-i18next";
-import { defaultLocale, defaultNS, type Locale, resources } from "./config";
+import { defaultLocale, defaultNS, isLocale, type Locale, resources } from "./config";
 
 function createClientI18n(lng: Locale): I18nInstance {
   const i18n = createInstance();
@@ -37,4 +37,17 @@ export function I18nProvider({
   }, [i18n, lng]);
 
   return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
+}
+
+/**
+ * Client side function to get the locale from the URL
+ * @returns The locale from the URL
+ */
+export function getLocale() {
+  if (typeof window === "undefined") {
+    return defaultLocale;
+  }
+  const url = new URL(window.location.href);
+  const segment = url.pathname.split("/")[1];
+  return isLocale(segment) ? segment : defaultLocale;
 }

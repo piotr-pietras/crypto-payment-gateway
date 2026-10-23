@@ -30,7 +30,7 @@
   },
 
   "payAddress": {
-    "mobileTitle": "Pay with mobile wallet",
+    "mobileTitle": "Pay with mobile wallet", 
     "mobileHint": "Open your favorite mobile crypto wallet and pay.",
     "qrHint": "Open your favorite mobile crypto wallet and scan the QR code.",
     "qrTitle": "Scan with your wallet",
@@ -53,15 +53,15 @@
   },
   "paymentExpiration": {
     "expiresIn": "Payment expires in",
-    "cancelledAutomatically": "If the payment is not received, it will be cancelled automatically."
+    "canceledAutomatically": "If the payment is not received, it will be canceled automatically."
   },
   "successPayment": {
     "title": "Payment successful!",
     "description": "Your payment has been confirmed and the item will be delivered shortly."
   },
   "failPayment": {
-    "title": "Payment expired or cancelled",
-    "description": "The payment was not completed in time and has been cancelled. You can try again or use a different wallet address."
+    "title": "Payment expired or canceled",
+    "description": "The payment was not completed in time and has been canceled. You can try again or use a different wallet address."
   },
   "conflictPayment": {
     "title": "A pending payment already exists",

@@ -1,0 +1,70 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "安全、快速、开放"
+  },
+  "common": {
+    "usedJustNow": "刚刚使用",
+    "usedMinutesAgo_other": "{{count}} 分钟前使用",
+    "usedHoursAgo_other": "{{count}} 小时前使用",
+    "usedDaysAgo_other": "{{count}} 天前使用",
+    "usedWeeksAgo_other": "{{count}} 周前使用",
+    "usedMonthsAgo_other": "{{count}} 个月前使用",
+    "callbackButton": "返回首页",
+    "or": "或"
+  },
+  "fromAddress": {
+    "title": "输入您的钱包地址",
+    "description-1": "粘贴您将用于发送 {{ currency }} 的地址。",
+    "description-2": "我们将用它来识别您的付款。",
+    "label": "钱包地址",
+    "button": "继续付款",
+    "error": "钱包地址无效",
+    "error-placeholder": "请输入有效的钱包地址",
+    "recentTitle": "最近使用的地址"
+  },
+  "payAddress": {
+    "mobileTitle": "使用手机钱包付款",
+    "mobileHint": "打开您常用的手机加密钱包并付款。",
+    "qrHint": "打开您常用的手机加密钱包并扫描二维码。",
+    "qrTitle": "使用钱包扫码",
+    "copyTitle": "使用钱包地址付款",
+    "copyHint": "复制下方地址，并从您的钱包<br/>准确发送 <bold>{{ amount }} {{ currency }}</bold>。",
+    "walletAddressLabel": "钱包地址",
+    "amountToSendLabel": "发送金额",
+    "exactAmountHint": "请务必发送准确金额。金额偏少或偏多都会导致付款失败。",
+    "copy": "复制",
+    "copied": "地址已复制到剪贴板",
+    "openWalletApp": "打开钱包应用"
+  },
+  "productPreview": {
+    "amountLabel": "金额"
+  },
+  "incomingTransfer": {
+    "waiting": "正在等待付款...",
+    "autoUpdate": "检测到付款后，此页面将自动更新。"
+  },
+  "paymentExpiration": {
+    "expiresIn": "付款到期剩余",
+    "canceledAutomatically": "如果未收到付款，将会自动取消。"
+  },
+  "successPayment": {
+    "title": "付款成功！",
+    "description": "您的付款已确认，商品将很快交付。"
+  },
+  "failPayment": {
+    "title": "付款已过期或已取消",
+    "description": "付款未及时完成，已被取消。您可以重试或使用其他钱包地址。"
+  },
+  "conflictPayment": {
+    "title": "已存在一笔待处理付款",
+    "description": "此钱包地址和此商品价格已有一笔待处理交易。每个地址同一时间只能有一笔待处理付款。",
+    "goToPending": "前往待处理付款",
+    "useDifferentWallet": "使用其他钱包地址"
+  },
+  "not-found": {
+    "title": "未找到付款",
+    "description-1": "您查找的付款不存在。",
+    "description-2": "请检查网址，或返回首页。"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "安全、迅速、オープン"
+  },
+  "common": {
+    "usedJustNow": "たった今使用",
+    "usedMinutesAgo_other": "{{count}}分前に使用",
+    "usedHoursAgo_other": "{{count}}時間前に使用",
+    "usedDaysAgo_other": "{{count}}日前に使用",
+    "usedWeeksAgo_other": "{{count}}週間前に使用",
+    "usedMonthsAgo_other": "{{count}}か月前に使用",
+    "callbackButton": "ホームに戻る",
+    "or": "または"
+  },
+  "fromAddress": {
+    "title": "ウォレットアドレスを入力",
+    "description-1": "{{ currency }} の送金元アドレスを貼り付けてください。",
+    "description-2": "お支払いの検出に使用します。",
+    "label": "ウォレットアドレス",
+    "button": "支払いに進む",
+    "error": "ウォレットアドレスが無効です",
+    "error-placeholder": "有効なウォレットアドレスを入力してください",
+    "recentTitle": "最近使用したアドレス"
+  },
+  "payAddress": {
+    "mobileTitle": "モバイルウォレットで支払う",
+    "mobileHint": "お好きなモバイル暗号資産ウォレットを開いて支払ってください。",
+    "qrHint": "お好きなモバイル暗号資産ウォレットを開き、QRコードをスキャンしてください。",
+    "qrTitle": "ウォレットでスキャン",
+    "copyTitle": "ウォレットアドレスで支払う",
+    "copyHint": "下のアドレスをコピーし、ウォレットから<br/>正確に <bold>{{ amount }} {{ currency }}</bold> を送金してください。",
+    "walletAddressLabel": "ウォレットアドレス",
+    "amountToSendLabel": "送金額",
+    "exactAmountHint": "正確な金額を送金してください。少ない、または多い金額を送ると、支払いは失敗します。",
+    "copy": "コピー",
+    "copied": "アドレスをクリップボードにコピーしました",
+    "openWalletApp": "ウォレットアプリを開く"
+  },
+  "productPreview": {
+    "amountLabel": "金額"
+  },
+  "incomingTransfer": {
+    "waiting": "支払いを待っています...",
+    "autoUpdate": "支払いが検出されると、このページは自動的に更新されます。"
+  },
+  "paymentExpiration": {
+    "expiresIn": "支払い期限まで",
+    "canceledAutomatically": "支払いが確認できない場合、自動的にキャンセルされます。"
+  },
+  "successPayment": {
+    "title": "支払いが完了しました",
+    "description": "お支払いが確認されました。商品はまもなく届けられます。"
+  },
+  "failPayment": {
+    "title": "支払いの期限切れまたはキャンセル",
+    "description": "支払いが時間内に完了しなかったため、キャンセルされました。もう一度試すか、別のウォレットアドレスを使用してください。"
+  },
+  "conflictPayment": {
+    "title": "保留中の支払いが既にあります",
+    "description": "このウォレットアドレスとこの商品価格には、すでに保留中の取引があります。各アドレスで同時に保留できる支払いは1件のみです。",
+    "goToPending": "保留中の支払いへ",
+    "useDifferentWallet": "別のウォレットアドレスを使う"
+  },
+  "not-found": {
+    "title": "支払いが見つかりません",
+    "description-1": "お探しの支払いは存在しません。",
+    "description-2": "URLを確認するか、ホームに戻ってください。"
+  }
+}

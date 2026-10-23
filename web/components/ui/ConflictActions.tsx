@@ -3,16 +3,14 @@
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import Button from "../generic/Button";
+import { getLocale } from "@/i18n/client";
 
 type Props = {
   pendingPaymentId: string;
   returnPaymentId: string;
 };
 
-export function ConflictActions({
-  pendingPaymentId,
-  returnPaymentId,
-}: Props) {
+export function ConflictActions({ pendingPaymentId, returnPaymentId }: Props) {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -20,14 +18,16 @@ export function ConflictActions({
     <div className="flex w-full flex-col gap-3">
       <Button
         variant="primary"
-        onClick={() => router.push(`/pay/?id=${pendingPaymentId}`)}
+        onClick={() =>
+          router.push(`/${getLocale()}/pay/?id=${pendingPaymentId}`)
+        }
       >
         {t("conflictPayment.goToPending")}
         <span aria-hidden>→</span>
       </Button>
       <Button
         variant="secondary"
-        onClick={() => router.push(`/?id=${returnPaymentId}`)}
+        onClick={() => router.push(`/${getLocale()}/?id=${returnPaymentId}`)}
       >
         {t("conflictPayment.useDifferentWallet")}
       </Button>

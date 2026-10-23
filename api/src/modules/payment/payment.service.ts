@@ -73,12 +73,13 @@ export class PaymentService {
           ].toLowerCase(),
         returnUrl: body.returnUrl,
         webhookUrl: body.webhookUrl,
+        locale: body.locale,
       },
     });
 
     return {
       id: payment.id,
-      path: `/en?id=${payment.id}`,
+      path: `/${body.locale || 'en'}?id=${payment.id}`,
     };
   }
 

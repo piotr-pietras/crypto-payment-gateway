@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Sicher, schnell, offen"
+  },
+  "common": {
+    "usedJustNow": "Gerade verwendet",
+    "usedMinutesAgo_one": "Vor {{count}} Minute verwendet",
+    "usedMinutesAgo_other": "Vor {{count}} Minuten verwendet",
+    "usedHoursAgo_one": "Vor {{count}} Stunde verwendet",
+    "usedHoursAgo_other": "Vor {{count}} Stunden verwendet",
+    "usedDaysAgo_one": "Vor {{count}} Tag verwendet",
+    "usedDaysAgo_other": "Vor {{count}} Tagen verwendet",
+    "usedWeeksAgo_one": "Vor {{count}} Woche verwendet",
+    "usedWeeksAgo_other": "Vor {{count}} Wochen verwendet",
+    "usedMonthsAgo_one": "Vor {{count}} Monat verwendet",
+    "usedMonthsAgo_other": "Vor {{count}} Monaten verwendet",
+    "callbackButton": "Zur Startseite zurückkehren",
+    "or": "ODER"
+  },
+  "fromAddress": {
+    "title": "Geben Sie Ihre Wallet-Adresse ein",
+    "description-1": "Fügen Sie die Adresse ein, von der Sie {{ currency }} senden.",
+    "description-2": "Wir verwenden sie, um Ihre Zahlung zu erkennen.",
+    "label": "Wallet-Adresse",
+    "button": "Weiter zur Zahlung",
+    "error": "Ungültige Wallet-Adresse",
+    "error-placeholder": "Geben Sie eine gültige Wallet-Adresse ein",
+    "recentTitle": "Zuletzt verwendete Adressen"
+  },
+  "payAddress": {
+    "mobileTitle": "Mit mobilem Wallet bezahlen",
+    "mobileHint": "Öffnen Sie Ihr bevorzugtes mobiles Krypto-Wallet und bezahlen Sie.",
+    "qrHint": "Öffnen Sie Ihr bevorzugtes mobiles Krypto-Wallet und scannen Sie den QR-Code.",
+    "qrTitle": "Mit Ihrem Wallet scannen",
+    "copyTitle": "Mit Wallet-Adresse bezahlen",
+    "copyHint": "Kopieren Sie die Adresse unten und senden Sie<br/>genau <bold>{{ amount }} {{ currency }}</bold> aus Ihrem Wallet.",
+    "walletAddressLabel": "Wallet-Adresse",
+    "amountToSendLabel": "Zu sendender Betrag",
+    "exactAmountHint": "Achten Sie darauf, den genauen Betrag zu senden. Ein zu niedriger oder zu hoher Betrag führt zu einer fehlgeschlagenen Zahlung.",
+    "copy": "Kopieren",
+    "copied": "Adresse in die Zwischenablage kopiert",
+    "openWalletApp": "Wallet-App öffnen"
+  },
+  "productPreview": {
+    "amountLabel": "Betrag"
+  },
+  "incomingTransfer": {
+    "waiting": "Warten auf die Zahlung...",
+    "autoUpdate": "Diese Seite wird automatisch aktualisiert, sobald die Zahlung erkannt wird."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Zahlung läuft ab in",
+    "canceledAutomatically": "Wenn die Zahlung nicht eingeht, wird sie automatisch storniert."
+  },
+  "successPayment": {
+    "title": "Zahlung erfolgreich!",
+    "description": "Ihre Zahlung wurde bestätigt und der Artikel wird in Kürze geliefert."
+  },
+  "failPayment": {
+    "title": "Zahlung abgelaufen oder storniert",
+    "description": "Die Zahlung wurde nicht rechtzeitig abgeschlossen und wurde storniert. Sie können es erneut versuchen oder eine andere Wallet-Adresse verwenden."
+  },
+  "conflictPayment": {
+    "title": "Eine ausstehende Zahlung ist bereits vorhanden",
+    "description": "Für diese Wallet-Adresse und diesen Artikelpreis gibt es bereits eine ausstehende Transaktion. Jede Adresse kann jeweils nur eine ausstehende Zahlung haben.",
+    "goToPending": "Zur ausstehenden Zahlung",
+    "useDifferentWallet": "Andere Wallet-Adresse verwenden"
+  },
+  "not-found": {
+    "title": "Hoppla! Zahlung nicht gefunden",
+    "description-1": "Die gesuchte Zahlung existiert nicht.",
+    "description-2": "Bitte prüfen Sie die URL oder kehren Sie zur Startseite zurück."
+  }
+}

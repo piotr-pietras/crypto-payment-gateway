@@ -6,6 +6,7 @@ import { PaymentDto } from "@/utils/types";
 import { ClockIcon } from "../icons/ClockIcon";
 import { Divider } from "../generic/Divider";
 import { useRouter } from "next/navigation";
+import { getLocale } from "@/i18n/client";
 
 type Props = {
   payment: PaymentDto;
@@ -47,7 +48,10 @@ export function PaymentExpirationSection({
           router.back();
           return;
         } else {
-          setTimeout(() => router.push(`/pay/fail?id=${payment.id}`), 2500);
+          setTimeout(
+            () => router.push(`/${getLocale()}/pay/fail?id=${payment.id}`),
+            2500
+          );
         }
       }
     };
@@ -76,7 +80,7 @@ export function PaymentExpirationSection({
       <Divider type="vertical" />
 
       <div className="flex min-w-0 flex-col gap-0.5 text-caption text-text-secondary">
-        {t("paymentExpiration.cancelledAutomatically")}
+        {t("paymentExpiration.canceledAutomatically")}
       </div>
     </div>
   );

@@ -52,3 +52,29 @@ export const ERC20TransferMethodId = '0xa9059cbb';
 export const ERC20TransferFuncName = 'transfer';
 export const ERC20TransferFromMethodId = '0x23b872dd';
 export const ERC20TransferFromFuncName = 'transferFrom';
+
+export enum Locales {
+  EN = 'en',
+  EN_GB = 'en-GB',
+  ES = 'es',
+  FR = 'fr',
+  DE = 'de',
+  IT = 'it',
+  RU = 'ru',
+  EN_IN = 'en-IN',
+  HI_IN = 'hi-IN',
+  ZH_CN = 'zh-CN',
+  ID = 'id',
+  UR_PK = 'ur-PK',
+  PT_BR = 'pt-BR',
+  BN_BD = 'bn-BD',
+  AR = 'ar',
+  JA = 'ja',
+  FIL = 'fil',
+  VI = 'vi',
+  TR = 'tr',
+  KO = 'ko',
+  TH = 'th',
+  AM = 'am',
+  SW = 'sw',
+}

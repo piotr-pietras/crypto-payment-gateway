@@ -9,7 +9,7 @@ import {
   IsNumberString,
   Matches,
 } from 'class-validator';
-import { PaymentTokens } from 'src/types';
+import { Locales, PaymentTokens } from 'src/types';
 import type { TokenMetadata } from 'src/types';
 import { Payment, PaymentStatus } from '../db/prisma/client';
 
@@ -59,6 +59,15 @@ export class CreatePaymentReqBodyDto {
   @IsString()
   @IsOptional()
   webhookUrl?: string;
+
+  @ApiProperty({
+    enum: Locales,
+    example: Locales.EN,
+    description: 'It determines the language of the payment page',
+  })
+  @IsEnum(Locales)
+  @IsOptional()
+  locale?: Locales;
 }
 
 export class CreatePaymentResBodyDto {

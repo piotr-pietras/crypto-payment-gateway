@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { I18nProvider } from "@/i18n/client";
-import { isLocale } from "@/i18n/config";
+import { isLocale, localeDirection } from "@/i18n/config";
 import Image from "next/image";
 import { getTranslation } from "@/i18n/server";
 import { Toaster } from "sonner";
@@ -39,6 +39,7 @@ export default async function RootLayout({
     <I18nProvider lng={locale}>
       <html
         lang={locale}
+        dir={localeDirection(locale)}
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <body className="min-h-full flex flex-col bg-background">

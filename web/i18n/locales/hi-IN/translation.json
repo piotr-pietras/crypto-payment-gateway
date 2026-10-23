@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "सुरक्षित, तेज़, खुला"
+  },
+  "common": {
+    "usedJustNow": "अभी उपयोग किया गया",
+    "usedMinutesAgo_one": "{{count}} मिनट पहले उपयोग किया गया",
+    "usedMinutesAgo_other": "{{count}} मिनट पहले उपयोग किया गया",
+    "usedHoursAgo_one": "{{count}} घंटा पहले उपयोग किया गया",
+    "usedHoursAgo_other": "{{count}} घंटे पहले उपयोग किया गया",
+    "usedDaysAgo_one": "{{count}} दिन पहले उपयोग किया गया",
+    "usedDaysAgo_other": "{{count}} दिन पहले उपयोग किया गया",
+    "usedWeeksAgo_one": "{{count}} सप्ताह पहले उपयोग किया गया",
+    "usedWeeksAgo_other": "{{count}} सप्ताह पहले उपयोग किया गया",
+    "usedMonthsAgo_one": "{{count}} महीना पहले उपयोग किया गया",
+    "usedMonthsAgo_other": "{{count}} महीने पहले उपयोग किया गया",
+    "callbackButton": "होम पेज पर वापस जाएँ",
+    "or": "या"
+  },
+  "fromAddress": {
+    "title": "अपना वॉलेट पता दर्ज करें",
+    "description-1": "वह पता चिपकाएँ जिससे आप {{ currency }} भेजेंगे।",
+    "description-2": "हम इसका उपयोग आपके भुगतान का पता लगाने के लिए करेंगे।",
+    "label": "वॉलेट पता",
+    "button": "भुगतान पर जारी रखें",
+    "error": "अमान्य वॉलेट पता",
+    "error-placeholder": "एक मान्य वॉलेट पता दर्ज करें",
+    "recentTitle": "हाल ही में उपयोग किए गए पते"
+  },
+  "payAddress": {
+    "mobileTitle": "मोबाइल वॉलेट से भुगतान करें",
+    "mobileHint": "अपना पसंदीदा मोबाइल क्रिप्टो वॉलेट खोलें और भुगतान करें।",
+    "qrHint": "अपना पसंदीदा मोबाइल क्रिप्टो वॉलेट खोलें और QR कोड स्कैन करें।",
+    "qrTitle": "अपने वॉलेट से स्कैन करें",
+    "copyTitle": "वॉलेट पते से भुगतान करें",
+    "copyHint": "नीचे दिया पता कॉपी करें और अपने वॉलेट से<br/>ठीक <bold>{{ amount }} {{ currency }}</bold> भेजें।",
+    "walletAddressLabel": "वॉलेट पता",
+    "amountToSendLabel": "भेजने की राशि",
+    "exactAmountHint": "ठीक वही राशि भेजें। कम या अधिक भेजने पर भुगतान विफल हो जाएगा।",
+    "copy": "कॉपी करें",
+    "copied": "पता क्लिपबोर्ड पर कॉपी हो गया",
+    "openWalletApp": "वॉलेट ऐप खोलें"
+  },
+  "productPreview": {
+    "amountLabel": "राशि"
+  },
+  "incomingTransfer": {
+    "waiting": "भुगतान की प्रतीक्षा हो रही है...",
+    "autoUpdate": "भुगतान का पता लगते ही यह पेज अपने आप अपडेट हो जाएगा।"
+  },
+  "paymentExpiration": {
+    "expiresIn": "भुगतान समाप्त होगा",
+    "canceledAutomatically": "यदि भुगतान प्राप्त नहीं होता है, तो यह अपने आप रद्द हो जाएगा।"
+  },
+  "successPayment": {
+    "title": "भुगतान सफल!",
+    "description": "आपके भुगतान की पुष्टि हो गई है और वस्तु जल्द ही पहुँचा दी जाएगी।"
+  },
+  "failPayment": {
+    "title": "भुगतान समाप्त या रद्द",
+    "description": "भुगतान समय पर पूरा नहीं हुआ और रद्द कर दिया गया है। आप फिर से कोशिश कर सकते हैं या कोई दूसरा वॉलेट पता उपयोग कर सकते हैं।"
+  },
+  "conflictPayment": {
+    "title": "एक लंबित भुगतान पहले से मौजूद है",
+    "description": "इस वॉलेट पते और इस वस्तु की कीमत के लिए पहले से एक लंबित लेनदेन है। प्रत्येक पते पर एक समय में केवल एक लंबित भुगतान हो सकता है।",
+    "goToPending": "लंबित भुगतान पर जाएँ",
+    "useDifferentWallet": "कोई दूसरा वॉलेट पता उपयोग करें"
+  },
+  "not-found": {
+    "title": "भुगतान नहीं मिला",
+    "description-1": "आप जिस भुगतान को खोज रहे हैं, वह मौजूद नहीं है।",
+    "description-2": "कृपया URL जाँचें या होम पेज पर वापस जाएँ।"
+  }
+}
