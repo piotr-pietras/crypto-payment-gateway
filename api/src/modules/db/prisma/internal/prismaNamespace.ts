@@ -704,7 +704,8 @@ export const PaymentScalarFieldEnum = {
   productDescription: 'productDescription',
   productImageUrl: 'productImageUrl',
   returnUrl: 'returnUrl',
-  webhookUrl: 'webhookUrl'
+  webhookUrl: 'webhookUrl',
+  locale: 'locale'
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]

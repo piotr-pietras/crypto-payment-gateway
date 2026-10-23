@@ -1,0 +1,80 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Sicuro, veloce, aperto"
+  },
+  "common": {
+    "usedJustNow": "Usato proprio ora",
+    "usedMinutesAgo_one": "Usato {{count}} minuto fa",
+    "usedMinutesAgo_other": "Usato {{count}} minuti fa",
+    "usedMinutesAgo_many": "Usato {{count}} minuti fa",
+    "usedHoursAgo_one": "Usato {{count}} ora fa",
+    "usedHoursAgo_other": "Usato {{count}} ore fa",
+    "usedHoursAgo_many": "Usato {{count}} ore fa",
+    "usedDaysAgo_one": "Usato {{count}} giorno fa",
+    "usedDaysAgo_other": "Usato {{count}} giorni fa",
+    "usedDaysAgo_many": "Usato {{count}} giorni fa",
+    "usedWeeksAgo_one": "Usato {{count}} settimana fa",
+    "usedWeeksAgo_other": "Usato {{count}} settimane fa",
+    "usedWeeksAgo_many": "Usato {{count}} settimane fa",
+    "usedMonthsAgo_one": "Usato {{count}} mese fa",
+    "usedMonthsAgo_other": "Usato {{count}} mesi fa",
+    "usedMonthsAgo_many": "Usato {{count}} mesi fa",
+    "callbackButton": "Torna alla home page",
+    "or": "OPPURE"
+  },
+  "fromAddress": {
+    "title": "Inserisci l'indirizzo del tuo wallet",
+    "description-1": "Incolla l'indirizzo da cui invierai {{ currency }}.",
+    "description-2": "Lo useremo per rilevare il tuo pagamento.",
+    "label": "Indirizzo del wallet",
+    "button": "Continua al pagamento",
+    "error": "Indirizzo del wallet non valido",
+    "error-placeholder": "Inserisci un indirizzo del wallet valido",
+    "recentTitle": "Indirizzi usati di recente"
+  },
+  "payAddress": {
+    "mobileTitle": "Paga con il wallet mobile",
+    "mobileHint": "Apri il tuo wallet crypto mobile preferito e paga.",
+    "qrHint": "Apri il tuo wallet crypto mobile preferito e scansiona il codice QR.",
+    "qrTitle": "Scansiona con il tuo wallet",
+    "copyTitle": "Paga con l'indirizzo del wallet",
+    "copyHint": "Copia l'indirizzo qui sotto e invia<br/>esattamente <bold>{{ amount }} {{ currency }}</bold> dal tuo wallet.",
+    "walletAddressLabel": "Indirizzo del wallet",
+    "amountToSendLabel": "Importo da inviare",
+    "exactAmountHint": "Assicurati di inviare l'importo esatto. Inviarne di meno o di più comporterà un pagamento non riuscito.",
+    "copy": "Copia",
+    "copied": "Indirizzo copiato negli appunti",
+    "openWalletApp": "Apri l'app del wallet"
+  },
+  "productPreview": {
+    "amountLabel": "Importo"
+  },
+  "incomingTransfer": {
+    "waiting": "In attesa del pagamento...",
+    "autoUpdate": "Questa pagina si aggiornerà automaticamente non appena il pagamento verrà rilevato."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Il pagamento scade tra",
+    "canceledAutomatically": "Se il pagamento non viene ricevuto, verrà annullato automaticamente."
+  },
+  "successPayment": {
+    "title": "Pagamento riuscito!",
+    "description": "Il pagamento è stato confermato e l'articolo sarà consegnato a breve."
+  },
+  "failPayment": {
+    "title": "Pagamento scaduto o annullato",
+    "description": "Il pagamento non è stato completato in tempo ed è stato annullato. Puoi riprovare o usare un altro indirizzo wallet."
+  },
+  "conflictPayment": {
+    "title": "Esiste già un pagamento in sospeso",
+    "description": "C'è già una transazione in sospeso per questo indirizzo wallet e questo prezzo. Ogni indirizzo può avere un solo pagamento in sospeso alla volta.",
+    "goToPending": "Vai al pagamento in sospeso",
+    "useDifferentWallet": "Usa un altro indirizzo wallet"
+  },
+  "not-found": {
+    "title": "Ops! Pagamento non trovato",
+    "description-1": "Il pagamento che stai cercando non esiste.",
+    "description-2": "Controlla l'URL o torna alla home page."
+  }
+}

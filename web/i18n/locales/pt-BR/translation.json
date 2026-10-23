@@ -1,0 +1,80 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Seguro, rápido, aberto"
+  },
+  "common": {
+    "usedJustNow": "Usado agora mesmo",
+    "usedMinutesAgo_one": "Usado há {{count}} minuto",
+    "usedMinutesAgo_other": "Usado há {{count}} minutos",
+    "usedMinutesAgo_many": "Usado há {{count}} minutos",
+    "usedHoursAgo_one": "Usado há {{count}} hora",
+    "usedHoursAgo_other": "Usado há {{count}} horas",
+    "usedHoursAgo_many": "Usado há {{count}} horas",
+    "usedDaysAgo_one": "Usado há {{count}} dia",
+    "usedDaysAgo_other": "Usado há {{count}} dias",
+    "usedDaysAgo_many": "Usado há {{count}} dias",
+    "usedWeeksAgo_one": "Usado há {{count}} semana",
+    "usedWeeksAgo_other": "Usado há {{count}} semanas",
+    "usedWeeksAgo_many": "Usado há {{count}} semanas",
+    "usedMonthsAgo_one": "Usado há {{count}} mês",
+    "usedMonthsAgo_other": "Usado há {{count}} meses",
+    "usedMonthsAgo_many": "Usado há {{count}} meses",
+    "callbackButton": "Voltar à página inicial",
+    "or": "OU"
+  },
+  "fromAddress": {
+    "title": "Informe o endereço da sua carteira",
+    "description-1": "Cole o endereço de onde você enviará {{ currency }}.",
+    "description-2": "Vamos usá-lo para detectar seu pagamento.",
+    "label": "Endereço da carteira",
+    "button": "Continuar para o pagamento",
+    "error": "Endereço de carteira inválido",
+    "error-placeholder": "Informe um endereço de carteira válido",
+    "recentTitle": "Endereços usados recentemente"
+  },
+  "payAddress": {
+    "mobileTitle": "Pague com a carteira no celular",
+    "mobileHint": "Abra sua carteira cripto favorita no celular e pague.",
+    "qrHint": "Abra sua carteira cripto favorita no celular e escaneie o código QR.",
+    "qrTitle": "Escaneie com sua carteira",
+    "copyTitle": "Pague com o endereço da carteira",
+    "copyHint": "Copie o endereço abaixo e envie<br/>exatamente <bold>{{ amount }} {{ currency }}</bold> da sua carteira.",
+    "walletAddressLabel": "Endereço da carteira",
+    "amountToSendLabel": "Valor a enviar",
+    "exactAmountHint": "Envie o valor exato. Enviar menos ou mais fará o pagamento falhar.",
+    "copy": "Copiar",
+    "copied": "Endereço copiado para a área de transferência",
+    "openWalletApp": "Abrir app da carteira"
+  },
+  "productPreview": {
+    "amountLabel": "Valor"
+  },
+  "incomingTransfer": {
+    "waiting": "Aguardando pagamento...",
+    "autoUpdate": "Esta página será atualizada automaticamente quando o pagamento for detectado."
+  },
+  "paymentExpiration": {
+    "expiresIn": "O pagamento expira em",
+    "canceledAutomatically": "Se o pagamento não for recebido, ele será cancelado automaticamente."
+  },
+  "successPayment": {
+    "title": "Pagamento concluído!",
+    "description": "Seu pagamento foi confirmado e o item será entregue em breve."
+  },
+  "failPayment": {
+    "title": "Pagamento expirado ou cancelado",
+    "description": "O pagamento não foi concluído a tempo e foi cancelado. Você pode tentar de novo ou usar outro endereço de carteira."
+  },
+  "conflictPayment": {
+    "title": "Já existe um pagamento pendente",
+    "description": "Já há uma transação pendente para este endereço de carteira e este preço. Cada endereço pode ter apenas um pagamento pendente por vez.",
+    "goToPending": "Ir para o pagamento pendente",
+    "useDifferentWallet": "Usar outro endereço de carteira"
+  },
+  "not-found": {
+    "title": "Ops! Pagamento não encontrado",
+    "description-1": "O pagamento que você procura não existe.",
+    "description-2": "Verifique o URL ou volte à página inicial."
+  }
+}

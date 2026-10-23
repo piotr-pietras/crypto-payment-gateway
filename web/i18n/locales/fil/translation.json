@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Ligtas, mabilis, bukas"
+  },
+  "common": {
+    "usedJustNow": "Kakagamit lang",
+    "usedMinutesAgo_one": "Ginamit {{count}} minuto ang nakalipas",
+    "usedMinutesAgo_other": "Ginamit {{count}} na minuto ang nakalipas",
+    "usedHoursAgo_one": "Ginamit {{count}} oras ang nakalipas",
+    "usedHoursAgo_other": "Ginamit {{count}} na oras ang nakalipas",
+    "usedDaysAgo_one": "Ginamit {{count}} araw ang nakalipas",
+    "usedDaysAgo_other": "Ginamit {{count}} na araw ang nakalipas",
+    "usedWeeksAgo_one": "Ginamit {{count}} linggo ang nakalipas",
+    "usedWeeksAgo_other": "Ginamit {{count}} na linggo ang nakalipas",
+    "usedMonthsAgo_one": "Ginamit {{count}} buwan ang nakalipas",
+    "usedMonthsAgo_other": "Ginamit {{count}} na buwan ang nakalipas",
+    "callbackButton": "Bumalik sa home page",
+    "or": "O"
+  },
+  "fromAddress": {
+    "title": "Ilagay ang address ng wallet mo",
+    "description-1": "I-paste ang address na pagmumulan ng {{ currency }}.",
+    "description-2": "Gagamitin namin ito para matukoy ang bayad mo.",
+    "label": "Address ng wallet",
+    "button": "Magpatuloy sa pagbabayad",
+    "error": "Hindi wastong address ng wallet",
+    "error-placeholder": "Maglagay ng wastong address ng wallet",
+    "recentTitle": "Mga address na kamakailang ginamit"
+  },
+  "payAddress": {
+    "mobileTitle": "Magbayad gamit ang mobile wallet",
+    "mobileHint": "Buksan ang paborito mong mobile crypto wallet at magbayad.",
+    "qrHint": "Buksan ang paborito mong mobile crypto wallet at i-scan ang QR code.",
+    "qrTitle": "I-scan gamit ang wallet mo",
+    "copyTitle": "Magbayad gamit ang address ng wallet",
+    "copyHint": "Kopyahin ang address sa ibaba at magpadala<br/>nang eksaktong <bold>{{ amount }} {{ currency }}</bold> mula sa wallet mo.",
+    "walletAddressLabel": "Address ng wallet",
+    "amountToSendLabel": "Halagang ipapadala",
+    "exactAmountHint": "Siguraduhing eksakto ang halagang ipapadala. Kapag kulang o sobra, mabibigo ang bayad.",
+    "copy": "Kopyahin",
+    "copied": "Nakopya ang address sa clipboard",
+    "openWalletApp": "Buksan ang wallet app"
+  },
+  "productPreview": {
+    "amountLabel": "Halaga"
+  },
+  "incomingTransfer": {
+    "waiting": "Naghihintay ng bayad...",
+    "autoUpdate": "Awtomatikong mag-a-update ang pahinang ito kapag natukoy na ang bayad."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Mag-e-expire ang bayad sa",
+    "canceledAutomatically": "Kung hindi matatanggap ang bayad, awtomatiko itong kakanselahin."
+  },
+  "successPayment": {
+    "title": "Matagumpay ang bayad!",
+    "description": "Nakumpirma na ang bayad mo at maihahatid ang item sa ilang sandali."
+  },
+  "failPayment": {
+    "title": "Nag-expire o nakansela ang bayad",
+    "description": "Hindi natapos ang bayad sa oras at nakansela na ito. Maaari kang sumubok muli o gumamit ng ibang address ng wallet."
+  },
+  "conflictPayment": {
+    "title": "May nakabinbing bayad na",
+    "description": "May nakabinbing transaksyon na para sa address ng wallet na ito at sa presyong ito. Isang nakabinbing bayad lang ang puwede sa bawat address sa isang pagkakataon.",
+    "goToPending": "Pumunta sa nakabinbing bayad",
+    "useDifferentWallet": "Gumamit ng ibang address ng wallet"
+  },
+  "not-found": {
+    "title": "Hindi nahanap ang bayad",
+    "description-1": "Walang ganitong bayad.",
+    "description-2": "Suriin ang URL o bumalik sa home page."
+  }
+}

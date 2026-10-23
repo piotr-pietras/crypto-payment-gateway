@@ -9,6 +9,8 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: 'postgres://postgres:postgres@localhost:51214/template1?sslmode=disable',
+    shadowDatabaseUrl:
+      'postgres://postgres:postgres@localhost:51215/template1?sslmode=disable&connection_limit=10&connect_timeout=0&max_idle_connection_lifetime=0&pool_timeout=0&socket_timeout=0',
+    url: 'postgres://postgres:postgres@localhost:51214/template1?sslmode=disable&connection_limit=10&connect_timeout=0&max_idle_connection_lifetime=0&pool_timeout=0&socket_timeout=0',
   },
 });

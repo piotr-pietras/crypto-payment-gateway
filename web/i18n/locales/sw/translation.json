@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Salama, haraka, wazi"
+  },
+  "common": {
+    "usedJustNow": "Imetumika sasa hivi",
+    "usedMinutesAgo_one": "Imetumika dakika {{count}} iliyopita",
+    "usedMinutesAgo_other": "Imetumika dakika {{count}} zilizopita",
+    "usedHoursAgo_one": "Imetumika saa {{count}} iliyopita",
+    "usedHoursAgo_other": "Imetumika saa {{count}} zilizopita",
+    "usedDaysAgo_one": "Imetumika siku {{count}} iliyopita",
+    "usedDaysAgo_other": "Imetumika siku {{count}} zilizopita",
+    "usedWeeksAgo_one": "Imetumika wiki {{count}} iliyopita",
+    "usedWeeksAgo_other": "Imetumika wiki {{count}} zilizopita",
+    "usedMonthsAgo_one": "Imetumika mwezi {{count}} uliopita",
+    "usedMonthsAgo_other": "Imetumika miezi {{count}} iliyopita",
+    "callbackButton": "Rudi kwenye ukurasa wa nyumbani",
+    "or": "AU"
+  },
+  "fromAddress": {
+    "title": "Weka anwani ya mkoba wako",
+    "description-1": "Bandika anwani utakayotumia kutuma {{ currency }}.",
+    "description-2": "Tutaitumia kutambua malipo yako.",
+    "label": "Anwani ya mkoba",
+    "button": "Endelea kwenye malipo",
+    "error": "Anwani ya mkoba si sahihi",
+    "error-placeholder": "Weka anwani sahihi ya mkoba",
+    "recentTitle": "Anwani zilizotumika hivi karibuni"
+  },
+  "payAddress": {
+    "mobileTitle": "Lipa kwa mkoba wa simu",
+    "mobileHint": "Fungua mkoba wako pendwa wa kripto kwenye simu na ulipe.",
+    "qrHint": "Fungua mkoba wako pendwa wa kripto kwenye simu na uchanganue msimbo wa QR.",
+    "qrTitle": "Changanua kwa mkoba wako",
+    "copyTitle": "Lipa kwa anwani ya mkoba",
+    "copyHint": "Nakili anwani iliyo hapa chini na utume<br/>hasa <bold>{{ amount }} {{ currency }}</bold> kutoka kwenye mkoba wako.",
+    "walletAddressLabel": "Anwani ya mkoba",
+    "amountToSendLabel": "Kiasi cha kutuma",
+    "exactAmountHint": "Hakikisha unatuma kiasi kamili. Kutuma kidogo au kingi zaidi kutasababisha malipo kushindwa.",
+    "copy": "Nakili",
+    "copied": "Anwani imenakiliwa kwenye ubao wa kunakili",
+    "openWalletApp": "Fungua programu ya mkoba"
+  },
+  "productPreview": {
+    "amountLabel": "Kiasi"
+  },
+  "incomingTransfer": {
+    "waiting": "Inasubiri malipo...",
+    "autoUpdate": "Ukurasa huu utasasishwa kiotomatiki malipo yatakapogunduliwa."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Malipo yanaisha baada ya",
+    "canceledAutomatically": "Ikiwa malipo hayatapokelewa, yatafutwa kiotomatiki."
+  },
+  "successPayment": {
+    "title": "Malipo yamefanikiwa!",
+    "description": "Malipo yako yamethibitishwa na bidhaa itatolewa hivi karibuni."
+  },
+  "failPayment": {
+    "title": "Malipo yameisha muda au yamefutwa",
+    "description": "Malipo hayakukamilika kwa wakati na yamefutwa. Unaweza kujaribu tena au kutumia anwani nyingine ya mkoba."
+  },
+  "conflictPayment": {
+    "title": "Tayari kuna malipo yanayosubiri",
+    "description": "Tayari kuna muamala unaosubiri kwa anwani hii ya mkoba na bei hii. Kila anwani inaweza kuwa na malipo moja tu yanayosubiri kwa wakati mmoja.",
+    "goToPending": "Nenda kwenye malipo yanayosubiri",
+    "useDifferentWallet": "Tumia anwani nyingine ya mkoba"
+  },
+  "not-found": {
+    "title": "Malipo hayajapatikana",
+    "description-1": "Malipo unayoyatafuta hayapo.",
+    "description-2": "Tafadhali angalia URL au urudi kwenye ukurasa wa nyumbani."
+  }
+}

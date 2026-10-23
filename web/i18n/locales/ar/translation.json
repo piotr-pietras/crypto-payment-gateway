@@ -1,0 +1,95 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "آمن، سريع، مفتوح"
+  },
+  "common": {
+    "usedJustNow": "استُخدم للتو",
+    "usedMinutesAgo_zero": "استُخدم منذ {{count}} دقائق",
+    "usedMinutesAgo_one": "استُخدم منذ دقيقة واحدة",
+    "usedMinutesAgo_two": "استُخدم منذ دقيقتين",
+    "usedMinutesAgo_few": "استُخدم منذ {{count}} دقائق",
+    "usedMinutesAgo_many": "استُخدم منذ {{count}} دقيقة",
+    "usedMinutesAgo_other": "استُخدم منذ {{count}} دقيقة",
+    "usedHoursAgo_zero": "استُخدم منذ {{count}} ساعات",
+    "usedHoursAgo_one": "استُخدم منذ ساعة واحدة",
+    "usedHoursAgo_two": "استُخدم منذ ساعتين",
+    "usedHoursAgo_few": "استُخدم منذ {{count}} ساعات",
+    "usedHoursAgo_many": "استُخدم منذ {{count}} ساعة",
+    "usedHoursAgo_other": "استُخدم منذ {{count}} ساعة",
+    "usedDaysAgo_zero": "استُخدم منذ {{count}} أيام",
+    "usedDaysAgo_one": "استُخدم منذ يوم واحد",
+    "usedDaysAgo_two": "استُخدم منذ يومين",
+    "usedDaysAgo_few": "استُخدم منذ {{count}} أيام",
+    "usedDaysAgo_many": "استُخدم منذ {{count}} يوماً",
+    "usedDaysAgo_other": "استُخدم منذ {{count}} يوم",
+    "usedWeeksAgo_zero": "استُخدم منذ {{count}} أسابيع",
+    "usedWeeksAgo_one": "استُخدم منذ أسبوع واحد",
+    "usedWeeksAgo_two": "استُخدم منذ أسبوعين",
+    "usedWeeksAgo_few": "استُخدم منذ {{count}} أسابيع",
+    "usedWeeksAgo_many": "استُخدم منذ {{count}} أسبوعاً",
+    "usedWeeksAgo_other": "استُخدم منذ {{count}} أسبوع",
+    "usedMonthsAgo_zero": "استُخدم منذ {{count}} أشهر",
+    "usedMonthsAgo_one": "استُخدم منذ شهر واحد",
+    "usedMonthsAgo_two": "استُخدم منذ شهرين",
+    "usedMonthsAgo_few": "استُخدم منذ {{count}} أشهر",
+    "usedMonthsAgo_many": "استُخدم منذ {{count}} شهراً",
+    "usedMonthsAgo_other": "استُخدم منذ {{count}} شهر",
+    "callbackButton": "العودة إلى الصفحة الرئيسية",
+    "or": "أو"
+  },
+  "fromAddress": {
+    "title": "أدخل عنوان محفظتك",
+    "description-1": "الصق العنوان الذي سترسل منه {{ currency }}.",
+    "description-2": "سنستخدمه لرصد دفعتك.",
+    "label": "عنوان المحفظة",
+    "button": "المتابعة إلى الدفع",
+    "error": "عنوان محفظة غير صالح",
+    "error-placeholder": "أدخل عنوان محفظة صالحاً",
+    "recentTitle": "العناوين المستخدمة مؤخراً"
+  },
+  "payAddress": {
+    "mobileTitle": "ادفع بمحفظة الهاتف",
+    "mobileHint": "افتح محفظة العملات المشفرة المفضلة على هاتفك وادفع.",
+    "qrHint": "افتح محفظة العملات المشفرة المفضلة على هاتفك وامسح رمز QR.",
+    "qrTitle": "امسح باستخدام محفظتك",
+    "copyTitle": "ادفع بعنوان المحفظة",
+    "copyHint": "انسخ العنوان أدناه وأرسل<br/>بالضبط <bold>{{ amount }} {{ currency }}</bold> من محفظتك.",
+    "walletAddressLabel": "عنوان المحفظة",
+    "amountToSendLabel": "المبلغ المراد إرساله",
+    "exactAmountHint": "تأكد من إرسال المبلغ بالضبط. إرسال مبلغ أقل أو أكبر سيؤدي إلى فشل الدفع.",
+    "copy": "نسخ",
+    "copied": "تم نسخ العنوان إلى الحافظة",
+    "openWalletApp": "فتح تطبيق المحفظة"
+  },
+  "productPreview": {
+    "amountLabel": "المبلغ"
+  },
+  "incomingTransfer": {
+    "waiting": "بانتظار الدفع...",
+    "autoUpdate": "ستتحدث هذه الصفحة تلقائياً عند رصد الدفع."
+  },
+  "paymentExpiration": {
+    "expiresIn": "تنتهي صلاحية الدفع خلال",
+    "canceledAutomatically": "إذا لم يُستلم الدفع، فسيتم إلغاؤه تلقائياً."
+  },
+  "successPayment": {
+    "title": "تم الدفع بنجاح!",
+    "description": "تم تأكيد دفعك وسيتم تسليم العنصر قريباً."
+  },
+  "failPayment": {
+    "title": "انتهت صلاحية الدفع أو تم إلغاؤه",
+    "description": "لم يكتمل الدفع في الوقت المحدد وتم إلغاؤه. يمكنك المحاولة مرة أخرى أو استخدام عنوان محفظة مختلف."
+  },
+  "conflictPayment": {
+    "title": "توجد دفعة معلّقة بالفعل",
+    "description": "توجد معاملة معلّقة بالفعل لعنوان المحفظة هذا وسعر هذا العنصر. يمكن أن يكون لكل عنوان دفعة معلّقة واحدة فقط في كل مرة.",
+    "goToPending": "الانتقال إلى الدفع المعلّق",
+    "useDifferentWallet": "استخدام عنوان محفظة مختلف"
+  },
+  "not-found": {
+    "title": "عذراً! الدفع غير موجود",
+    "description-1": "الدفع الذي تبحث عنه غير موجود.",
+    "description-2": "يرجى التحقق من الرابط أو العودة إلى الصفحة الرئيسية."
+  }
+}

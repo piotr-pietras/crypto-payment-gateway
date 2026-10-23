@@ -49,6 +49,7 @@ export type PaymentMinAggregateOutputType = {
   productImageUrl: string | null
   returnUrl: string | null
   webhookUrl: string | null
+  locale: string | null
 }
 
 export type PaymentMaxAggregateOutputType = {
@@ -66,6 +67,7 @@ export type PaymentMaxAggregateOutputType = {
   productImageUrl: string | null
   returnUrl: string | null
   webhookUrl: string | null
+  locale: string | null
 }
 
 export type PaymentCountAggregateOutputType = {
@@ -83,6 +85,7 @@ export type PaymentCountAggregateOutputType = {
   productImageUrl: number
   returnUrl: number
   webhookUrl: number
+  locale: number
   _all: number
 }
 
@@ -110,6 +113,7 @@ export type PaymentMinAggregateInputType = {
   productImageUrl?: true
   returnUrl?: true
   webhookUrl?: true
+  locale?: true
 }
 
 export type PaymentMaxAggregateInputType = {
@@ -127,6 +131,7 @@ export type PaymentMaxAggregateInputType = {
   productImageUrl?: true
   returnUrl?: true
   webhookUrl?: true
+  locale?: true
 }
 
 export type PaymentCountAggregateInputType = {
@@ -144,6 +149,7 @@ export type PaymentCountAggregateInputType = {
   productImageUrl?: true
   returnUrl?: true
   webhookUrl?: true
+  locale?: true
   _all?: true
 }
 
@@ -248,6 +254,7 @@ export type PaymentGroupByOutputType = {
   productImageUrl: string | null
   returnUrl: string
   webhookUrl: string | null
+  locale: string | null
   _count: PaymentCountAggregateOutputType | null
   _avg: PaymentAvgAggregateOutputType | null
   _sum: PaymentSumAggregateOutputType | null
@@ -288,6 +295,7 @@ export type PaymentWhereInput = {
   productImageUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
   returnUrl?: Prisma.StringFilter<"Payment"> | string
   webhookUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  locale?: Prisma.StringNullableFilter<"Payment"> | string | null
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
 }
 
@@ -306,6 +314,7 @@ export type PaymentOrderByWithRelationInput = {
   productImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   returnUrl?: Prisma.SortOrder
   webhookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  locale?: Prisma.SortOrderInput | Prisma.SortOrder
   transfer?: Prisma.TransferOrderByWithRelationInput
 }
 
@@ -327,6 +336,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   productImageUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
   returnUrl?: Prisma.StringFilter<"Payment"> | string
   webhookUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  locale?: Prisma.StringNullableFilter<"Payment"> | string | null
   transfer?: Prisma.XOR<Prisma.TransferNullableScalarRelationFilter, Prisma.TransferWhereInput> | null
 }, "id" | "transferHash">
 
@@ -345,6 +355,7 @@ export type PaymentOrderByWithAggregationInput = {
   productImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   returnUrl?: Prisma.SortOrder
   webhookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  locale?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
   _avg?: Prisma.PaymentAvgOrderByAggregateInput
   _max?: Prisma.PaymentMaxOrderByAggregateInput
@@ -370,6 +381,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   productImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   returnUrl?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   webhookUrl?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  locale?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
 }
 
 export type PaymentCreateInput = {
@@ -386,6 +398,7 @@ export type PaymentCreateInput = {
   productImageUrl?: string | null
   returnUrl: string
   webhookUrl?: string | null
+  locale?: string | null
   transfer?: Prisma.TransferCreateNestedOneWithoutPaymentInput
 }
 
@@ -404,6 +417,7 @@ export type PaymentUncheckedCreateInput = {
   productImageUrl?: string | null
   returnUrl: string
   webhookUrl?: string | null
+  locale?: string | null
 }
 
 export type PaymentUpdateInput = {
@@ -420,6 +434,7 @@ export type PaymentUpdateInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transfer?: Prisma.TransferUpdateOneWithoutPaymentNestedInput
 }
 
@@ -438,6 +453,7 @@ export type PaymentUncheckedUpdateInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentCreateManyInput = {
@@ -455,6 +471,7 @@ export type PaymentCreateManyInput = {
   productImageUrl?: string | null
   returnUrl: string
   webhookUrl?: string | null
+  locale?: string | null
 }
 
 export type PaymentUpdateManyMutationInput = {
@@ -471,6 +488,7 @@ export type PaymentUpdateManyMutationInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentUncheckedUpdateManyInput = {
@@ -488,6 +506,7 @@ export type PaymentUncheckedUpdateManyInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentCountOrderByAggregateInput = {
@@ -505,6 +524,7 @@ export type PaymentCountOrderByAggregateInput = {
   productImageUrl?: Prisma.SortOrder
   returnUrl?: Prisma.SortOrder
   webhookUrl?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
 }
 
 export type PaymentAvgOrderByAggregateInput = {
@@ -526,6 +546,7 @@ export type PaymentMaxOrderByAggregateInput = {
   productImageUrl?: Prisma.SortOrder
   returnUrl?: Prisma.SortOrder
   webhookUrl?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
 }
 
 export type PaymentMinOrderByAggregateInput = {
@@ -543,6 +564,7 @@ export type PaymentMinOrderByAggregateInput = {
   productImageUrl?: Prisma.SortOrder
   returnUrl?: Prisma.SortOrder
   webhookUrl?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
 }
 
 export type PaymentSumOrderByAggregateInput = {
@@ -620,6 +642,7 @@ export type PaymentCreateWithoutTransferInput = {
   productImageUrl?: string | null
   returnUrl: string
   webhookUrl?: string | null
+  locale?: string | null
 }
 
 export type PaymentUncheckedCreateWithoutTransferInput = {
@@ -636,6 +659,7 @@ export type PaymentUncheckedCreateWithoutTransferInput = {
   productImageUrl?: string | null
   returnUrl: string
   webhookUrl?: string | null
+  locale?: string | null
 }
 
 export type PaymentCreateOrConnectWithoutTransferInput = {
@@ -668,6 +692,7 @@ export type PaymentUpdateWithoutTransferInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentUncheckedUpdateWithoutTransferInput = {
@@ -684,6 +709,7 @@ export type PaymentUncheckedUpdateWithoutTransferInput = {
   productImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   returnUrl?: Prisma.StringFieldUpdateOperationsInput | string
   webhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -703,6 +729,7 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   productImageUrl?: boolean
   returnUrl?: boolean
   webhookUrl?: boolean
+  locale?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -721,6 +748,7 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   productImageUrl?: boolean
   returnUrl?: boolean
   webhookUrl?: boolean
+  locale?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -739,6 +767,7 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   productImageUrl?: boolean
   returnUrl?: boolean
   webhookUrl?: boolean
+  locale?: boolean
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
@@ -757,9 +786,10 @@ export type PaymentSelectScalar = {
   productImageUrl?: boolean
   returnUrl?: boolean
   webhookUrl?: boolean
+  locale?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transferHash" | "createdAt" | "status" | "updatedAt" | "amount" | "contractAddress" | "fromAddress" | "validUntil" | "productTitle" | "productDescription" | "productImageUrl" | "returnUrl" | "webhookUrl", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transferHash" | "createdAt" | "status" | "updatedAt" | "amount" | "contractAddress" | "fromAddress" | "validUntil" | "productTitle" | "productDescription" | "productImageUrl" | "returnUrl" | "webhookUrl" | "locale", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transfer?: boolean | Prisma.Payment$transferArgs<ExtArgs>
 }
@@ -790,6 +820,7 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     productImageUrl: string | null
     returnUrl: string
     webhookUrl: string | null
+    locale: string | null
   }, ExtArgs["result"]["payment"]>
   composites: {}
 }
@@ -1228,6 +1259,7 @@ export interface PaymentFieldRefs {
   readonly productImageUrl: Prisma.FieldRef<"Payment", 'String'>
   readonly returnUrl: Prisma.FieldRef<"Payment", 'String'>
   readonly webhookUrl: Prisma.FieldRef<"Payment", 'String'>
+  readonly locale: Prisma.FieldRef<"Payment", 'String'>
 }
     
 
