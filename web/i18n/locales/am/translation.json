@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "ደህንነቱ የተጠበቀ፣ ፈጣን፣ ክፍት"
+  },
+  "common": {
+    "usedJustNow": "አሁን ተጠቅመውበታል",
+    "usedMinutesAgo_one": "ከ{{count}} ደቂቃ በፊት ጥቅም ላይ ውሏል",
+    "usedMinutesAgo_other": "ከ{{count}} ደቂቃዎች በፊት ጥቅም ላይ ውሏል",
+    "usedHoursAgo_one": "ከ{{count}} ሰዓት በፊት ጥቅም ላይ ውሏል",
+    "usedHoursAgo_other": "ከ{{count}} ሰዓታት በፊት ጥቅም ላይ ውሏል",
+    "usedDaysAgo_one": "ከ{{count}} ቀን በፊት ጥቅም ላይ ውሏል",
+    "usedDaysAgo_other": "ከ{{count}} ቀናት በፊት ጥቅም ላይ ውሏል",
+    "usedWeeksAgo_one": "ከ{{count}} ሳምንት በፊት ጥቅም ላይ ውሏል",
+    "usedWeeksAgo_other": "ከ{{count}} ሳምንታት በፊት ጥቅም ላይ ውሏል",
+    "usedMonthsAgo_one": "ከ{{count}} ወር በፊት ጥቅም ላይ ውሏል",
+    "usedMonthsAgo_other": "ከ{{count}} ወራት በፊት ጥቅም ላይ ውሏል",
+    "callbackButton": "ወደ መነሻ ገጽ ተመለስ",
+    "or": "ወይም"
+  },
+  "fromAddress": {
+    "title": "የዋሌት አድራሻዎን ያስገቡ",
+    "description-1": "{{ currency }} የሚልኩበትን አድራሻ ይለጥፉ።",
+    "description-2": "ክፍያዎን ለመለየት እንጠቀምበታለን።",
+    "label": "የዋሌት አድራሻ",
+    "button": "ወደ ክፍያ ቀጥል",
+    "error": "ልክ ያልሆነ የዋሌት አድራሻ",
+    "error-placeholder": "ትክክለኛ የዋሌት አድራሻ ያስገቡ",
+    "recentTitle": "በቅርብ ጥቅም ላይ የዋሉ አድራሻዎች"
+  },
+  "payAddress": {
+    "mobileTitle": "በሞባይል ዋሌት ይክፈሉ",
+    "mobileHint": "የሚወዱትን የሞባይል ክሪፕቶ ዋሌት ከፍተው ይክፈሉ።",
+    "qrHint": "የሚወዱትን የሞባይል ክሪፕቶ ዋሌት ከፍተው የQR ኮዱን ይቃኙ።",
+    "qrTitle": "በዋሌትዎ ይቃኙ",
+    "copyTitle": "በዋሌት አድራሻ ይክፈሉ",
+    "copyHint": "ከታች ያለውን አድራሻ ይቅዱና ከዋሌትዎ<br/>በትክክል <bold>{{ amount }} {{ currency }}</bold> ይላኩ።",
+    "walletAddressLabel": "የዋሌት አድራሻ",
+    "amountToSendLabel": "የሚላክ መጠን",
+    "exactAmountHint": "ትክክለኛውን መጠን መላክዎን ያረጋግጡ። ያነሰ ወይም የበለጠ መላክ ክፍያው እንዲወድቅ ያደርጋል።",
+    "copy": "ቅዳ",
+    "copied": "አድራሻው ወደ ቅንጥብ ሰሌዳ ተቀድቷል",
+    "openWalletApp": "የዋሌት መተግበሪያ ክፈት"
+  },
+  "productPreview": {
+    "amountLabel": "መጠን"
+  },
+  "incomingTransfer": {
+    "waiting": "ክፍያ በመጠበቅ ላይ...",
+    "autoUpdate": "ክፍያው ሲገኝ ይህ ገጽ በራስ-ሰር ይዘምናል።"
+  },
+  "paymentExpiration": {
+    "expiresIn": "ክፍያው የሚያበቃው በ",
+    "canceledAutomatically": "ክፍያ ካልደረሰ በራስ-ሰር ይሰረዛል።"
+  },
+  "successPayment": {
+    "title": "ክፍያው ተሳክቷል!",
+    "description": "ክፍያዎ ተረጋግጧል እና እቃው በቅርቡ ይደርሳል።"
+  },
+  "failPayment": {
+    "title": "ክፍያው ጊዜው አልፏል ወይም ተሰርዟል",
+    "description": "ክፍያው በጊዜ አልተጠናቀቀም እና ተሰርዟል። እንደገና መሞከር ወይም ሌላ የዋሌት አድራሻ መጠቀም ይችላሉ።"
+  },
+  "conflictPayment": {
+    "title": "በመጠባበቅ ላይ ያለ ክፍያ አስቀድሞ አለ",
+    "description": "ለዚህ የዋሌት አድራሻ እና ለዚህ የእቃ ዋጋ አስቀድሞ በመጠባበቅ ላይ ያለ ግብይት አለ። እያንዳንዱ አድራሻ በአንድ ጊዜ አንድ በመጠባበቅ ላይ ያለ ክፍያ ብቻ ሊኖረው ይችላል።",
+    "goToPending": "ወደ በመጠባበቅ ላይ ያለው ክፍያ ይሂዱ",
+    "useDifferentWallet": "ሌላ የዋሌት አድራሻ ይጠቀሙ"
+  },
+  "not-found": {
+    "title": "ክፍያ አልተገኘም",
+    "description-1": "የሚፈልጉት ክፍያ የለም።",
+    "description-2": "እባክዎ URLውን ያረጋግጡ ወይም ወደ መነሻ ገጽ ይመለሱ።"
+  }
+}

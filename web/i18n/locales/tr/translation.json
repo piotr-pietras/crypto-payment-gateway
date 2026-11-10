@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Güvenli, hızlı, açık"
+  },
+  "common": {
+    "usedJustNow": "Az önce kullanıldı",
+    "usedMinutesAgo_one": "{{count}} dakika önce kullanıldı",
+    "usedMinutesAgo_other": "{{count}} dakika önce kullanıldı",
+    "usedHoursAgo_one": "{{count}} saat önce kullanıldı",
+    "usedHoursAgo_other": "{{count}} saat önce kullanıldı",
+    "usedDaysAgo_one": "{{count}} gün önce kullanıldı",
+    "usedDaysAgo_other": "{{count}} gün önce kullanıldı",
+    "usedWeeksAgo_one": "{{count}} hafta önce kullanıldı",
+    "usedWeeksAgo_other": "{{count}} hafta önce kullanıldı",
+    "usedMonthsAgo_one": "{{count}} ay önce kullanıldı",
+    "usedMonthsAgo_other": "{{count}} ay önce kullanıldı",
+    "callbackButton": "Ana sayfaya dön",
+    "or": "VEYA"
+  },
+  "fromAddress": {
+    "title": "Cüzdan adresinizi girin",
+    "description-1": "{{ currency }} göndereceğiniz adresi yapıştırın.",
+    "description-2": "Ödemenizi tespit etmek için bu adresi kullanacağız.",
+    "label": "Cüzdan adresi",
+    "button": "Ödemeye devam et",
+    "error": "Geçersiz cüzdan adresi",
+    "error-placeholder": "Geçerli bir cüzdan adresi girin",
+    "recentTitle": "Son kullanılan adresler"
+  },
+  "payAddress": {
+    "mobileTitle": "Mobil cüzdanla öde",
+    "mobileHint": "Sık kullandığınız mobil kripto cüzdanını açın ve ödeme yapın.",
+    "qrHint": "Sık kullandığınız mobil kripto cüzdanını açın ve QR kodunu tarayın.",
+    "qrTitle": "Cüzdanınızla tarayın",
+    "copyTitle": "Cüzdan adresiyle öde",
+    "copyHint": "Aşağıdaki adresi kopyalayın ve cüzdanınızdan<br/>tam olarak <bold>{{ amount }} {{ currency }}</bold> gönderin.",
+    "walletAddressLabel": "Cüzdan adresi",
+    "amountToSendLabel": "Gönderilecek tutar",
+    "exactAmountHint": "Tam tutarı gönderdiğinizden emin olun. Daha az veya daha fazla göndermek ödemenin başarısız olmasına neden olur.",
+    "copy": "Kopyala",
+    "copied": "Adres panoya kopyalandı",
+    "openWalletApp": "Cüzdan uygulamasını aç"
+  },
+  "productPreview": {
+    "amountLabel": "Tutar"
+  },
+  "incomingTransfer": {
+    "waiting": "Ödeme bekleniyor...",
+    "autoUpdate": "Ödeme algılandığında bu sayfa otomatik olarak güncellenir."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Ödeme şu sürede sona erer",
+    "canceledAutomatically": "Ödeme alınmazsa otomatik olarak iptal edilir."
+  },
+  "successPayment": {
+    "title": "Ödeme başarılı!",
+    "description": "Ödemeniz onaylandı ve ürün kısa süre içinde teslim edilecek."
+  },
+  "failPayment": {
+    "title": "Ödeme süresi doldu veya iptal edildi",
+    "description": "Ödeme zamanında tamamlanmadı ve iptal edildi. Yeniden deneyebilir veya farklı bir cüzdan adresi kullanabilirsiniz."
+  },
+  "conflictPayment": {
+    "title": "Bekleyen bir ödeme zaten var",
+    "description": "Bu cüzdan adresi ve bu ürün fiyatı için zaten bekleyen bir işlem var. Her adresin aynı anda yalnızca bir bekleyen ödemesi olabilir.",
+    "goToPending": "Bekleyen ödemeye git",
+    "useDifferentWallet": "Farklı bir cüzdan adresi kullan"
+  },
+  "not-found": {
+    "title": "Ödeme bulunamadı",
+    "description-1": "Aradığınız ödeme mevcut değil.",
+    "description-2": "URL'yi kontrol edin veya ana sayfaya dönün."
+  }
+}

@@ -13,6 +13,7 @@ import { formatUsedAt } from "@/utils/date";
 import makeBlockie from "ethereum-blockies-base64";
 import Image from "next/image";
 import { PaymentDto } from "@/utils/types";
+import { getLocale } from "@/i18n/client";
 
 type Props = {
   payment: PaymentDto;
@@ -32,15 +33,16 @@ export function EnterFromAddressSection({ payment }: Props) {
     const origin = window.location.origin;
     const api = new Api(origin);
     const res = await api.addFromAddress(payment.id, address);
+    const locale = getLocale();
     if (!res.ok && res.status === 409) {
       const data = (await res.json()) as { conflictPayment: { id: string } };
       router.push(
-        `/pay/conflict/?id=${data.conflictPayment.id}&returnId=${payment.id}`
+        `/${locale}/pay/conflict/?id=${data.conflictPayment.id}&returnId=${payment.id}`
       );
       return;
     }
     Storage.saveRecentAddress(address);
-    redirect(`/pay/?id=${payment.id}`);
+    redirect(`/${locale}/pay/?id=${payment.id}`);
   };
 
   const onAddressChange = (value: string) => {

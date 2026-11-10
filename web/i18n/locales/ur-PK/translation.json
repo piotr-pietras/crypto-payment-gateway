@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "محفوظ، تیز، کھلا"
+  },
+  "common": {
+    "usedJustNow": "ابھی استعمال ہوا",
+    "usedMinutesAgo_one": "{{count}} منٹ پہلے استعمال ہوا",
+    "usedMinutesAgo_other": "{{count}} منٹ پہلے استعمال ہوا",
+    "usedHoursAgo_one": "{{count}} گھنٹہ پہلے استعمال ہوا",
+    "usedHoursAgo_other": "{{count}} گھنٹے پہلے استعمال ہوا",
+    "usedDaysAgo_one": "{{count}} دن پہلے استعمال ہوا",
+    "usedDaysAgo_other": "{{count}} دن پہلے استعمال ہوا",
+    "usedWeeksAgo_one": "{{count}} ہفتہ پہلے استعمال ہوا",
+    "usedWeeksAgo_other": "{{count}} ہفتے پہلے استعمال ہوا",
+    "usedMonthsAgo_one": "{{count}} مہینہ پہلے استعمال ہوا",
+    "usedMonthsAgo_other": "{{count}} مہینے پہلے استعمال ہوا",
+    "callbackButton": "ہوم پیج پر واپس جائیں",
+    "or": "یا"
+  },
+  "fromAddress": {
+    "title": "اپنے والیٹ کا پتہ درج کریں",
+    "description-1": "وہ پتہ چسپاں کریں جس سے آپ {{ currency }} بھیجیں گے۔",
+    "description-2": "ہم اس سے آپ کی ادائیگی پہچانیں گے۔",
+    "label": "والیٹ کا پتہ",
+    "button": "ادائیگی کی طرف جائیں",
+    "error": "والیٹ کا پتہ غلط ہے",
+    "error-placeholder": "درست والیٹ پتہ درج کریں",
+    "recentTitle": "حال میں استعمال شدہ پتے"
+  },
+  "payAddress": {
+    "mobileTitle": "موبائل والیٹ سے ادائیگی کریں",
+    "mobileHint": "اپنا پسندیدہ موبائل کرپٹو والیٹ کھولیں اور ادائیگی کریں۔",
+    "qrHint": "اپنا پسندیدہ موبائل کرپٹو والیٹ کھولیں اور QR کوڈ اسکین کریں۔",
+    "qrTitle": "اپنے والیٹ سے اسکین کریں",
+    "copyTitle": "والیٹ پتے سے ادائیگی کریں",
+    "copyHint": "نیچے دیا گیا پتہ کاپی کریں اور اپنے والیٹ سے<br/>بالکل <bold>{{ amount }} {{ currency }}</bold> بھیجیں۔",
+    "walletAddressLabel": "والیٹ کا پتہ",
+    "amountToSendLabel": "بھیجنے کی رقم",
+    "exactAmountHint": "عین وہی رقم بھیجیں۔ کم یا زیادہ بھیجنے سے ادائیگی ناکام ہو جائے گی۔",
+    "copy": "کاپی",
+    "copied": "پتہ کلپ بورڈ پر کاپی ہو گیا",
+    "openWalletApp": "والیٹ ایپ کھولیں"
+  },
+  "productPreview": {
+    "amountLabel": "رقم"
+  },
+  "incomingTransfer": {
+    "waiting": "ادائیگی کا انتظار...",
+    "autoUpdate": "ادائیگی کا پتہ چلتے ہی یہ صفحہ خود بخود اپ ڈیٹ ہو جائے گا۔"
+  },
+  "paymentExpiration": {
+    "expiresIn": "ادائیگی ختم ہونے میں",
+    "canceledAutomatically": "اگر ادائیگی موصول نہ ہو تو یہ خود بخود منسوخ ہو جائے گی۔"
+  },
+  "successPayment": {
+    "title": "ادائیگی کامیاب!",
+    "description": "آپ کی ادائیگی کی تصدیق ہو گئی ہے اور چیز جلد پہنچا دی جائے گی۔"
+  },
+  "failPayment": {
+    "title": "ادائیگی کی میعاد ختم یا منسوخ",
+    "description": "ادائیگی وقت پر مکمل نہیں ہوئی اور منسوخ کر دی گئی ہے۔ آپ دوبارہ کوشش کر سکتے ہیں یا کوئی اور والیٹ پتہ استعمال کر سکتے ہیں۔"
+  },
+  "conflictPayment": {
+    "title": "ایک زیر التوا ادائیگی پہلے سے موجود ہے",
+    "description": "اس والیٹ پتے اور اس قیمت کے لیے پہلے سے ایک زیر التوا لین دین موجود ہے۔ ہر پتے پر ایک وقت میں صرف ایک زیر التوا ادائیگی ہو سکتی ہے۔",
+    "goToPending": "زیر التوا ادائیگی پر جائیں",
+    "useDifferentWallet": "کوئی اور والیٹ پتہ استعمال کریں"
+  },
+  "not-found": {
+    "title": "ادائیگی نہیں ملی",
+    "description-1": "جس ادائیگی کو آپ تلاش کر رہے ہیں وہ موجود نہیں۔",
+    "description-2": "براہ کرم URL چیک کریں یا ہوم پیج پر واپس جائیں۔"
+  }
+}

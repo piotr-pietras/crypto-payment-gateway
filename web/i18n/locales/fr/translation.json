@@ -1,0 +1,80 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Sécurisé, rapide, ouvert"
+  },
+  "common": {
+    "usedJustNow": "Utilisée à l'instant",
+    "usedMinutesAgo_one": "Utilisée il y a {{count}} minute",
+    "usedMinutesAgo_other": "Utilisée il y a {{count}} minutes",
+    "usedMinutesAgo_many": "Utilisée il y a {{count}} minutes",
+    "usedHoursAgo_one": "Utilisée il y a {{count}} heure",
+    "usedHoursAgo_other": "Utilisée il y a {{count}} heures",
+    "usedHoursAgo_many": "Utilisée il y a {{count}} heures",
+    "usedDaysAgo_one": "Utilisée il y a {{count}} jour",
+    "usedDaysAgo_other": "Utilisée il y a {{count}} jours",
+    "usedDaysAgo_many": "Utilisée il y a {{count}} jours",
+    "usedWeeksAgo_one": "Utilisée il y a {{count}} semaine",
+    "usedWeeksAgo_other": "Utilisée il y a {{count}} semaines",
+    "usedWeeksAgo_many": "Utilisée il y a {{count}} semaines",
+    "usedMonthsAgo_one": "Utilisée il y a {{count}} mois",
+    "usedMonthsAgo_other": "Utilisée il y a {{count}} mois",
+    "usedMonthsAgo_many": "Utilisée il y a {{count}} mois",
+    "callbackButton": "Retour à la page d'accueil",
+    "or": "OU"
+  },
+  "fromAddress": {
+    "title": "Saisissez l'adresse de votre portefeuille",
+    "description-1": "Collez l'adresse depuis laquelle vous enverrez {{ currency }}.",
+    "description-2": "Nous l'utiliserons pour détecter votre paiement.",
+    "label": "Adresse du portefeuille",
+    "button": "Continuer vers le paiement",
+    "error": "Adresse de portefeuille non valide",
+    "error-placeholder": "Saisissez une adresse de portefeuille valide",
+    "recentTitle": "Adresses récemment utilisées"
+  },
+  "payAddress": {
+    "mobileTitle": "Payer avec un portefeuille mobile",
+    "mobileHint": "Ouvrez votre portefeuille crypto mobile préféré et payez.",
+    "qrHint": "Ouvrez votre portefeuille crypto mobile préféré et scannez le code QR.",
+    "qrTitle": "Scannez avec votre portefeuille",
+    "copyTitle": "Payer avec l'adresse du portefeuille",
+    "copyHint": "Copiez l'adresse ci-dessous et envoyez<br/>exactement <bold>{{ amount }} {{ currency }}</bold> depuis votre portefeuille.",
+    "walletAddressLabel": "Adresse du portefeuille",
+    "amountToSendLabel": "Montant à envoyer",
+    "exactAmountHint": "Veillez à envoyer le montant exact. Envoyer moins ou plus entraînera l'échec du paiement.",
+    "copy": "Copier",
+    "copied": "Adresse copiée dans le presse-papiers",
+    "openWalletApp": "Ouvrir l'application du portefeuille"
+  },
+  "productPreview": {
+    "amountLabel": "Montant"
+  },
+  "incomingTransfer": {
+    "waiting": "En attente du paiement...",
+    "autoUpdate": "Cette page se mettra à jour automatiquement dès que le paiement sera détecté."
+  },
+  "paymentExpiration": {
+    "expiresIn": "Le paiement expire dans",
+    "canceledAutomatically": "Si le paiement n'est pas reçu, il sera annulé automatiquement."
+  },
+  "successPayment": {
+    "title": "Paiement réussi !",
+    "description": "Votre paiement a été confirmé et l'article sera livré sous peu."
+  },
+  "failPayment": {
+    "title": "Paiement expiré ou annulé",
+    "description": "Le paiement n'a pas été effectué à temps et a été annulé. Vous pouvez réessayer ou utiliser une autre adresse de portefeuille."
+  },
+  "conflictPayment": {
+    "title": "Un paiement en attente existe déjà",
+    "description": "Une transaction est déjà en attente pour cette adresse de portefeuille et ce prix. Chaque adresse ne peut avoir qu'un seul paiement en attente à la fois.",
+    "goToPending": "Aller au paiement en attente",
+    "useDifferentWallet": "Utiliser une autre adresse de portefeuille"
+  },
+  "not-found": {
+    "title": "Oups ! Paiement introuvable",
+    "description-1": "Le paiement que vous recherchez n'existe pas.",
+    "description-2": "Vérifiez l'URL ou retournez à la page d'accueil."
+  }
+}

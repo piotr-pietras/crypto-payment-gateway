@@ -41,7 +41,7 @@ export default async function SuccessPage({
   }
 
   const data = (await res.json()) as PaymentDto;
-  const redirectUrl = Page.verifyURL(data, ROUTE);
+  const redirectUrl = Page.verifyURL(data, ROUTE, locale);
   if (redirectUrl) {
     redirect(redirectUrl);
   }
