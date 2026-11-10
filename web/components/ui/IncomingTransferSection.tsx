@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { io } from "socket.io-client";
 import { useRouter } from "next/navigation";
 import LoadingIndicator from "../generic/LoadingIndicator";
+import { getLocale } from "@/i18n/client";
 
 type Props = {
   payment: PaymentDto;
@@ -28,7 +29,7 @@ export function IncomingTransferSection({ payment }: Props) {
 
     socket.on("transfer", (data: { id: string }) => {
       if (data.id === payment.id) {
-        router.push(`/pay/success/?id=${data.id}`);
+        router.push(`/${getLocale()}/pay/success/?id=${data.id}`);
       }
     });
 

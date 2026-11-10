@@ -1,0 +1,75 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "Seguro, rápido, abierto"
+  },
+  "common": {
+    "usedJustNow": "Usada hace un momento",
+    "usedMinutesAgo_one": "Usada hace {{count}} minuto",
+    "usedMinutesAgo_other": "Usada hace {{count}} minutos",
+    "usedHoursAgo_one": "Usada hace {{count}} hora",
+    "usedHoursAgo_other": "Usada hace {{count}} horas",
+    "usedDaysAgo_one": "Usada hace {{count}} día",
+    "usedDaysAgo_other": "Usada hace {{count}} días",
+    "usedWeeksAgo_one": "Usada hace {{count}} semana",
+    "usedWeeksAgo_other": "Usada hace {{count}} semanas",
+    "usedMonthsAgo_one": "Usada hace {{count}} mes",
+    "usedMonthsAgo_other": "Usada hace {{count}} meses",
+    "callbackButton": "Volver a la página de inicio",
+    "or": "O"
+  },
+  "fromAddress": {
+    "title": "Introduce la dirección de tu monedero",
+    "description-1": "Pega la dirección desde la que enviarás {{ currency }}.",
+    "description-2": "La usaremos para detectar tu pago.",
+    "label": "Dirección del monedero",
+    "button": "Continuar al pago",
+    "error": "Dirección de monedero no válida",
+    "error-placeholder": "Introduce una dirección de monedero válida",
+    "recentTitle": "Direcciones usadas recientemente"
+  },
+  "payAddress": {
+    "mobileTitle": "Paga con el monedero móvil",
+    "mobileHint": "Abre tu monedero cripto móvil favorito y paga.",
+    "qrHint": "Abre tu monedero cripto móvil favorito y escanea el código QR.",
+    "qrTitle": "Escanea con tu monedero",
+    "copyTitle": "Paga con la dirección del monedero",
+    "copyHint": "Copia la dirección de abajo y envía<br/>exactamente <bold>{{ amount }} {{ currency }}</bold> desde tu monedero.",
+    "walletAddressLabel": "Dirección del monedero",
+    "amountToSendLabel": "Importe a enviar",
+    "exactAmountHint": "Asegúrate de enviar el importe exacto. Enviar menos o más hará que el pago falle.",
+    "copy": "Copiar",
+    "copied": "Dirección copiada al portapapeles",
+    "openWalletApp": "Abrir la aplicación del monedero"
+  },
+  "productPreview": {
+    "amountLabel": "Importe"
+  },
+  "incomingTransfer": {
+    "waiting": "Esperando el pago...",
+    "autoUpdate": "Esta página se actualizará automáticamente cuando se detecte el pago."
+  },
+  "paymentExpiration": {
+    "expiresIn": "El pago caduca en",
+    "canceledAutomatically": "Si no se recibe el pago, se cancelará automáticamente."
+  },
+  "successPayment": {
+    "title": "¡Pago realizado!",
+    "description": "Tu pago se ha confirmado y el artículo se entregará en breve."
+  },
+  "failPayment": {
+    "title": "Pago caducado o cancelado",
+    "description": "El pago no se completó a tiempo y se ha cancelado. Puedes intentarlo de nuevo o usar otra dirección de monedero."
+  },
+  "conflictPayment": {
+    "title": "Ya existe un pago pendiente",
+    "description": "Ya hay una transacción pendiente para esta dirección de monedero y este precio. Cada dirección solo puede tener un pago pendiente a la vez.",
+    "goToPending": "Ir al pago pendiente",
+    "useDifferentWallet": "Usar otra dirección de monedero"
+  },
+  "not-found": {
+    "title": "¡Vaya! Pago no encontrado",
+    "description-1": "El pago que buscas no existe.",
+    "description-2": "Comprueba la URL o vuelve a la página de inicio."
+  }
+}

@@ -1,5 +1,12 @@
 import { createInstance, type i18n as I18nInstance } from "i18next";
-import { defaultLocale, defaultNS, isLocale, type Locale, resources } from "./config";
+import {
+  defaultLocale,
+  defaultNS,
+  isLocale,
+  type Locale,
+  resources,
+} from "./config";
+import { headers } from "next/headers";
 
 export async function initI18n(
   lng: Locale = defaultLocale
@@ -30,4 +37,15 @@ export async function getTranslation(_lng: string) {
     t: i18n.getFixedT(lng, defaultNS),
     i18n,
   };
+}
+
+/**
+ * Server side function to get the locale from the headers
+ * @returns The locale from the headers
+ */
+export async function getLocale() {
+  const headerList = await headers();
+  const url = headerList.get("x-url");
+  const segment = url ? new URL(url).pathname.split("/")[1] : "";
+  return isLocale(segment) ? segment : defaultLocale;
 }

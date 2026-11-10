@@ -51,6 +51,7 @@ model Payment {
   productImageUrl String?
   returnUrl       String
   webhookUrl      String?
+  locale          String?
 
   @@index([status])
   @@index([createdAt])

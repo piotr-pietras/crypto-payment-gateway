@@ -1,0 +1,70 @@
+{
+  "layout": {
+    "title": "CryptoPayment",
+    "subtitle": "안전하고, 빠르고, 열려 있습니다"
+  },
+  "common": {
+    "usedJustNow": "방금 사용함",
+    "usedMinutesAgo_other": "{{count}}분 전 사용",
+    "usedHoursAgo_other": "{{count}}시간 전 사용",
+    "usedDaysAgo_other": "{{count}}일 전 사용",
+    "usedWeeksAgo_other": "{{count}}주 전 사용",
+    "usedMonthsAgo_other": "{{count}}개월 전 사용",
+    "callbackButton": "홈으로 돌아가기",
+    "or": "또는"
+  },
+  "fromAddress": {
+    "title": "지갑 주소를 입력하세요",
+    "description-1": "{{ currency }}을(를) 보낼 주소를 붙여넣으세요.",
+    "description-2": "이 주소로 결제를 확인합니다.",
+    "label": "지갑 주소",
+    "button": "결제로 계속",
+    "error": "잘못된 지갑 주소",
+    "error-placeholder": "올바른 지갑 주소를 입력하세요",
+    "recentTitle": "최근 사용한 주소"
+  },
+  "payAddress": {
+    "mobileTitle": "모바일 지갑으로 결제",
+    "mobileHint": "자주 쓰는 모바일 암호화폐 지갑을 열고 결제하세요.",
+    "qrHint": "자주 쓰는 모바일 암호화폐 지갑을 열고 QR 코드를 스캔하세요.",
+    "qrTitle": "지갑으로 스캔",
+    "copyTitle": "지갑 주소로 결제",
+    "copyHint": "아래 주소를 복사하고 지갑에서<br/>정확히 <bold>{{ amount }} {{ currency }}</bold>을(를) 보내세요.",
+    "walletAddressLabel": "지갑 주소",
+    "amountToSendLabel": "보낼 금액",
+    "exactAmountHint": "정확한 금액을 보내세요. 더 적거나 많이 보내면 결제가 실패합니다.",
+    "copy": "복사",
+    "copied": "주소가 클립보드에 복사되었습니다",
+    "openWalletApp": "지갑 앱 열기"
+  },
+  "productPreview": {
+    "amountLabel": "금액"
+  },
+  "incomingTransfer": {
+    "waiting": "결제 대기 중...",
+    "autoUpdate": "결제가 확인되면 이 페이지가 자동으로 업데이트됩니다."
+  },
+  "paymentExpiration": {
+    "expiresIn": "결제 만료까지",
+    "canceledAutomatically": "결제가 접수되지 않으면 자동으로 취소됩니다."
+  },
+  "successPayment": {
+    "title": "결제가 완료되었습니다",
+    "description": "결제가 확인되었으며 상품이 곧 전달됩니다."
+  },
+  "failPayment": {
+    "title": "결제가 만료되었거나 취소되었습니다",
+    "description": "결제가 제시간에 완료되지 않아 취소되었습니다. 다시 시도하거나 다른 지갑 주소를 사용하세요."
+  },
+  "conflictPayment": {
+    "title": "대기 중인 결제가 이미 있습니다",
+    "description": "이 지갑 주소와 이 상품 가격에 대한 대기 중인 거래가 이미 있습니다. 주소마다 대기 중인 결제는 한 번에 하나만 가능합니다.",
+    "goToPending": "대기 중인 결제로 이동",
+    "useDifferentWallet": "다른 지갑 주소 사용"
+  },
+  "not-found": {
+    "title": "결제를 찾을 수 없습니다",
+    "description-1": "찾으시는 결제가 존재하지 않습니다.",
+    "description-2": "URL을 확인하거나 홈으로 돌아가세요."
+  }
+}

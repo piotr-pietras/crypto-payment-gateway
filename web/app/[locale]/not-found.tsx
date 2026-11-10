@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { getTranslation } from "@/i18n/server";
-import { defaultLocale } from "@/i18n/config";
+import { getLocale, getTranslation } from "@/i18n/server";
 
 export default async function NotFound() {
-  const { t } = await getTranslation(defaultLocale);
+  const locale = await getLocale();
+  const { t } = await getTranslation(locale);
 
   return (
     <div className="p-4 flex flex-col items-center justify-center gap-4">
